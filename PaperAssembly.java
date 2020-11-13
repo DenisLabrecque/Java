@@ -20,4 +20,11 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
     public int getValue() {
         return 0;
     }
+
+    /**
+     * Add sheets to the paper tray.
+     * @param sheets
+     */
+    public void addPaper(int sheets) {
+    }
 }

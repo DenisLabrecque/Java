@@ -18,4 +18,10 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
     public int getValue() {
         return 0;
     }
+
+    /**
+     * Makes the drum brand new (no longer used).
+     */
+    public void replaceDrum() {
+    }
 }

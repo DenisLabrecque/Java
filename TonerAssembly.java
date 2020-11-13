@@ -18,4 +18,14 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
     public int getValue() {
         return 0;
     }
+
+    /**
+     * Adds toner according to the assigned quantities in grams.
+     * @param cyan
+     * @param magenta
+     * @param yellow
+     * @param black
+     */
+    public void addToner(float cyan, float magenta, float yellow, float black) {
+    }
 }

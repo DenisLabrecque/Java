@@ -18,4 +18,16 @@ public class PrinterQueue extends AssemblyUnit implements ISimAssembly {
     public int getValue() {
         return 0;
     }
+
+    /**
+     * @param document Document to add to the print queue.
+     */
+    public void add(Document document) {
+    }
+
+    /**
+     * @param document Document to remove from the print queue.
+     */
+    public void remove(Document document) {
+    }
 }

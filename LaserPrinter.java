@@ -32,21 +32,11 @@ public class LaserPrinter {
 			}
 		}
 	}
-	
-	public void reportStatus() {
-		if(isOn) {
-			System.out.println("--- Printer Status Report ---");
-			System.out.println("          Paper Level: " + paperTray.getValue());
-			System.out.println("--- Printer Status Report Complete ---");
-		} else {
-			System.out.println("Printer is off.");
-		}
-	}
-	
+
 	public void powerOff() {
 		if(isOn) {
 			System.out.println("Laser Printer - Shutting down.");
-		
+
 			try {
 				paperTray.deactivate();
 			} catch (Exception e) {
@@ -60,5 +50,80 @@ public class LaserPrinter {
 		} else {
 			System.out.println("Printer is already off.");
 		}
+	}
+
+	public void loadPaper(int sheets) {
+		paperTray.addPaper(sheets);
+	}
+
+	public void loadToner(float cyan, float magenta, float yellow, float black) {
+		tonerCartridge.addToner(cyan, magenta, yellow, black);
+	}
+
+	public void replaceDrum() {
+		printAssembly.replaceDrum();
+	}
+
+	public void addToQueue(Document document) {
+		queue.add(document);
+	}
+
+	public void print(Document document) {
+		// TODO follow the steps of printing
+	}
+
+	/**
+	 * Stop printing this document. Does nothing if this document is not currently being printed.
+	 * @param document
+	 */
+	public void cancel(Document document) {
+
+	}
+
+	/**
+	 * Remove this document from the print queue. If it is currently being printed, it is already out of the queue;
+	 * cancel instead.
+	 * @param document
+	 */
+	public void remove(Document document) {
+		queue.remove(document);
+	}
+	
+	public void reportStatus() {
+		if(isOn) {
+			System.out.println("--- Printer Status Report ---");
+			System.out.println("          Paper Level: " + paperTray.getValue());
+			System.out.println("--- Printer Status Report Complete ---");
+		} else {
+			System.out.println("Printer is off.");
+		}
+	}
+
+	public void testPaperTray() {
+
+	}
+
+	public void testTonerCartridge() {
+
+	}
+
+	public void testFuser() {
+
+	}
+
+	public void testPrintAssembly() {
+
+	}
+
+	public void testOutput() {
+
+	}
+
+	public void testDisplay() {
+
+	}
+
+	public void testQueue() {
+
 	}
 }
