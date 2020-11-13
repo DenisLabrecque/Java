@@ -1,18 +1,23 @@
-public class PaperAssembly {
+public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
     public PaperAssembly(int i) {
     }
 
     public void activate() {
     }
 
+    public void deactivate() {
+    }
+
     public boolean isActive() {
         return true;
     }
 
-    public String getValue() {
-        return "full";
+    @Override
+    public void setValue(int newValue) {
+
     }
 
-    public void deactivate() {
+    public int getValue() {
+        return 0;
     }
 }
