@@ -1,15 +1,21 @@
 public class LaserPrinter {
 	private boolean isOn = false;
+	private DisplayAssembly display;
 	private PaperAssembly  paperTray;
 	private TonerAssembly tonerCartridge;
 	private FuserAssembly fuser;
 	private PrintAssembly printAssembly;
 	private OutputAssembly output;
-	private DisplayAssembly display;
 	private PrinterQueue queue;
 	
 	public LaserPrinter() {
+		display = new ConsoleDisplay();
 		paperTray = new PaperAssembly(300);
+		tonerCartridge = new TonerAssembly();
+		fuser = new FuserAssembly();
+		printAssembly = new PrintAssembly();
+		output = new OutputAssembly();
+		queue = new PrinterQueue();
 	}
 
 	public void powerOn() {
@@ -93,9 +99,8 @@ public class LaserPrinter {
 	}
 
 	/**
-	 * Remove this document from the print queue. If it is currently being printed, it is already out of the queue;
-	 * cancel instead.
-	 * @param document
+	 * @param document Remove this document from the print queue. If it is currently being printed, it is already out of
+	 * the queue; cancel instead.
 	 */
 	public void remove(Document document) {
 		queue.remove(document);
