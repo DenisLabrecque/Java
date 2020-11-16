@@ -2,11 +2,15 @@ import java.util.HashMap;
 
 /**
  * Represents a printer's display. To connect to an actual display, this class must be extended by a subclass
- * that represents the screen. For purposes of this homework, that is either the console or JavaFX. Any inheritor must
- * implement IRefreshable to update the screen with new information.
+ * that represents the screen. For purposes of this homework, that is either the console or JavaFX.
  * Denis Labrecque, November 2020
  */
 public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssembly {
+
+    private Light tonerLED = new Light(); // On if error, yellow if warning, flashing red if error
+    private Light drumLED  = new Light(); // On if error, yellow if warning, flashing red if error
+    private Light errorLED = new Light(); // On if error, flashing red
+    private Light readyLED = new Light(); // Flashing green while powering up or printing, solid green otherwise
 
     HashMap<String, Exception> exceptions = new HashMap<>();
     Exception currentException = null;
