@@ -1,5 +1,5 @@
 /**
- * LED used to indicate the status of the printer.
+ * LED used to indicate the printer's status.
  */
 public class Light {
     private static final float FLASH_SECONDS = 0.8f;

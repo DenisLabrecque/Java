@@ -11,26 +11,38 @@ public class LaserPrinter {
 	public LaserPrinter() {
 		paperTray = new PaperAssembly(300);
 	}
-	
-	// Body of logic
 
 	public void powerOn() {
-		if(isOn) {
-			System.out.println("Printer is already on.");
-		} else {
-			System.out.println("Laser Printer - Starting up.");
 
-			try {
-				paperTray.activate();
-			} catch (Exception e) {
-				System.out.println("Exception was thrown while powering on the printer.  " + e);
-			}
-		
-			if(paperTray.isActive()) {
-				isOn = true;
-				System.out.println("Laser Printer successfully powered up.");
-			}
-		}
+		if(isOn)
+			display.message("Printer is already on.");
+		else
+			display.message("Printer starting up.");
+
+		//if(isOn) {
+		//	System.out.println("Printer is already on.");
+		//} else {
+		//	System.out.println("Laser Printer - Starting up.");
+
+		//	try {
+		//		paperTray.activate();
+		//	} catch (Exception e) {
+		//		System.out.println("Exception was thrown while powering on the printer.  " + e);
+		//	}
+
+		//	if(paperTray.isActive()) {
+		//		isOn = true;
+		//		System.out.println("Laser Printer successfully powered up.");
+		//	}
+		//}
+
+		safelyActivateAssembly(display); // Activate the display first so it can output exceptions.
+		safelyActivateAssembly(paperTray);
+		safelyActivateAssembly(tonerCartridge);
+		safelyActivateAssembly(fuser);
+		safelyActivateAssembly(printAssembly);
+		safelyActivateAssembly(output);
+		safelyActivateAssembly(queue);
 	}
 
 	public void powerOff() {
@@ -99,33 +111,14 @@ public class LaserPrinter {
 		}
 	}
 
-	public void testPaperTray() {
-		if(paperTray.isError())
-			display.addException(paperTray.exception());
-	}
-
-	public void testTonerCartridge() {
-		if(tonerCartridge.isError())
-			display.addException(tonerCartridge.exception());
-	}
-
-	public void testFuser() {
-		if(fuser.isError())
-			display.addException(fuser.exception());
-	}
-
-	public void testPrintAssembly() {
-		if(printAssembly.isError())
-			display.addException(printAssembly.exception());
-	}
-
-	public void testOutput() {
-		if(output.isError())
-			display.addException(output.exception());
-	}
-
-	public void testQueue() {
-		if(queue.isError())
-			display.addException(queue.exception());
+	/**
+	 * Activate the assembly; catch any exceptions and report them to the display.
+	 */
+	public void safelyActivateAssembly(AssemblyUnit assembly) {
+		try {
+			assembly.activate();
+		} catch(AssemblyException e) {
+			display.addException(e);
+		}
 	}
 }

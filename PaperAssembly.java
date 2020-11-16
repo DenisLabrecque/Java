@@ -1,15 +1,16 @@
 public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
+
     public PaperAssembly(int i) {
     }
 
-    public void activate() {
+    @Override
+    public void activate() throws AssemblyException {
+
     }
 
-    public void deactivate() {
-    }
+    @Override
+    public void deactivate() throws AssemblyException {
 
-    public boolean isActive() {
-        return true;
     }
 
     @Override
@@ -17,6 +18,7 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
 
     }
 
+    @Override
     public int getValue() {
         return 0;
     }

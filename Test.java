@@ -1,12 +1,13 @@
 import java.util.Scanner;
 
+/**
+ * Test the creation and execution of the laser printer homework.
+ */
 public class Test {
   public static void main(String[] args) {
 	
 	boolean continueLoop = true;
-	
-    LaserPrinter lp = new LaserPrinter();
-	
+    LaserPrinter printer = new LaserPrinter();
 	Scanner input = new Scanner(System.in);
 	
 	while(continueLoop) {
@@ -18,25 +19,25 @@ public class Test {
 				displayHelp();
 				break;
 			case "REPORT":
-				displayReport(lp);
+				displayReport(printer);
 				break;
 			case "POWERON":
-				startPrinter(lp);
+				printer.powerOn();
 				break;
 			case "POWEROFF":
-				shutdownPrinter(lp);
+				printer.powerOff();
 				break;
 			case "QUEUE":
-				reportQueue(lp);
+				reportQueue(printer);
 				break;
 			case "PRINT":
-				printJob(lp);
+				printJob(printer);
 				break;
 			case "CANCEL":
-				cancelJob(lp);
+				cancelJob(printer);
 				break;
 			case "ADD":
-				addJob(input, lp);
+				addJob(input, printer);
 				break;
 			case "QUIT":
 			case "EXIT":
@@ -44,19 +45,9 @@ public class Test {
 		}
 	}
   }
-
-	public static void startPrinter(LaserPrinter o) {
-		System.out.println("Turning on Laser Printer.");
-		o.powerOn();
-	}
 	
 	public static void displayReport(LaserPrinter o) {
 		o.reportStatus();
-	}
-	
-	public static void shutdownPrinter(LaserPrinter o) {
-		System.out.println("Turning off Laser Printer.");
-		o.powerOff();
 	}
 	
 	public static void reportQueue(LaserPrinter o) {
