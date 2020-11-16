@@ -9,7 +9,7 @@ public class LaserPrinter {
 	private PrinterQueue queue;
 	
 	public LaserPrinter() {
-		display = new ConsoleDisplay();
+		display = new ConsoleDisplay(this);
 		paperTray = new PaperAssembly(300);
 		tonerCartridge = new TonerAssembly();
 		fuser = new FuserAssembly();
@@ -19,29 +19,6 @@ public class LaserPrinter {
 	}
 
 	public void powerOn() {
-
-		if(isOn)
-			display.message("Printer is already on.");
-		else
-			display.message("Printer starting up.");
-
-		//if(isOn) {
-		//	System.out.println("Printer is already on.");
-		//} else {
-		//	System.out.println("Laser Printer - Starting up.");
-
-		//	try {
-		//		paperTray.activate();
-		//	} catch (Exception e) {
-		//		System.out.println("Exception was thrown while powering on the printer.  " + e);
-		//	}
-
-		//	if(paperTray.isActive()) {
-		//		isOn = true;
-		//		System.out.println("Laser Printer successfully powered up.");
-		//	}
-		//}
-
 		safelyActivateAssembly(display); // Activate the display first so it can output exceptions.
 		safelyActivateAssembly(paperTray);
 		safelyActivateAssembly(tonerCartridge);

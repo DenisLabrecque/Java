@@ -18,8 +18,16 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
 
     @Override
     public void activate() throws AssemblyException {
-        // TODO add timing event
-        activated = true;
+        // TODO check if already activated
+        // Print a startup message, wait for this component to turn on
+        try {
+            Thread.sleep(300); // Time for the screen to turn on
+            activated = true;
+            push("Welcome.");
+            Thread.sleep(500); // Welcome screen time
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -60,7 +68,7 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
      * the new message.
      * @param message Message to display to the user. Exceptions may take precedence if necessary.
      */
-    public void message(String message) {
+    public void push(String message) {
         if(activated == false)
             return;
 
