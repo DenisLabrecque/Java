@@ -28,4 +28,11 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
      */
     public void addToner(float cyan, float magenta, float yellow, float black) {
     }
+
+    /**
+     * Retrieve the exception object (if an exception has occurred).
+     */
+    public AssemblyException exception() {
+        return null;
+    }
 }

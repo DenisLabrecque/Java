@@ -100,30 +100,32 @@ public class LaserPrinter {
 	}
 
 	public void testPaperTray() {
-
+		if(paperTray.isError())
+			display.addException(paperTray.exception());
 	}
 
 	public void testTonerCartridge() {
-
+		if(tonerCartridge.isError())
+			display.addException(tonerCartridge.exception());
 	}
 
 	public void testFuser() {
-
+		if(fuser.isError())
+			display.addException(fuser.exception());
 	}
 
 	public void testPrintAssembly() {
-
+		if(printAssembly.isError())
+			display.addException(printAssembly.exception());
 	}
 
 	public void testOutput() {
-
-	}
-
-	public void testDisplay() {
-
+		if(output.isError())
+			display.addException(output.exception());
 	}
 
 	public void testQueue() {
-
+		if(queue.isError())
+			display.addException(queue.exception());
 	}
 }

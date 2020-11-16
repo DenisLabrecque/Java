@@ -18,4 +18,11 @@ public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
     public int getValue() {
         return 0;
     }
+
+    /**
+     * @return Current exception object (if an exception has occurred).
+     */
+    public AssemblyException exception() {
+        return null;
+    }
 }

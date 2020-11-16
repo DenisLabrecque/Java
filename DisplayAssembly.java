@@ -18,4 +18,13 @@ public class DisplayAssembly extends AssemblyUnit implements ISimAssembly {
     public int getValue() {
         return 0;
     }
+
+    /**
+     * Adds an exception that needs to be solved before the printer can continue printing.
+     * The exception should not be added twice.
+     * @param exception The problem to solve.
+     */
+    public void addException(AssemblyException exception) {
+
+    }
 }

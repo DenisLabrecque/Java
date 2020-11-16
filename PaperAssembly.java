@@ -27,4 +27,11 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
      */
     public void addPaper(int sheets) {
     }
+
+    /**
+     * @return Current exception object (if an exception has occurred).
+     */
+    public AssemblyException exception() {
+        return null;
+    }
 }

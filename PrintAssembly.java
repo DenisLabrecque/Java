@@ -24,4 +24,11 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
      */
     public void replaceDrum() {
     }
+
+    /**
+     * @return Current exception object (if an exception has occurred).
+     */
+    public AssemblyException exception() {
+        return null;
+    }
 }
