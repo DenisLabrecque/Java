@@ -43,4 +43,12 @@ public class Light {
     public Color color() {
         return color;
     }
+
+    /**
+     * @return A string that describes the light's color and pattern. For example, "GREEN light, SOLID".
+     */
+    @Override
+    public String toString() {
+        return color + " light, " + pattern;
+    }
 }

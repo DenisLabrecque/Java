@@ -1,23 +1,4 @@
-public class PrinterQueue extends AssemblyUnit implements ISimAssembly {
-    @Override
-    public void activate() throws AssemblyException {
-
-    }
-
-    @Override
-    public void deactivate() throws AssemblyException {
-
-    }
-
-    @Override
-    public void setValue(int newValue) {
-
-    }
-
-    @Override
-    public int getValue() {
-        return 0;
-    }
+public class PrinterQueue implements ISimAssembly {
 
     /**
      * @param document Document to add to the print queue.
@@ -36,5 +17,20 @@ public class PrinterQueue extends AssemblyUnit implements ISimAssembly {
      */
     public AssemblyException exception() {
         return null;
+    }
+
+    @Override
+    public void setValue(int newValue) {
+
+    }
+
+    @Override
+    public int getValue() {
+        return 0;
+    }
+
+    @Override
+    public void setError(int newValue) {
+
     }
 }

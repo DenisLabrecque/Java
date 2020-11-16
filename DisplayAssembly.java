@@ -7,18 +7,26 @@ import java.util.HashMap;
  */
 public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssembly {
 
-    private Light tonerLED = new Light(); // On if error, yellow if warning, flashing red if error
-    private Light drumLED  = new Light(); // On if error, yellow if warning, flashing red if error
-    private Light errorLED = new Light(); // On if error, flashing red
-    private Light readyLED = new Light(); // Flashing green while powering up or printing, solid green otherwise
+    protected Light tonerLED = new Light(); // On if error, yellow if warning, flashing red if error
+    protected Light drumLED  = new Light(); // On if error, yellow if warning, flashing red if error
+    protected Light errorLED = new Light(); // On if error, flashing red
+    protected Light readyLED = new Light(); // Flashing green while powering up or printing, solid green otherwise
 
     HashMap<String, Exception> exceptions = new HashMap<>();
     Exception currentException = null;
     String currentMessage = null;
 
+    /**
+     * Turn on this display. Does nothing if the display is already on.
+     * @throws AssemblyException Will not throw.
+     */
     @Override
     public void activate() throws AssemblyException {
-        // TODO check if already activated
+        if(activated == true) {
+            push("Display already activated.");
+            return;
+        }
+
         // Print a startup message, wait for this component to turn on
         try {
             Thread.sleep(300); // Time for the screen to turn on
@@ -30,9 +38,23 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
         }
     }
 
+    /**
+     * Turn off this display. Does nothing if the display is already off.
+     * @throws AssemblyException Will not throw.
+     */
     @Override
     public void deactivate() throws AssemblyException {
-        activated = false;
+        if(activated == false)
+            return;
+
+        try {
+            push("Goodbye.");
+            Thread.sleep(300);
+            activated = false;
+            refresh();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -79,7 +101,7 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     }
 
     /**
-     * Trigger a re-print of the display's information. Will not do anything if the display is not activated.
+     * Trigger a re-print of the display's information. Should not do anything if the display is not activated.
      */
     public abstract void refresh();
 }

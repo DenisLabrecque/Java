@@ -26,6 +26,9 @@ public class LaserPrinter {
 		safelyActivateAssembly(printAssembly);
 		safelyActivateAssembly(output);
 		safelyActivateAssembly(queue);
+
+		// Finally, this printer itself is on if the sum of its parts is
+		isOn = true;
 	}
 
 	public void powerOff() {

@@ -36,5 +36,11 @@ public class ConsoleDisplay extends DisplayAssembly {
             System.out.println("MESSAGE: none.");
         else
             System.out.println("MESSAGE: " + currentMessage);
+
+        // Print lights
+        System.out.println("TONER: " + tonerLED);
+        System.out.println("DRUM : " + drumLED);
+        System.out.println("ERROR: " + errorLED);
+        System.out.println("READY: " + readyLED);
     }
 }
