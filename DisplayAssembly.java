@@ -7,6 +7,8 @@ import java.util.HashMap;
  */
 public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssembly {
 
+    protected LaserPrinter printer;
+
     protected Light tonerLED = new Light(); // On if error, yellow if warning, flashing red if error
     protected Light drumLED  = new Light(); // On if error, yellow if warning, flashing red if error
     protected Light errorLED = new Light(); // On if error, flashing red
@@ -17,13 +19,21 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     String currentMessage = null;
 
     /**
+     * Constructor. Create a console display with a reference back to the printer.
+     * @param printer The printer this display is showing information for.
+     */
+    public DisplayAssembly(LaserPrinter printer) {
+        this.printer = printer;
+    }
+
+    /**
      * Turn on this display. Does nothing if the display is already on.
      * @throws AssemblyException Will not throw.
      */
     @Override
     public void activate() throws AssemblyException {
         if(activated == true) {
-            push("Display already activated.");
+            printer.push("Display already activated.");
             return;
         }
 
@@ -31,7 +41,7 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
         try {
             Thread.sleep(300); // Time for the screen to turn on
             activated = true;
-            push("Welcome.");
+            printer.push("Welcome.");
             Thread.sleep(500); // Welcome screen time
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -48,7 +58,7 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
             return;
 
         try {
-            push("Goodbye.");
+            printer.push("Goodbye.");
             Thread.sleep(300);
             activated = false;
             refresh();
@@ -76,11 +86,15 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
         if(activated == false)
             return;
 
-        if(exception.getMessage() != null && exception.getMessage().isEmpty() == false) {
+        if(exception != null) {
             // If this is the only exception, update the exception, otherwise print the other one first
             if(currentException == null)
                 currentException = exception;
-            exceptions.put(exception.getMessage(), exception);
+
+            if(exception.getMessage() == null || exception.getMessage().isEmpty())
+                exceptions.put("Unknown error.", exception);
+            else
+                exceptions.put(exception.getMessage(), exception);
         }
         refresh();
     }

@@ -3,14 +3,13 @@
  * Denis Labrecque, November 2020
  */
 public class ConsoleDisplay extends DisplayAssembly {
-    private LaserPrinter printer;
 
     /**
      * Constructor. Create a console display with a reference back to the printer.
      * @param printer The printer this display is showing information for.
      */
     public ConsoleDisplay(LaserPrinter printer) {
-        this.printer = printer;
+        super(printer);
     }
 
     /**
@@ -36,6 +35,12 @@ public class ConsoleDisplay extends DisplayAssembly {
             System.out.println("MESSAGE: none.");
         else
             System.out.println("MESSAGE: " + currentMessage);
+
+        // Set light state
+        if(printer.isPoweringUp())
+            readyLED.switchTo(Light.Pattern.FLASHING);
+        else if(printer.isOn())
+            readyLED.switchTo(Light.Pattern.SOLID);
 
         // Print lights
         System.out.println("TONER: " + tonerLED);

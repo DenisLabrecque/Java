@@ -11,6 +11,9 @@ public class Test {
 	Scanner input = new Scanner(System.in);
 	
 	while(continueLoop) {
+		if(printer.isOn() == false)
+			System.out.println("[Printer is off.]");
+
 		System.out.print("\nEnter command (?=help): ");
 		String userResponse = input.nextLine().toUpperCase();
 		
@@ -42,6 +45,8 @@ public class Test {
 			case "QUIT":
 			case "EXIT":
 				continueLoop = false;
+			default:
+				System.out.println("Command " + userResponse.toUpperCase() + " not found.");
 		}
 	}
   }
