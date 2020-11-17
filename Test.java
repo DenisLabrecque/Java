@@ -23,9 +23,11 @@ public class Test {
 				printer.reportStatus();
 				break;
 			case "POWERON":
+			case "ON":
 				printer.powerOn();
 				break;
 			case "POWEROFF":
+			case "OFF":
 				printer.powerOff();
 				break;
 			case "QUEUE":

@@ -1,5 +1,3 @@
-import java.util.HashMap;
-
 /**
  * Represents a printer's display. To connect to an actual display, this class must be extended by a subclass
  * that represents the screen. For purposes of this homework, that is either the console or JavaFX.
@@ -9,10 +7,10 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
 
     protected LaserPrinter printer;
 
-    protected Light tonerLED = new Light(); // On if error, yellow if warning, flashing red if error
-    protected Light drumLED  = new Light(); // On if error, yellow if warning, flashing red if error
-    protected Light errorLED = new Light(); // On if error, flashing red
-    protected Light readyLED = new Light(); // Flashing green while powering up or printing, solid green otherwise
+    protected Light tonerLED = new Light(); // Solid yellow if warning, flashing red if error
+    protected Light drumLED  = new Light(); // Solid yellow if warning, flashing red if error
+    protected Light errorLED = new Light(Light.Color.RED); // Flashing red if error
+    protected Light readyLED = new Light(Light.Color.GREEN); // Solid green, flashing green while powering up or printing
 
     AssemblyException currentException = null;
     String currentWarning = null;
@@ -119,4 +117,80 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
      * Show the status of the queue.
      */
     public abstract void reportQueue();
+
+    public abstract void displayTonerWarningError();
+
+    public abstract void displayDrumWarningError();
+
+    public abstract void displayGeneralError();
+
+    public abstract void displayReadyState();
+
+    public abstract void resetDisplay();
+
+    /**
+     * Solid green if nothing, solid yellow if warning, flashing red if error.
+     */
+    protected void setTonerLightState() {
+        if (printer.toner().isActive()) {
+            if (printer.toner().isError()) {
+                tonerLED.setColor(Light.Color.RED);
+                tonerLED.setPattern(Light.Pattern.FLASHING);
+            }
+            else if (printer.toner().isWarning()) {
+                tonerLED.setColor(Light.Color.YELLOW);
+                tonerLED.setPattern(Light.Pattern.SOLID);
+            }
+            else {
+                tonerLED.setColor(Light.Color.GREEN);
+                tonerLED.setPattern(Light.Pattern.SOLID);
+            }
+        }
+        else
+            tonerLED.setPattern(Light.Pattern.OFF);
+    }
+
+    /**
+     *  Solid green if nothing, solid yellow if warning, flashing red if error.
+     */
+    protected void setDrumLightState() {
+        if (printer.printAssembly().drumIsActive()) {
+            if (printer.printAssembly().isError()) {
+                drumLED.setColor(Light.Color.RED);
+                drumLED.setPattern(Light.Pattern.FLASHING);
+            } else if (printer.printAssembly().isWarning()) {
+                drumLED.setColor(Light.Color.YELLOW);
+                drumLED.setPattern(Light.Pattern.SOLID);
+            } else {
+                drumLED.setColor(Light.Color.GREEN);
+                drumLED.setPattern(Light.Pattern.SOLID);
+            }
+        }
+        else
+            drumLED.setPattern(Light.Pattern.OFF);
+    }
+
+    /**
+     * Flashing red when there is an error.
+     */
+    protected void setErrorLightState() {
+        if (!printer.isOn())
+            errorLED.setPattern(Light.Pattern.OFF);
+        if (printer.isError())
+            errorLED.setPattern(Light.Pattern.FLASHING);
+        else
+            errorLED.setPattern(Light.Pattern.OFF);
+    }
+
+    /**
+     * Solid green if on, flashing green while powering up or printing.
+     */
+    protected void setReadyLightState() {
+        if (printer.isPowering() || printer.isPrinting())
+            readyLED.setPattern(Light.Pattern.FLASHING);
+        else if (printer.isOn())
+            readyLED.setPattern(Light.Pattern.SOLID);
+        else
+            readyLED.setPattern(Light.Pattern.OFF);
+    }
 }

@@ -15,18 +15,27 @@ public class Light {
     private Pattern pattern;
 
     /**
-     * Creates a solid green light.
+     * Creates a green light that's off.
      */
     public Light() {
         color = Color.GREEN;
-        pattern = Pattern.SOLID;
+        pattern = Pattern.OFF;
+    }
+
+    /**
+     * Create a light that's off.
+     * @param color The light's color.
+     */
+    public Light(Color color) {
+        this.color = color;
+        this.pattern = Pattern.OFF;
     }
 
     /**
      * Change the light's pattern, or turn it off.
      * @param pattern On/off pattern.
      */
-    public void switchTo(Pattern pattern) {
+    public void setPattern(Pattern pattern) {
         this.pattern = pattern;
     }
 

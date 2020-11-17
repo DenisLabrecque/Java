@@ -40,4 +40,12 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
     public AssemblyException exception() {
         return null;
     }
+
+    public boolean drumIsActive() {
+        return activated; // TODO
+    }
+
+    public boolean isWarning() {
+        return false; // TODO
+    }
 }

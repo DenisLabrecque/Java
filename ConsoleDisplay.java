@@ -25,7 +25,10 @@ public class ConsoleDisplay extends DisplayAssembly {
             printMessages();
         }
 
-        printLights();
+        displayTonerWarningError();
+        displayDrumWarningError();
+        displayGeneralError();
+        displayReadyState();
     }
 
     public void clearScreen() {
@@ -52,47 +55,21 @@ public class ConsoleDisplay extends DisplayAssembly {
     }
 
     private void printLights() {
-        // Set light state
-        setReadyLightState();
-        setTonerLightState();
+        displayTonerWarningError();
+        displayDrumWarningError();
+        displayGeneralError();
 
         // Print lights
-        System.out.println("TONER: " + tonerLED);
-        System.out.println("DRUM : " + drumLED);
         System.out.println("ERROR: " + errorLED);
         System.out.println("READY: " + readyLED);
     }
 
-    private void setReadyLightState() {
-        if (printer.isPowering())
-            readyLED.switchTo(Light.Pattern.FLASHING);
-        else if (printer.isOn())
-            readyLED.switchTo(Light.Pattern.SOLID);
-        else
-            readyLED.switchTo(Light.Pattern.OFF);
-    }
 
-    private void setTonerLightState() {
-        if (printer.toner().isActive()) {
-            tonerLED.switchTo(Light.Pattern.SOLID);
-            if (printer.toner().isError())
-                tonerLED.setColor(Light.Color.RED);
-            else if (printer.toner().isWarning())
-                tonerLED.setColor(Light.Color.YELLOW);
-            else
-                tonerLED.setColor(Light.Color.GREEN);
-        }
-        else
-            tonerLED.switchTo(Light.Pattern.OFF);
-    }
-
-    private void setDrumLightState() {
-        //if(printer.printAssembly().isActive())
-    }
 
     @Override
     public void reportStatus() {
-        // Status
+        clearScreen();
+
         System.out.println("PAPER TRAY: " + printer.paperTray().getValue());
         System.out.println("PRINT QUEUE: " + printer.queue().getValue());
         System.out.println("OUTPUT TRAY: " + printer.outputTray().getValue());
@@ -110,5 +87,64 @@ public class ConsoleDisplay extends DisplayAssembly {
             String queue = "QUEUE: " + printer.queue().getValue();
             pushMessage(queue);
         }
+    }
+
+    /**
+     * Display toner warning/error.
+     */
+    @Override
+    public void displayTonerWarningError() {
+        setTonerLightState();
+
+        System.out.println();
+        System.out.println("TONER");
+        System.out.println("   " + tonerLED); // TODO warning/error message
+    }
+
+    /**
+     * Display drum warning/error.
+     */
+    @Override
+    public void displayDrumWarningError() {
+        setDrumLightState();
+
+        System.out.println();
+        System.out.println("DRUM");
+        System.out.println("   " + drumLED); // TODO warning/error message
+    }
+
+    /**
+     * Display general error (jam typically).
+     */
+    @Override
+    public void displayGeneralError() {
+        setErrorLightState();
+
+        System.out.println();
+        System.out.println("ERROR");
+        if(printer.isError()) {
+            StringBuilder builder = new StringBuilder();
+            for(AssemblyException exception : printer.exceptions())
+                builder.append("\n   " + exception.getMessage());
+            System.out.print(builder.toString());
+        }
+        System.out.println("   " + errorLED);
+    }
+
+    /**
+     * Display powering up, printing, waiting.
+     */
+    @Override
+    public void displayReadyState() {
+        setReadyLightState();
+
+        System.out.println();
+        System.out.println("STATUS");
+        System.out.println("   " + readyLED);
+    }
+
+    @Override
+    public void resetDisplay() {
+
     }
 }

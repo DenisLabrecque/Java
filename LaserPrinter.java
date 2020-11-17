@@ -47,6 +47,11 @@ public class LaserPrinter {
 	public boolean isPowering() { return isPowering; }
 
 	/**
+	 * @return Whether the printer is currently experiencing one or many exceptions.
+	 */
+	public boolean isError() { return exceptions.size() > 0; }
+
+	/**
 	 * Searches all the applicable components for exceptions.
 	 * @return A list of all component exceptions. The is empty if no exception is reported.
 	 */
@@ -128,7 +133,7 @@ public class LaserPrinter {
 	 * @param document
 	 */
 	public void cancel(Document document) {
-
+		// TODO
 	}
 
 	/**
@@ -195,5 +200,9 @@ public class LaserPrinter {
 
 	public void addJob(String name, int pageCount) {
 		// TODO add to queue
+	}
+
+	public boolean isPrinting() {
+		return false; // TODO
 	}
 }
