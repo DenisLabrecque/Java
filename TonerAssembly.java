@@ -44,4 +44,8 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
     public AssemblyException exception() {
         return null;
     }
+
+    public boolean isWarning() {
+        return false; // TODO add a warning string that returns false when null and true when filled
+    }
 }

@@ -13,40 +13,81 @@ public class ConsoleDisplay extends DisplayAssembly {
     }
 
     /**
-     * Trigger a re-print of the display's information. Will not do anything if the display is not activated.
+     * Trigger a re-print of the display's information. Only prints lights if the display is not on.
      */
     @Override
     public void refresh() {
-        if(activated == false)
-            return;
+        clearScreen();
 
-        // Clear the screen
-        for(int i = 0; i < 10; i++)
+        if(activated) {
+            printExceptions();
+            printWarnings();
+            printMessages();
+        }
+
+        printLights();
+    }
+
+    public void clearScreen() {
+        for (int i = 0; i < 10; i++)
             System.out.println();
+    }
 
+    private void printExceptions() {
         // Print exceptions
-        if(currentException != null)
+        if (currentException != null)
             System.out.println("ERROR: " + currentException.getMessage());
+    }
 
+    private void printWarnings() {
         // Print warning
-        if(currentWarning != null)
+        if (currentWarning != null)
             System.out.println("WARNING: " + currentWarning);
+    }
 
+    private void printMessages() {
         // Print message
-        if(currentMessage != null)
+        if (currentMessage != null)
             System.out.println("MESSAGE: " + currentMessage);
+    }
 
+    private void printLights() {
         // Set light state
-        if(printer.isPoweringUp())
-            readyLED.switchTo(Light.Pattern.FLASHING);
-        else if(printer.isOn())
-            readyLED.switchTo(Light.Pattern.SOLID);
+        setReadyLightState();
+        setTonerLightState();
 
         // Print lights
         System.out.println("TONER: " + tonerLED);
         System.out.println("DRUM : " + drumLED);
         System.out.println("ERROR: " + errorLED);
         System.out.println("READY: " + readyLED);
+    }
+
+    private void setReadyLightState() {
+        if (printer.isPowering())
+            readyLED.switchTo(Light.Pattern.FLASHING);
+        else if (printer.isOn())
+            readyLED.switchTo(Light.Pattern.SOLID);
+        else
+            readyLED.switchTo(Light.Pattern.OFF);
+    }
+
+    private void setTonerLightState() {
+        if (printer.toner().isActive()) {
+            tonerLED.switchTo(Light.Pattern.SOLID);
+            if (printer.toner().isError())
+                tonerLED.setColor(Light.Color.RED);
+            else if (printer.toner().isWarning())
+                tonerLED.setColor(Light.Color.YELLOW);
+            else
+                tonerLED.setColor(Light.Color.GREEN);
+        }
+        else
+            tonerLED.switchTo(Light.Pattern.OFF);
+    }
+
+    private void setDrumLightState() {
+        //if(printer.printAssembly().isActive())
     }
 
     @Override
@@ -58,5 +99,16 @@ public class ConsoleDisplay extends DisplayAssembly {
         System.out.println("PRINT ASSEMBLY: " + printer.printAssembly().getValue());
         System.out.println("FUSER: " + printer.fuser().getValue());
         System.out.println("TONER: " + printer.toner().getValue());
+    }
+
+    /**
+     * Show the status of the queue.
+     */
+    @Override
+    public void reportQueue() {
+        if(activated) {
+            String queue = "QUEUE: " + printer.queue().getValue();
+            pushMessage(queue);
+        }
     }
 }

@@ -11,9 +11,6 @@ public class Test {
 	Scanner input = new Scanner(System.in);
 	
 	while(continueLoop) {
-		if(printer.isOn() == false)
-			System.out.println("[Printer is off.]");
-
 		System.out.print("\nEnter command (?=help): ");
 		String userResponse = input.nextLine().toUpperCase();
 		
@@ -38,7 +35,7 @@ public class Test {
 				printer.printJob();
 				break;
 			case "CANCEL":
-				printer.cancelJob();
+				cancelJob(input, printer);
 				break;
 			case "ADD":
 				addJob(input, printer);
@@ -68,7 +65,9 @@ public class Test {
 	}
 
 	public static void cancelJob(Scanner scanner, LaserPrinter printer) {
-  		
+		System.out.print("Job to cancel: ");
+		String name = scanner.nextLine().toUpperCase();
+		printer.cancelJob(name);
 	}
 	
 	public static void displayHelp() {

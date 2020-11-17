@@ -45,6 +45,13 @@ public class Light {
     }
 
     /**
+     * @param color Set the light to the stated color.
+     */
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    /**
      * @return A string that describes the light's color and pattern. For example, "GREEN light, SOLID".
      */
     @Override

@@ -1,6 +1,11 @@
+import java.util.ArrayList;
+
 public class LaserPrinter {
+
 	private boolean isOn = false;
-	private boolean isPoweringUp = false;
+	private boolean isPowering = false; // Powering up or down
+	ArrayList<AssemblyException> exceptions = new ArrayList<>();
+
 	private DisplayAssembly display;
 	private PaperAssembly  paperTray;
 	private TonerAssembly tonerCartridge;
@@ -37,31 +42,37 @@ public class LaserPrinter {
 	public boolean isOn() { return isOn; }
 
 	/**
-	 * @return Whether the printer is in the process of turning on.
+	 * @return Whether the printer is in the process of turning on/off.
 	 */
-	public boolean isPoweringUp() { return isPoweringUp; }
+	public boolean isPowering() { return isPowering; }
+
+	/**
+	 * Searches all the applicable components for exceptions.
+	 * @return A list of all component exceptions. The is empty if no exception is reported.
+	 */
+	public ArrayList<AssemblyException> exceptions() { return exceptions; }
 
 	/**
 	 * Turn on the printer. Does nothing if the printer is already on.
 	 * Will block on any errors.
 	 */
 	public void powerOn() {
-		if(isOn)
-			return;
+		if(!isOn) {
+			// Power up
+			isPowering = true;
 
-		isOn = false;
-		isPoweringUp = true;
+			safelyActivateAssembly(display); // Activate the display first so it can output exceptions.
+			safelyActivateAssembly(paperTray);
+			safelyActivateAssembly(tonerCartridge);
+			safelyActivateAssembly(fuser);
+			safelyActivateAssembly(printAssembly);
+			safelyActivateAssembly(outputTray);
 
-		safelyActivateAssembly(display); // Activate the display first so it can output exceptions.
-		safelyActivateAssembly(paperTray);
-		safelyActivateAssembly(tonerCartridge);
-		safelyActivateAssembly(fuser);
-		safelyActivateAssembly(printAssembly);
-		safelyActivateAssembly(outputTray);
-
-		// Finally, this printer itself is on if the sum of its parts is
-		isPoweringUp = false;
-		isOn = true;
+			// On
+			isPowering = false;
+			isOn = true;
+			display.refresh();
+		}
 	}
 
 	/**
@@ -69,15 +80,31 @@ public class LaserPrinter {
 	 * Will not block on errors.
 	 */
 	public void powerOff() {
-		if(isOn == false)
-			return;
+		if(isOn) {
+			// Power down
+			isOn = false;
+			isPowering = true;
 
-		safelyDeactivateAssembly(paperTray);
-		safelyDeactivateAssembly(tonerCartridge);
-		safelyDeactivateAssembly(fuser);
-		safelyDeactivateAssembly(printAssembly);
-		safelyDeactivateAssembly(outputTray);
-		safelyDeactivateAssembly(display); // Deactivate the display last
+			safelyDeactivateAssembly(paperTray);
+			safelyDeactivateAssembly(tonerCartridge);
+			safelyDeactivateAssembly(fuser);
+			safelyDeactivateAssembly(printAssembly);
+			safelyDeactivateAssembly(outputTray);
+			safelyDeactivateAssembly(display); // Deactivate the display last
+
+			// Off
+			isPowering = false;
+			display().refresh();
+		}
+	}
+
+	/**
+	 * Raise a blocking exception that prevents the printer from continuing.
+	 * @param exception The problem that occurred, with the message the user will see. Should not be null.
+	 */
+	public void raiseException(AssemblyException exception) {
+		if(exception != null)
+			exceptions.add(exception);
 	}
 
 	public void loadPaper(int sheets) {
@@ -127,7 +154,7 @@ public class LaserPrinter {
 		try {
 			assembly.activate();
 		} catch(AssemblyException e) {
-			display.addException(e);
+
 		}
 	}
 
@@ -138,7 +165,7 @@ public class LaserPrinter {
 		try {
 			assembly.deactivate();
 		} catch(AssemblyException e) {
-			display.addException(e);
+			display.refresh();
 		}
 	}
 
@@ -152,15 +179,10 @@ public class LaserPrinter {
 	}
 
 	/**
-	 * Halt the printer and display an exception warning that must be resolved to the user.
-	 * @param exception The error that has occurred. The message property of the exception will be printed for the user
-	 *                  to see.
+	 * Display information about the queue.
 	 */
-	public void addException(AssemblyException exception) {
-		display.addException(exception);
-	}
-
 	public void reportQueue() {
+		display.reportQueue();
 	}
 
 	public void printJob() {
@@ -168,8 +190,10 @@ public class LaserPrinter {
 	}
 
 	public void cancelJob(String name) {
+		// TODO stop, remove from queue, etc.
 	}
 
 	public void addJob(String name, int pageCount) {
+		// TODO add to queue
 	}
 }
