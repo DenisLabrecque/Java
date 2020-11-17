@@ -42,4 +42,18 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
     public AssemblyException exception() {
         return null;
     }
+
+    /**
+     * Set paper levels back to 100%.
+     */
+    public void refill() {
+        // TODO
+    }
+
+    /**
+     * Solve a jam.
+     */
+    public void unjam() {
+        // TODO
+    }
 }

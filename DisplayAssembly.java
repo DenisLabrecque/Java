@@ -10,10 +10,8 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     protected Light tonerLED = new Light(); // Solid yellow if warning, flashing red if error
     protected Light drumLED  = new Light(); // Solid yellow if warning, flashing red if error
     protected Light errorLED = new Light(Light.Color.RED); // Flashing red if error
-    protected Light readyLED = new Light(Light.Color.GREEN); // Solid green, flashing green while powering up or printing
+    protected Light readyLED = new Light(Light.Color.GREEN); // Solid green, flashing green while powering up/printing
 
-    AssemblyException currentException = null;
-    String currentWarning = null;
     String currentMessage = null;
 
     /**
@@ -74,32 +72,17 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     }
 
     /**
-     * Pass a warning message to the display. Will not do anything if the display is not activated. Will refresh the
-     * screen with the new warning.
-     * @param warning Message to display to the user. Other warnings may take precedence.
-     */
-    public void pushWarning(String warning) {
-        if(activated == false)
-            return;
-
-        if(warning != null && warning.isEmpty() == false) {
-            currentWarning = warning;
-            refresh();
-        }
-    }
-
-    /**
      * Pass a message to display. Will not do anything if the display is not activated. Will refresh the screen with
      * the new message.
      * @param message Message to display to the user.
      */
     public void pushMessage(String message) {
-        if(activated == false)
-            return;
+        if(activated) {
 
-        if(message != null && message.isEmpty() == false) {
-            currentMessage = message;
-            refresh();
+            if (message != null && message.isEmpty() == false) {
+                currentMessage = message;
+                refresh();
+            }
         }
     }
 
@@ -125,8 +108,6 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     public abstract void displayGeneralError();
 
     public abstract void displayReadyState();
-
-    public abstract void resetDisplay();
 
     /**
      * Solid green if nothing, solid yellow if warning, flashing red if error.
@@ -155,7 +136,7 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
      */
     protected void setDrumLightState() {
         if (printer.printAssembly().drumIsActive()) {
-            if (printer.printAssembly().isError()) {
+            if (printer.exceptions().containsKey(AssemblyException.PrinterIssue.DRUM)) {
                 drumLED.setColor(Light.Color.RED);
                 drumLED.setPattern(Light.Pattern.FLASHING);
             } else if (printer.printAssembly().isWarning()) {
@@ -192,5 +173,13 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
             readyLED.setPattern(Light.Pattern.SOLID);
         else
             readyLED.setPattern(Light.Pattern.OFF);
+    }
+
+    /**
+     * Remove errors the printer has flagged. (Note that if they have not been properly resolved, they may get reported
+     * again by the printer).
+     */
+    protected void reset() {
+        printer.exceptions().clear();
     }
 }

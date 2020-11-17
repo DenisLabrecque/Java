@@ -1,10 +1,15 @@
-import java.util.ArrayList;
+import java.util.HashMap;
 
+/**
+ * Represents a laser printer with all its components, giving it methods to start up, detect problems, and solve them.
+ * Denis Labrecque, November 2020
+ */
 public class LaserPrinter {
 
 	private boolean isOn = false;
 	private boolean isPowering = false; // Powering up or down
-	ArrayList<AssemblyException> exceptions = new ArrayList<>();
+	private boolean isPrinting = false;
+	HashMap<AssemblyException.PrinterIssue, AssemblyException> exceptions = new HashMap<>();
 
 	private DisplayAssembly display;
 	private PaperAssembly  paperTray;
@@ -27,35 +32,77 @@ public class LaserPrinter {
 		queue = new PrinterQueue(this);
 	}
 
-	// Properties
+	/**
+	 * Property.
+	 * @return This printer's DisplayAssembly.
+	 */
 	public DisplayAssembly display() { return display; }
+
+	/**
+	 * Property.
+	 * @return This printer's PaperAssembly.
+	 */
 	public PaperAssembly paperTray() { return paperTray; }
+
+	/**
+	 * Property.
+	 * @return This printer's TonerAssembly.
+	 */
 	public TonerAssembly toner() { return tonerCartridge; }
+
+	/**
+	 * Property.
+	 * @return This printer's FuserAssembly.
+	 */
 	public FuserAssembly fuser() { return fuser; }
+
+	/**
+	 * Property.
+	 * @return This printer's PrintAssembly.
+	 */
 	public PrintAssembly printAssembly() { return printAssembly; }
+
+	/**
+	 * Property.
+	 * @return This printer's OutputAssembly.
+	 */
 	public OutputAssembly outputTray() { return outputTray; }
+
+	/**
+	 * Property.
+	 * @return This printer's PrinterQueue.
+	 */
 	public PrinterQueue queue() { return queue; }
 
 	/**
+	 * Property.
 	 * @return Whether the printer is on or off.
 	 */
 	public boolean isOn() { return isOn; }
 
 	/**
+	 * Property.
 	 * @return Whether the printer is in the process of turning on/off.
 	 */
 	public boolean isPowering() { return isPowering; }
 
 	/**
+	 * Property.
 	 * @return Whether the printer is currently experiencing one or many exceptions.
 	 */
 	public boolean isError() { return exceptions.size() > 0; }
 
 	/**
+	 * Property.
+	 * @return Whether the printer is currently printing something.
+	 */
+	public boolean isPrinting() { return isPrinting; }
+
+	/**
 	 * Searches all the applicable components for exceptions.
 	 * @return A list of all component exceptions. The is empty if no exception is reported.
 	 */
-	public ArrayList<AssemblyException> exceptions() { return exceptions; }
+	public HashMap<AssemblyException.PrinterIssue, AssemblyException> exceptions() { return exceptions; }
 
 	/**
 	 * Turn on the printer. Does nothing if the printer is already on.
@@ -109,7 +156,7 @@ public class LaserPrinter {
 	 */
 	public void raiseException(AssemblyException exception) {
 		if(exception != null)
-			exceptions.add(exception);
+			exceptions.put(exception.issue(), exception);
 	}
 
 	public void loadPaper(int sheets) {
@@ -159,7 +206,7 @@ public class LaserPrinter {
 		try {
 			assembly.activate();
 		} catch(AssemblyException e) {
-
+			raiseException(e);
 		}
 	}
 
@@ -200,9 +247,5 @@ public class LaserPrinter {
 
 	public void addJob(String name, int pageCount) {
 		// TODO add to queue
-	}
-
-	public boolean isPrinting() {
-		return false; // TODO
 	}
 }

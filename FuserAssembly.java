@@ -1,22 +1,31 @@
 public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
 
+    LaserPrinter printer;
+    AssemblyException.PrinterIssue issue = null;
+
     /**
      * Constructor.
-     * @param laserPrinter Reference back to the printer this fuser assembly is part of.
+     * @param printer Reference back to the printer this fuser assembly is part of.
      */
-    public FuserAssembly(LaserPrinter laserPrinter) {
-
-        try {
-            laserPrinter.push("Heating up fuser.");
-            Thread.sleep(10000); // Takes 10 seconds
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public FuserAssembly(LaserPrinter printer) {
+        this.printer = printer;
     }
 
     @Override
     public void activate() throws AssemblyException {
+        if(issue != null) // The issue was already present as the printer shut down, before activating again
+            throw new AssemblyException(issue);
 
+        try {
+            printer.push("Heating up fuser.");
+            Thread.sleep(10000); // Takes 10 seconds
+            activated = true;
+            printer.push("Fuser ready.");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        throw new AssemblyException(AssemblyException.PrinterIssue.FUSER); // TEST
     }
 
     @Override
