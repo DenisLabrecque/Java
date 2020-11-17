@@ -14,12 +14,12 @@ public class LaserPrinter {
 	 */
 	public LaserPrinter() {
 		display = new ConsoleDisplay(this);
-		paperTray = new PaperAssembly(300);
-		tonerCartridge = new TonerAssembly();
+		paperTray = new PaperAssembly(this, 300);
+		tonerCartridge = new TonerAssembly(this);
 		fuser = new FuserAssembly(this);
-		printAssembly = new PrintAssembly();
-		outputTray = new OutputAssembly();
-		queue = new PrinterQueue();
+		printAssembly = new PrintAssembly(this);
+		outputTray = new OutputAssembly(this);
+		queue = new PrinterQueue(this);
 	}
 
 	// Properties
@@ -43,6 +43,7 @@ public class LaserPrinter {
 
 	/**
 	 * Turn on the printer. Does nothing if the printer is already on.
+	 * Will block on any errors.
 	 */
 	public void powerOn() {
 		if(isOn)
@@ -63,8 +64,19 @@ public class LaserPrinter {
 		isOn = true;
 	}
 
+	/**
+	 * Turn off the printer. Does nothing if the printer is already off.
+	 * Will not block on errors.
+	 */
 	public void powerOff() {
+		if(isOn == false)
+			return;
+
 		safelyDeactivateAssembly(paperTray);
+		safelyDeactivateAssembly(tonerCartridge);
+		safelyDeactivateAssembly(fuser);
+		safelyDeactivateAssembly(printAssembly);
+		safelyDeactivateAssembly(outputTray);
 		safelyDeactivateAssembly(display); // Deactivate the display last
 	}
 
@@ -82,10 +94,6 @@ public class LaserPrinter {
 
 	public void addToQueue(Document document) {
 		queue.add(document);
-	}
-
-	public void print(Document document) {
-		// TODO follow the steps of printing
 	}
 
 	/**
@@ -150,5 +158,18 @@ public class LaserPrinter {
 	 */
 	public void addException(AssemblyException exception) {
 		display.addException(exception);
+	}
+
+	public void reportQueue() {
+	}
+
+	public void printJob() {
+		// TODO follow steps for printing
+	}
+
+	public void cancelJob(String name) {
+	}
+
+	public void addJob(String name, int pageCount) {
 	}
 }

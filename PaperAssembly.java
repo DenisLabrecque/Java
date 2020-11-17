@@ -1,6 +1,12 @@
 public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
 
-    public PaperAssembly(int i) {
+    /**
+     * Constructor.
+     * @param laserPrinter Reference back to the printer for sending messages, warnings, and exceptions.
+     * @param sheets
+     */
+    public PaperAssembly(LaserPrinter laserPrinter, int sheets) {
+
     }
 
     @Override

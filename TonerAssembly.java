@@ -1,4 +1,13 @@
 public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
+
+    /**
+     * Constructor.
+     * @param laserPrinter Reference back to the printer for sending messages, warnings, and exceptions.
+     */
+    public TonerAssembly(LaserPrinter laserPrinter) {
+        super();
+    }
+
     @Override
     public void activate() throws AssemblyException {
 

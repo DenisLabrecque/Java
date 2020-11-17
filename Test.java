@@ -32,16 +32,22 @@ public class Test {
 				printer.powerOff();
 				break;
 			case "QUEUE":
-				reportQueue(printer);
+				printer.reportQueue();
 				break;
 			case "PRINT":
-				printJob(printer);
+				printer.printJob();
 				break;
 			case "CANCEL":
-				cancelJob(printer);
+				printer.cancelJob();
 				break;
 			case "ADD":
 				addJob(input, printer);
+				break;
+			case "UNJAM":
+				break;
+			case "REPLACE TONER":
+				break;
+			case "REPLACE PAPER":
 				break;
 			case "QUIT":
 			case "EXIT":
@@ -52,25 +58,17 @@ public class Test {
 	}
   }
 	
-	public static void reportQueue(LaserPrinter o) {
-		//o.reportQueue();
+	public static void addJob(Scanner scanner, LaserPrinter printer) {
+		System.out.print("Job Name to add: ");
+		String name = scanner.nextLine().toUpperCase();
+		System.out.print("Job page count: ");
+		String count = scanner.nextLine();
+		int pageCount = Integer.parseInt(count);
+		printer.addJob(name, pageCount);
 	}
-	
-	public static void printJob(LaserPrinter o) {
-		//o.printJob();
-	}
-	
-	public static void cancelJob(LaserPrinter o) {
-		//o.cancelJob();
-	}
-	
-	public static void addJob(Scanner s, LaserPrinter o) {
-		//System.out.print("Job Name to add: ");
-		//String name = s.nextLine().toUpperCase();
-		//System.out.print("Job page count: ");
-		//String count = s.nextLine();
-		//int pageCount = Integer.parseInt(count);
-		//o.addJob(name, pageCount);
+
+	public static void cancelJob(Scanner scanner, LaserPrinter printer) {
+  		
 	}
 	
 	public static void displayHelp() {

@@ -1,6 +1,13 @@
 public class PrinterQueue implements ISimAssembly {
 
     /**
+     * Constructor.
+     * @param laserPrinter Reference back to the printer for sending messages, warnings, and exceptions.
+     */
+    public PrinterQueue(LaserPrinter laserPrinter) {
+    }
+
+    /**
      * @param document Document to add to the print queue.
      */
     public void add(Document document) {
