@@ -22,7 +22,8 @@ public class Test {
 				displayHelp();
 				break;
 			case "REPORT":
-				displayReport(printer);
+			case "STATUS":
+				printer.reportStatus();
 				break;
 			case "POWERON":
 				printer.powerOn();
@@ -50,10 +51,6 @@ public class Test {
 		}
 	}
   }
-	
-	public static void displayReport(LaserPrinter o) {
-		o.reportStatus();
-	}
 	
 	public static void reportQueue(LaserPrinter o) {
 		//o.reportQueue();

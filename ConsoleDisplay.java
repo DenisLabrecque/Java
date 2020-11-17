@@ -25,15 +25,15 @@ public class ConsoleDisplay extends DisplayAssembly {
             System.out.println();
 
         // Print exceptions
-        if(currentException == null)
-            System.out.println("ERROR  : none.");
-        else
-            System.out.println("ERROR  :" + currentException.getMessage());
+        if(currentException != null)
+            System.out.println("ERROR: " + currentException.getMessage());
+
+        // Print warning
+        if(currentWarning != null)
+            System.out.println("WARNING: " + currentWarning);
 
         // Print message
-        if(currentMessage == null)
-            System.out.println("MESSAGE: none.");
-        else
+        if(currentMessage != null)
             System.out.println("MESSAGE: " + currentMessage);
 
         // Set light state
@@ -47,5 +47,16 @@ public class ConsoleDisplay extends DisplayAssembly {
         System.out.println("DRUM : " + drumLED);
         System.out.println("ERROR: " + errorLED);
         System.out.println("READY: " + readyLED);
+    }
+
+    @Override
+    public void reportStatus() {
+        // Status
+        System.out.println("PAPER TRAY: " + printer.paperTray().getValue());
+        System.out.println("PRINT QUEUE: " + printer.queue().getValue());
+        System.out.println("OUTPUT TRAY: " + printer.outputTray().getValue());
+        System.out.println("PRINT ASSEMBLY: " + printer.printAssembly().getValue());
+        System.out.println("FUSER: " + printer.fuser().getValue());
+        System.out.println("TONER: " + printer.toner().getValue());
     }
 }

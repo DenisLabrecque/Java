@@ -6,7 +6,7 @@ public class LaserPrinter {
 	private TonerAssembly tonerCartridge;
 	private FuserAssembly fuser;
 	private PrintAssembly printAssembly;
-	private OutputAssembly output;
+	private OutputAssembly outputTray;
 	private PrinterQueue queue;
 
 	/**
@@ -18,23 +18,28 @@ public class LaserPrinter {
 		tonerCartridge = new TonerAssembly();
 		fuser = new FuserAssembly(this);
 		printAssembly = new PrintAssembly();
-		output = new OutputAssembly();
+		outputTray = new OutputAssembly();
 		queue = new PrinterQueue();
 	}
+
+	// Properties
+	public DisplayAssembly display() { return display; }
+	public PaperAssembly paperTray() { return paperTray; }
+	public TonerAssembly toner() { return tonerCartridge; }
+	public FuserAssembly fuser() { return fuser; }
+	public PrintAssembly printAssembly() { return printAssembly; }
+	public OutputAssembly outputTray() { return outputTray; }
+	public PrinterQueue queue() { return queue; }
 
 	/**
 	 * @return Whether the printer is on or off.
 	 */
-	public boolean isOn() {
-		return isOn;
-	}
+	public boolean isOn() { return isOn; }
 
 	/**
 	 * @return Whether the printer is in the process of turning on.
 	 */
-	public boolean isPoweringUp() {
-		return isPoweringUp;
-	}
+	public boolean isPoweringUp() { return isPoweringUp; }
 
 	/**
 	 * Turn on the printer. Does nothing if the printer is already on.
@@ -43,14 +48,18 @@ public class LaserPrinter {
 		if(isOn)
 			return;
 
+		isOn = false;
+		isPoweringUp = true;
+
 		safelyActivateAssembly(display); // Activate the display first so it can output exceptions.
 		safelyActivateAssembly(paperTray);
 		safelyActivateAssembly(tonerCartridge);
 		safelyActivateAssembly(fuser);
 		safelyActivateAssembly(printAssembly);
-		safelyActivateAssembly(output);
+		safelyActivateAssembly(outputTray);
 
 		// Finally, this printer itself is on if the sum of its parts is
+		isPoweringUp = false;
 		isOn = true;
 	}
 
@@ -94,15 +103,13 @@ public class LaserPrinter {
 	public void remove(Document document) {
 		queue.remove(document);
 	}
-	
+
+	/**
+	 * Ask the screen to display the printer's status. Does nothing if the printer is off.
+	 */
 	public void reportStatus() {
-		if(isOn) {
-			System.out.println("--- Printer Status Report ---");
-			System.out.println("          Paper Level: " + paperTray.getValue());
-			System.out.println("--- Printer Status Report Complete ---");
-		} else {
-			System.out.println("Printer is off.");
-		}
+		if(isOn)
+			display.reportStatus();
 	}
 
 	/**
@@ -133,7 +140,7 @@ public class LaserPrinter {
 	 *                of the printer. For an exception, add an exception instead.
 	 */
 	public void push(String message) {
-		display.push(message);
+		display.pushMessage(message);
 	}
 
 	/**

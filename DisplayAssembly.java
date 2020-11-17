@@ -16,6 +16,7 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
 
     HashMap<String, Exception> exceptions = new HashMap<>();
     Exception currentException = null;
+    String currentWarning = null;
     String currentMessage = null;
 
     /**
@@ -100,11 +101,26 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     }
 
     /**
+     * Pass a warning message to the display. Will not do anything if the display is not activated. Will refresh the
+     * screen with the new warning.
+     * @param warning Message to display to the user. Other warnings may take precedence.
+     */
+    public void pushWarning(String warning) {
+        if(activated == false)
+            return;
+
+        if(warning != null && warning.isEmpty() == false) {
+            currentWarning = warning;
+            refresh();
+        }
+    }
+
+    /**
      * Pass a message to display. Will not do anything if the display is not activated. Will refresh the screen with
      * the new message.
      * @param message Message to display to the user. Exceptions may take precedence if necessary.
      */
-    public void push(String message) {
+    public void pushMessage(String message) {
         if(activated == false)
             return;
 
@@ -118,4 +134,9 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
      * Trigger a re-print of the display's information. Should not do anything if the display is not activated.
      */
     public abstract void refresh();
+
+    /**
+     * Show the status of the printer as a whole.
+     */
+    public abstract void reportStatus();
 }
