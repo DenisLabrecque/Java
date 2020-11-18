@@ -14,27 +14,27 @@ public class OutputAssembly extends AssemblyUnit implements ISimAssembly {
 	}
 	
 	public void emptyTray (int numberOfPages) {
-		//if (numberOfPages
+		//for(int = 
 		
 	}
 
 	@Override
 	public void activate() throws AssemblyException {
-
+		activated = true;
 	}
 
 	@Override
 	public void deactivate() throws AssemblyException {
-
+		activated = false;
 	}
 
 	@Override
-	public void setValue(int newValue) {
-
+	public void setValue(int numberOfPages) {
+		this.numberOfPages = numberOfPages;
 	}
 
 	@Override
 	public int getValue() {
-		return 0;
+		return numberOfPages;
 	}
 }
