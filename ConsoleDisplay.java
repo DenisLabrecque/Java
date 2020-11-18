@@ -1,3 +1,5 @@
+import java.util.Map;
+
 /**
  * Takes information sent to the display and prints it in console format.
  * Denis Labrecque, November 2020
@@ -38,14 +40,19 @@ public class ConsoleDisplay extends DisplayAssembly {
 
     private void printExceptions() {
         // Print exceptions
-        if (currentException != null)
-            System.out.println("ERROR: " + currentException.getMessage());
+        if (printer.exceptions().size() > 0) {
+            StringBuilder builder = new StringBuilder();
+            for(Map.Entry<AssemblyException.PrinterIssue, AssemblyException> entry : printer.exceptions().entrySet())
+                builder.append("   " + entry.getValue().getMessage() + "\n");
+            System.out.println(builder.toString());
+        }
     }
 
     private void printWarnings() {
         // Print warning
-        if (currentWarning != null)
-            System.out.println("WARNING: " + currentWarning);
+        // TODO find a good way of making warnings
+        //if (currentWarning != null)
+        //    System.out.println("WARNING: " + currentWarning);
     }
 
     private void printMessages() {
@@ -110,7 +117,9 @@ public class ConsoleDisplay extends DisplayAssembly {
 
         System.out.println();
         System.out.println("DRUM");
-        System.out.println("   " + drumLED); // TODO warning/error message
+        System.out.println("   " + drumLED);
+        if(printer.exceptions().containsKey(AssemblyException.PrinterIssue.DRUM))
+            System.out.print(printer.exceptions().get(AssemblyException.PrinterIssue.DRUM).getMessage());
     }
 
     /**
@@ -122,13 +131,13 @@ public class ConsoleDisplay extends DisplayAssembly {
 
         System.out.println();
         System.out.println("ERROR");
+        System.out.println("   " + errorLED);
         if(printer.isError()) {
             StringBuilder builder = new StringBuilder();
-            for(AssemblyException exception : printer.exceptions())
-                builder.append("\n   " + exception.getMessage());
+            for(Map.Entry<AssemblyException.PrinterIssue, AssemblyException> entry : printer.exceptions().entrySet())
+                builder.append("   " + entry.getValue().getMessage() + "\n");
             System.out.print(builder.toString());
         }
-        System.out.println("   " + errorLED);
     }
 
     /**
@@ -141,10 +150,5 @@ public class ConsoleDisplay extends DisplayAssembly {
         System.out.println();
         System.out.println("STATUS");
         System.out.println("   " + readyLED);
-    }
-
-    @Override
-    public void resetDisplay() {
-
     }
 }

@@ -42,12 +42,20 @@ public class Test {
 			case "ADD":
 				addJob(input, printer);
 				break;
+			case "RESET":
+				printer.display().reset();
+				break;
 			case "UNJAM":
+				printer.paperTray().unjam();
 				break;
 			case "REPLACE TONER":
+				printer.toner().refill();
 				break;
 			case "REPLACE PAPER":
+				printer.paperTray().refill();
 				break;
+			case "REPLACE DRUM":
+				printer.replaceDrum();
 			case "QUIT":
 			case "EXIT":
 				continueLoop = false;

@@ -12,7 +12,11 @@ public abstract class AssemblyUnit
 	public boolean isActive() {
 		return activated;
 	}
-	
+
+	/**
+	 *
+	 * @param value Convert this from a printer issue.
+	 */
 	public void setError(int value) {
 		errorCode = value;
 	}

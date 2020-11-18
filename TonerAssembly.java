@@ -48,4 +48,11 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
     public boolean isWarning() {
         return false; // TODO add a warning string that returns false when null and true when filled
     }
+
+    /**
+     * Set levels back to 100%.
+     */
+    public void refill() {
+        // TODO
+    }
 }
