@@ -155,8 +155,10 @@ public class LaserPrinter {
 	 * @param exception The problem that occurred, with the message the user will see. Should not be null.
 	 */
 	public void raiseException(AssemblyException exception) {
-		if(exception != null)
+		if(exception != null) {
 			exceptions.put(exception.issue(), exception);
+			display.refresh();
+		}
 	}
 
 	public void loadPaper(int sheets) {

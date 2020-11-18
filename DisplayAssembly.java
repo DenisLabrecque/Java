@@ -35,10 +35,10 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
 
         // Print a startup message, wait for this component to turn on
         try {
-            Thread.sleep(300); // Time for the screen to turn on
+            pushMessage("Screen turning on.");
+            Thread.sleep(500); // Time for the screen to turn on
             activated = true;
-            pushMessage("Welcome.");
-            Thread.sleep(500); // Welcome screen time
+            pushMessage("Screen on.");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -50,16 +50,15 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
      */
     @Override
     public void deactivate() throws AssemblyException {
-        if(activated == false)
-            return;
-
-        try {
-            pushMessage("Goodbye.");
-            Thread.sleep(300);
-            activated = false;
-            refresh();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if(activated) {
+            try {
+                pushMessage("Shutting down screen.");
+                Thread.sleep(500);
+                activated = false;
+                pushMessage("Screen shut down.");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -72,8 +71,8 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     }
 
     /**
-     * Pass a message to display. Will not do anything if the display is not activated. Will refresh the screen with
-     * the new message.
+     * Pass a message to display. Will not do anything if the display is not activated. Refreshes the screen with the
+     * new message.
      * @param message Message to display to the user.
      */
     public void pushMessage(String message) {
@@ -177,9 +176,10 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
 
     /**
      * Remove errors the printer has flagged. (Note that if they have not been properly resolved, they may get reported
-     * again by the printer).
+     * again by the printer). Also clear the current message.
      */
     protected void reset() {
         printer.exceptions().clear();
+        currentMessage = null;
     }
 }
