@@ -1,16 +1,30 @@
 public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 
+    LaserPrinter printer;
+    AssemblyException.PrinterIssue issue = null;
+
     /**
      * Constructor.
-     * @param laserPrinter Reference back to the printer for sending messages, warnings, and exceptions.
+     * @param printer Reference back to the printer for sending messages, warnings, and exceptions.
      */
-    public PrintAssembly(LaserPrinter laserPrinter) {
+    public PrintAssembly(LaserPrinter printer) {
         super();
+        this.printer = printer;
     }
 
     @Override
     public void activate() throws AssemblyException {
+        if(issue != null) // The issue was already present as the printer shut down, before activating again
+            throw new AssemblyException(issue, this);
 
+        try {
+            printer.push("Starting print assembly.");
+            Thread.sleep(1000);
+            activated = true;
+            printer.push("Print assembly ready.");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -22,8 +22,6 @@ public class ConsoleDisplay extends DisplayAssembly {
         clearScreen();
 
         if(activated) {
-            //printExceptions();
-            //printWarnings();
             printMessages();
         }
 
@@ -46,13 +44,6 @@ public class ConsoleDisplay extends DisplayAssembly {
                 builder.append("   " + entry.getValue().getMessage() + "\n");
             System.out.println(builder.toString());
         }
-    }
-
-    private void printWarnings() {
-        // Print warning
-        // TODO find a good way of making warnings
-        //if (currentWarning != null)
-        //    System.out.println("WARNING: " + currentWarning);
     }
 
     private void printMessages() {
@@ -96,7 +87,10 @@ public class ConsoleDisplay extends DisplayAssembly {
 
         System.out.println();
         System.out.println("TONER");
-        System.out.println("   " + tonerLED); // TODO warning/error message
+        System.out.println("   " + tonerLED);
+        if(printer.isOnOrPowering() && printer.containsErrorFor(printer.toner()) != null)
+            System.out.println("   " + printer.containsErrorFor(printer.toner()).getMessage());
+        // TODO warnings
     }
 
     /**
@@ -109,8 +103,9 @@ public class ConsoleDisplay extends DisplayAssembly {
         System.out.println();
         System.out.println("DRUM");
         System.out.println("   " + drumLED);
-        if(printer.exceptions().containsKey(AssemblyException.PrinterIssue.DRUM))
+        if(activated && printer.exceptions().containsKey(AssemblyException.PrinterIssue.DRUM))
             System.out.print(printer.exceptions().get(AssemblyException.PrinterIssue.DRUM).getMessage());
+        // TODO warnings
     }
 
     /**

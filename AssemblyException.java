@@ -19,6 +19,7 @@ public class AssemblyException extends Exception
 	}
 
 	private PrinterIssue issue;
+	private AssemblyUnit cause;
 
 	/**
 	 * Default constructor. Not recommended to use this, as the cause is generic. This means that multiple issues
@@ -37,12 +38,20 @@ public class AssemblyException extends Exception
 	public PrinterIssue issue() { return issue;	}
 
 	/**
+	 * Property.
+	 * @return Type that is the cause of the failure.
+	 */
+	public AssemblyUnit cause() { return cause; }
+
+	/**
 	 * Constructor. Use this to define where the error came from so that the printer knows how it can be solved. A
 	 * constant message is associated to each issue.
 	 * @param issue The identifier of the problem.
+	 * @param cause The AssemblyUnit type that caused the problem.
 	 */
-	public AssemblyException(PrinterIssue issue) {
+	public AssemblyException(PrinterIssue issue, AssemblyUnit cause) {
 		super(messageFromIssue(issue));
+		this.cause = cause;
 	}
 
 	private static String messageFromIssue(PrinterIssue issue) {

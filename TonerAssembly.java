@@ -1,16 +1,32 @@
 public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
 
+    LaserPrinter printer;
+    AssemblyException.PrinterIssue issue = null;
+
     /**
      * Constructor.
-     * @param laserPrinter Reference back to the printer for sending messages, warnings, and exceptions.
+     * @param printer Reference back to the printer for sending messages, warnings, and exceptions.
      */
-    public TonerAssembly(LaserPrinter laserPrinter) {
+    public TonerAssembly(LaserPrinter printer) {
         super();
+        this.printer = printer;
     }
 
     @Override
     public void activate() throws AssemblyException {
+        if(issue != null) // The issue was already present as the printer shut down, before activating again
+            throw new AssemblyException(issue, this);
 
+        try {
+            printer.push("Reading toner values.");
+            Thread.sleep(100);
+            activated = true;
+            printer.push("Toner ready.");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        throw new AssemblyException(AssemblyException.PrinterIssue.GENERAL, this);
     }
 
     @Override

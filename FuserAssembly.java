@@ -14,18 +14,18 @@ public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
     @Override
     public void activate() throws AssemblyException {
         if(issue != null) // The issue was already present as the printer shut down, before activating again
-            throw new AssemblyException(issue);
+            throw new AssemblyException(issue, this);
 
         try {
             printer.push("Heating up fuser.");
             Thread.sleep(10000); // Takes 10 seconds
             activated = true;
-            printer.push("Fuser ready.");
+            printer.push("Fuser on.");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        throw new AssemblyException(AssemblyException.PrinterIssue.FUSER); // TEST
+        throw new AssemblyException(AssemblyException.PrinterIssue.FUSER, this); // TEST
     }
 
     @Override
