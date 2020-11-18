@@ -1,37 +1,20 @@
 public class OutputAssembly extends AssemblyUnit implements ISimAssembly {
-
-    /**
-     * Constructor.
-     * @param laserPrinter Reference back to the printer for sending messages, warnings, and exceptions.
-     */
-    public OutputAssembly(LaserPrinter laserPrinter) {
-        super();
-    }
-
-    @Override
-    public void activate() throws AssemblyException {
-
-    }
-
-    @Override
-    public void deactivate() throws AssemblyException {
-
-    }
-
-    @Override
-    public void setValue(int newValue) {
-
-    }
-
-    @Override
-    public int getValue() {
-        return 0;
-    }
-
-    /**
-     * @return Current exception object (if an exception has occurred).
-     */
-    public AssemblyException exception() {
-        return null;
-    }
+	
+    private final static int MAX_PAGES;
+	 private int numberOfPages;
+	 
+	 /* Default constructor */
+	public OutputAssembly() {
+		this.numberOfPages = MAX_PAGES;
+	}
+	
+	/* Sets the paper tray level to initial value */
+	public OutputAssembly(int numberOfPages) {
+		this.numberOfPages = numberOfPages;
+	}
+	
+	public void emptyTray (int numberOfPages) {
+		if (numberOfPages 
+		
+	}
 }
