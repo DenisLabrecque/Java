@@ -22,8 +22,8 @@ public class ConsoleDisplay extends DisplayAssembly {
         clearScreen();
 
         if(activated) {
-            printExceptions();
-            printWarnings();
+            //printExceptions();
+            //printWarnings();
             printMessages();
         }
 
@@ -57,20 +57,11 @@ public class ConsoleDisplay extends DisplayAssembly {
 
     private void printMessages() {
         // Print message
-        if (currentMessage != null)
-            System.out.println("MESSAGE: " + currentMessage);
+        if (currentMessage != null) {
+            System.out.println("MESSAGE");
+            System.out.println("   " + currentMessage);
+        }
     }
-
-    private void printLights() {
-        displayTonerWarningError();
-        displayDrumWarningError();
-        displayGeneralError();
-
-        // Print lights
-        System.out.println("ERROR: " + errorLED);
-        System.out.println("READY: " + readyLED);
-    }
-
 
 
     @Override
