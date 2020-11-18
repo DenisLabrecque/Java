@@ -13,13 +13,15 @@ public class OutputAssembly extends AssemblyUnit implements ISimAssembly {
 		this.numberOfPages = numberOfPages;
 	}
 	
-	public void emptyTray (int numberOfPages) {
-		
-		for (int i = numberOfPages; i >= 0; i--)
+	public void emptyTray () {
+		 
+		 numberOfPages = 0;
+		 
+		/*for (int i = numberOfPages; i >= 0; i--)
 			if (i == 0)
 				System.out.println("Tray is empty");
 			else
-				System.out.println("Tray is not empty");
+				System.out.println("Tray is not empty");*/
 	
 	}
 
