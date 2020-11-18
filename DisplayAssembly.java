@@ -53,7 +53,7 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
         if(activated) {
             try {
                 pushMessage("Shutting down screen.");
-                Thread.sleep(500);
+                Thread.sleep(300);
                 activated = false;
                 pushMessage("Screen shut down.");
             } catch (InterruptedException e) {
