@@ -92,7 +92,8 @@ public class ConsoleDisplay extends DisplayAssembly {
         // Display must be on to show error messages
         if(activated && printer.containsErrorFor(printer.toner()) != null)
             System.out.println("   " + printer.containsErrorFor(printer.toner()).getMessage());
-        // TODO warnings
+        if(activated && printer.toner().isWarning())
+            System.out.println("   " + printer.toner().warning());
     }
 
     /**
@@ -106,7 +107,8 @@ public class ConsoleDisplay extends DisplayAssembly {
 
         if(activated && printer.exceptions().containsKey(AssemblyException.PrinterIssue.DRUM))
             System.out.print(printer.exceptions().get(AssemblyException.PrinterIssue.DRUM).getMessage());
-        // TODO warnings
+        if(activated && printer.printAssembly().isDrumWarning())
+            System.out.print(printer.printAssembly().drumWarning());
     }
 
     /**
@@ -126,7 +128,6 @@ public class ConsoleDisplay extends DisplayAssembly {
                 System.out.print(builder.toString());
             }
         }
-        // TODO warnings?
     }
 
     /**

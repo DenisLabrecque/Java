@@ -73,4 +73,12 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
     public void refill() {
         // TODO
     }
+
+    /**
+     * Property.
+     * @return Warning message.
+     */
+    public String warning() {
+        return "Toner almost empty.";
+    }
 }

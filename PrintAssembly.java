@@ -127,4 +127,20 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	/**
+	 * Property.
+	 * @return True when the drum is low.
+	 */
+	public boolean isDrumWarning() {
+		return false; // TODO
+	}
+
+	/**
+	 * Property.
+	 * @return String warning the user that the drum is old.
+	 */
+	public String drumWarning() {
+		return "Drum nearly worn out.";
+	}
 }

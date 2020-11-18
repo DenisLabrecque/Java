@@ -9,10 +9,6 @@ public class AssemblyException extends Exception
 		PAPER_JAM,
 		FUSER,
 		TONER,
-		TONER_C,
-		TONER_M,
-		TONER_Y,
-		TONER_K,
 		DRUM
 	}
 
@@ -62,14 +58,6 @@ public class AssemblyException extends Exception
 				return "Fuser overheated";
 			case TONER:
 				return "Out of toner";
-			case TONER_C:
-				return "Out of cyan";
-			case TONER_M:
-				return "Out of magenta";
-			case TONER_Y:
-				return "Out of yellow";
-			case TONER_K:
-				return "Out of black";
 			case DRUM:
 				return "Drum worn out";
 			default:
