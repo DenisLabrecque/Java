@@ -11,7 +11,9 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
         super();
         this.printer = printer;
     }
-
+    /**
+     * 
+     */
     @Override
     public void activate() throws AssemblyException {
         if(issue != null) // The issue was already present as the printer shut down, before activating again
