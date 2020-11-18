@@ -217,7 +217,7 @@ public class LaserPrinter {
 	 * Ask the screen to display the printer's status. Does nothing if the printer is off.
 	 */
 	public void reportStatus() {
-		if(isOn)
+		if(isOnOrPowering())
 			display.reportStatus();
 	}
 

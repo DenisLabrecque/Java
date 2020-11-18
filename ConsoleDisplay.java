@@ -59,11 +59,17 @@ public class ConsoleDisplay extends DisplayAssembly {
     public void reportStatus() {
         clearScreen();
 
-        System.out.println("PAPER TRAY: " + printer.paperTray().getValue());
+        System.out.println("PAPER TRAY");
+        System.out.println("   " + printer.paperTray().getValue());
+
         System.out.println("PRINT QUEUE: " + printer.queue().getValue());
+
         System.out.println("OUTPUT TRAY: " + printer.outputTray().getValue());
+
         System.out.println("PRINT ASSEMBLY: " + printer.printAssembly().getValue());
+
         System.out.println("FUSER: " + printer.fuser().getValue());
+
         System.out.println("TONER: " + printer.toner().getValue());
     }
 
@@ -73,8 +79,9 @@ public class ConsoleDisplay extends DisplayAssembly {
     @Override
     public void reportQueue() {
         if(activated) {
-            String queue = "QUEUE: " + printer.queue().getValue();
-            pushMessage(queue);
+            clearScreen();
+            System.out.println("QUEUE");
+            System.out.println("   " + printer.queue().getValue());
         }
     }
 
@@ -85,7 +92,6 @@ public class ConsoleDisplay extends DisplayAssembly {
     public void displayTonerWarningError() {
         setTonerLightState();
 
-        System.out.println();
         System.out.println("TONER");
         System.out.println("   " + tonerLED);
         if(printer.isOnOrPowering() && printer.containsErrorFor(printer.toner()) != null)
@@ -100,7 +106,6 @@ public class ConsoleDisplay extends DisplayAssembly {
     public void displayDrumWarningError() {
         setDrumLightState();
 
-        System.out.println();
         System.out.println("DRUM");
         System.out.println("   " + drumLED);
         if(activated && printer.exceptions().containsKey(AssemblyException.PrinterIssue.DRUM))
@@ -115,7 +120,6 @@ public class ConsoleDisplay extends DisplayAssembly {
     public void displayGeneralError() {
         setErrorLightState();
 
-        System.out.println();
         System.out.println("ERROR");
         System.out.println("   " + errorLED);
         if(printer.isError()) {
@@ -133,7 +137,6 @@ public class ConsoleDisplay extends DisplayAssembly {
     public void displayReadyState() {
         setReadyLightState();
 
-        System.out.println();
         System.out.println("STATUS");
         System.out.println("   " + readyLED);
     }

@@ -1,5 +1,3 @@
-
-
 /**
  * Throw an exception about a printer's assembly. To be displayed to the user.
  */

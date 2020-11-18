@@ -30,6 +30,8 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 		spinUpLaserMirror();
 		chargeCoronaWire();
 		turnOnDischargeLamp();
+
+		activated = true;
 	}
 
 	// Deactivates the PrintAssembly
@@ -38,6 +40,8 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 		spinDownLaserMirror();
 		dischargeCoronaWire();
 		turnOffDischargeLamp();
+
+		activated = false;
 	}
 
 	// Spins up the laser mirror

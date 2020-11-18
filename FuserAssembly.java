@@ -30,7 +30,10 @@ public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
 
     @Override
     public void deactivate() throws AssemblyException {
+        activated = false;
 
+        if(issue != null)
+            throw new AssemblyException(issue, this);
     }
 
     @Override
