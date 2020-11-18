@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents a laser printer with all its components, giving it methods to start up, detect problems, and solve them.
@@ -82,6 +83,21 @@ public class LaserPrinter {
 
 	/**
 	 * Property.
+	 * @return Whether the printer is on or still in the process of turning on/off.
+	 */
+	public boolean isOnOrPowering() { return isOn || isPowering; }
+
+	/**
+	 * Property.
+	 * @return Whether each assembly has been succesfully turned on.
+	 */
+	private boolean allAssembliesOn() {
+		return display.isActive() && paperTray.isActive() && tonerCartridge.isActive() &&
+				fuser.isActive() && printAssembly.isActive() && outputTray().isActive();
+	}
+
+	/**
+	 * Property.
 	 * @return Whether the printer is in the process of turning on/off.
 	 */
 	public boolean isPowering() { return isPowering; }
@@ -120,10 +136,14 @@ public class LaserPrinter {
 			safelyActivateAssembly(printAssembly);
 			safelyActivateAssembly(outputTray);
 
-			// On
-			isPowering = false;
-			isOn = true;
-			display.refresh();
+			// Set whether is on
+			if(allAssembliesOn()) { // No error when turning on assemblies
+				isPowering = false;
+				isOn = true;
+				display.refresh();
+			}
+			else
+				display().refresh(); // Final tally
 		}
 	}
 
@@ -132,7 +152,7 @@ public class LaserPrinter {
 	 * Will not block on errors.
 	 */
 	public void powerOff() {
-		if(isOn) {
+		if(isOn || isPowering) {
 			// Power down
 			isOn = false;
 			isPowering = true;
@@ -241,6 +261,7 @@ public class LaserPrinter {
 
 	public void printJob() {
 		// TODO follow steps for printing
+		// TODO if in error, we cannot print
 	}
 
 	public void cancelJob(String name) {
@@ -249,5 +270,16 @@ public class LaserPrinter {
 
 	public void addJob(String name, int pageCount) {
 		// TODO add to queue
+	}
+
+	public AssemblyException containsErrorFor(AssemblyUnit assembly) {
+		for(Map.Entry<AssemblyException.PrinterIssue, AssemblyException> entry : exceptions.entrySet()) {
+			if(entry.getValue().cause() == null)
+				continue;
+			else if(entry.getValue().cause().getClass() == assembly.getClass())
+				return entry.getValue();
+		}
+
+		return null;
 	}
 }

@@ -40,11 +40,10 @@ public class Light {
     }
 
     /**
+     * Property.
      * @return Whether the light is currently lit. This will change based on the pattern.
      */
-    public boolean isLit() {
-        return true;
-    }
+    public boolean isLit() { return pattern != Pattern.OFF; }
 
     /**
      * @return Get the light's current color.
@@ -65,6 +64,9 @@ public class Light {
      */
     @Override
     public String toString() {
-        return color + " light, " + pattern;
+        if(!isLit())
+            return "OFF";
+        else
+            return color + " light, " + pattern;
     }
 }
