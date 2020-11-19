@@ -18,7 +18,7 @@ public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
 
         try {
             printer.push("Heating up fuser.");
-            Thread.sleep(10000); // Takes 10 seconds
+            Thread.sleep(10); // Takes 10 seconds
             activated = true;
             printer.push("Fuser on.");
         } catch (InterruptedException e) {
@@ -30,7 +30,10 @@ public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
 
     @Override
     public void deactivate() throws AssemblyException {
+        activated = false;
 
+        if(issue != null)
+            throw new AssemblyException(issue, this);
     }
 
     @Override

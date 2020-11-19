@@ -36,16 +36,6 @@ public class ConsoleDisplay extends DisplayAssembly {
             System.out.println();
     }
 
-    private void printExceptions() {
-        // Print exceptions
-        if (printer.exceptions().size() > 0) {
-            StringBuilder builder = new StringBuilder();
-            for(Map.Entry<AssemblyException.PrinterIssue, AssemblyException> entry : printer.exceptions().entrySet())
-                builder.append("   " + entry.getValue().getMessage() + "\n");
-            System.out.println(builder.toString());
-        }
-    }
-
     private void printMessages() {
         // Print message
         if (currentMessage != null) {
@@ -59,12 +49,23 @@ public class ConsoleDisplay extends DisplayAssembly {
     public void reportStatus() {
         clearScreen();
 
-        System.out.println("PAPER TRAY: " + printer.paperTray().getValue());
-        System.out.println("PRINT QUEUE: " + printer.queue().getValue());
-        System.out.println("OUTPUT TRAY: " + printer.outputTray().getValue());
-        System.out.println("PRINT ASSEMBLY: " + printer.printAssembly().getValue());
-        System.out.println("FUSER: " + printer.fuser().getValue());
-        System.out.println("TONER: " + printer.toner().getValue());
+        System.out.println("PAPER TRAY");
+        System.out.println("   " + printer.paperTray().getValue());
+
+        System.out.println("PRINT QUEUE");
+        System.out.println("   " + printer.queue().getValue());
+
+        System.out.println("OUTPUT TRAY");
+        System.out.println("   " + printer.outputTray().getValue());
+
+        System.out.println("PRINT ASSEMBLY");
+        System.out.println("   " + printer.printAssembly().getValue());
+
+        System.out.println("FUSER");
+        System.out.println("   " + printer.fuser().getValue());
+
+        System.out.println("TONER");
+        System.out.println("   " + printer.toner().getValue());
     }
 
     /**
@@ -72,9 +73,10 @@ public class ConsoleDisplay extends DisplayAssembly {
      */
     @Override
     public void reportQueue() {
-        if(activated) {
-            String queue = "QUEUE: " + printer.queue().getValue();
-            pushMessage(queue);
+        if(activated) { // Display must be on to show messages
+            clearScreen();
+            System.out.println("QUEUE");
+            System.out.println("   " + printer.queue().getValue());
         }
     }
 
@@ -84,13 +86,14 @@ public class ConsoleDisplay extends DisplayAssembly {
     @Override
     public void displayTonerWarningError() {
         setTonerLightState();
-
-        System.out.println();
         System.out.println("TONER");
         System.out.println("   " + tonerLED);
-        if(printer.isOnOrPowering() && printer.containsErrorFor(printer.toner()) != null)
+
+        // Display must be on to show error messages
+        if(activated && printer.containsErrorFor(printer.toner()) != null)
             System.out.println("   " + printer.containsErrorFor(printer.toner()).getMessage());
-        // TODO warnings
+        if(activated && printer.toner().isWarning())
+            System.out.println("   " + printer.toner().warning());
     }
 
     /**
@@ -99,13 +102,13 @@ public class ConsoleDisplay extends DisplayAssembly {
     @Override
     public void displayDrumWarningError() {
         setDrumLightState();
-
-        System.out.println();
         System.out.println("DRUM");
         System.out.println("   " + drumLED);
+
         if(activated && printer.exceptions().containsKey(AssemblyException.PrinterIssue.DRUM))
             System.out.print(printer.exceptions().get(AssemblyException.PrinterIssue.DRUM).getMessage());
-        // TODO warnings
+        if(activated && printer.printAssembly().isDrumWarning())
+            System.out.print(printer.printAssembly().drumWarning());
     }
 
     /**
@@ -114,15 +117,16 @@ public class ConsoleDisplay extends DisplayAssembly {
     @Override
     public void displayGeneralError() {
         setErrorLightState();
-
-        System.out.println();
         System.out.println("ERROR");
         System.out.println("   " + errorLED);
-        if(printer.isError()) {
-            StringBuilder builder = new StringBuilder();
-            for(Map.Entry<AssemblyException.PrinterIssue, AssemblyException> entry : printer.exceptions().entrySet())
-                builder.append("   " + entry.getValue().getMessage() + "\n");
-            System.out.print(builder.toString());
+
+        if(activated) { // Display must be on to show error messages
+            if (printer.isError()) {
+                StringBuilder builder = new StringBuilder();
+                for (Map.Entry<AssemblyException.PrinterIssue, AssemblyException> entry : printer.exceptions().entrySet())
+                    builder.append("   " + entry.getValue().getMessage() + "\n");
+                System.out.print(builder.toString());
+            }
         }
     }
 
@@ -132,9 +136,7 @@ public class ConsoleDisplay extends DisplayAssembly {
     @Override
     public void displayReadyState() {
         setReadyLightState();
-
-        System.out.println();
-        System.out.println("STATUS");
+        System.out.println("READY");
         System.out.println("   " + readyLED);
     }
 }

@@ -10,6 +10,7 @@ public class LaserPrinter {
 	private boolean isOn = false;
 	private boolean isPowering = false; // Powering up or down
 	private boolean isPrinting = false;
+	// This is a list because when the printer turns on, there could be multiple issues to resolve.
 	HashMap<AssemblyException.PrinterIssue, AssemblyException> exceptions = new HashMap<>();
 
 	private DisplayAssembly display;
@@ -217,7 +218,7 @@ public class LaserPrinter {
 	 * Ask the screen to display the printer's status. Does nothing if the printer is off.
 	 */
 	public void reportStatus() {
-		if(isOn)
+		if(isOnOrPowering())
 			display.reportStatus();
 	}
 

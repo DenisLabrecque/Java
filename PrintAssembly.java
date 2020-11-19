@@ -30,6 +30,8 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 		spinUpLaserMirror();
 		chargeCoronaWire();
 		turnOnDischargeLamp();
+
+		activated = true;
 	}
 
 	// Deactivates the PrintAssembly
@@ -38,6 +40,8 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 		spinDownLaserMirror();
 		dischargeCoronaWire();
 		turnOffDischargeLamp();
+
+		activated = false;
 	}
 
 	// Spins up the laser mirror
@@ -122,5 +126,21 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 	public int getValue() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	/**
+	 * Property.
+	 * @return True when the drum is low.
+	 */
+	public boolean isDrumWarning() {
+		return false; // TODO
+	}
+
+	/**
+	 * Property.
+	 * @return String warning the user that the drum is old.
+	 */
+	public String drumWarning() {
+		return "Drum nearly worn out.";
 	}
 }

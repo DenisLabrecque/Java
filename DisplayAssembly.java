@@ -53,7 +53,7 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
         if(activated) {
             try {
                 pushMessage("Shutting down screen.");
-                Thread.sleep(500);
+                Thread.sleep(300);
                 activated = false;
                 pushMessage("Screen shut down.");
             } catch (InterruptedException e) {
@@ -154,10 +154,12 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
      * Flashing red when there is an error.
      */
     protected void setErrorLightState() {
-        if (!printer.isOn())
-            errorLED.setPattern(Light.Pattern.OFF);
-        if (printer.isError())
-            errorLED.setPattern(Light.Pattern.FLASHING);
+        if (printer.isOnOrPowering()) {
+            if (printer.isError())
+                errorLED.setPattern(Light.Pattern.FLASHING);
+            else
+                errorLED.setPattern(Light.Pattern.OFF);
+        }
         else
             errorLED.setPattern(Light.Pattern.OFF);
     }

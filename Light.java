@@ -65,7 +65,7 @@ public class Light {
     @Override
     public String toString() {
         if(!isLit())
-            return "OFF";
+            return "Light OFF";
         else
             return color + " light, " + pattern;
     }
