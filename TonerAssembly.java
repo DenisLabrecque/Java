@@ -1,8 +1,8 @@
 public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
 
     LaserPrinter printer;
-    AssemblyException.PrinterIssue issue = null;
-
+    AssemblyException exception = null;
+    int tonerLvl = 0;
     /**
      * Constructor.
      * @param printer Reference back to the printer for sending messages, warnings, and exceptions.
@@ -11,13 +11,10 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
         super();
         this.printer = printer;
     }
-    /**
-     * 
-     */
     @Override
     public void activate() throws AssemblyException {
-        if(issue != null) // The issue was already present as the printer shut down, before activating again
-            throw new AssemblyException(issue, this);
+        if(exception != null) // The issue was already present as the printer shut down, before activating again
+            throw exception;
 
         try {
             printer.push("Reading toner values.");
@@ -28,7 +25,7 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
             e.printStackTrace();
         }
 
-        throw new AssemblyException(AssemblyException.PrinterIssue.GENERAL, this);
+        throw new AssemblyException(AssemblyException.PrinterIssue.TONER, this);
     }
 
     @Override
@@ -38,29 +35,20 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
 
     @Override
     public void setValue(int newValue) {
-
+    	tonerLvl = newValue;
     }
 
     @Override
     public int getValue() {
-        return 0;
+        return tonerLvl;
     }
 
-    /**
-     * Adds toner according to the assigned quantities in grams.
-     * @param cyan
-     * @param magenta
-     * @param yellow
-     * @param black
-     */
-    public void addToner(float cyan, float magenta, float yellow, float black) {
-    }
 
     /**
      * Retrieve the exception object (if an exception has occurred).
      */
     public AssemblyException exception() {
-        return null;
+        return exception;
     }
 
     public boolean isWarning() {
@@ -71,6 +59,6 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
      * Set levels back to 100%.
      */
     public void refill() {
-        // TODO
+        setValue(100);
     }
 }
