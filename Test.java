@@ -56,9 +56,11 @@ public class Test {
 				break;
 			case "REPLACE DRUM":
 				printer.replaceDrum();
+				break;
 			case "QUIT":
 			case "EXIT":
 				continueLoop = false;
+				break;
 			default:
 				System.out.println("Command " + userResponse.toUpperCase() + " not found.");
 		}
