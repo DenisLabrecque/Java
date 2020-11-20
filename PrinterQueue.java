@@ -15,14 +15,24 @@ public class PrinterQueue implements ISimAssembly {
 		printerQueue = new LinkedList<Document>();
 	}
 
-	// Adds a document to the queue
+	// Adds a document to the print queue
 	public void add(Document document) {
 		printerQueue.add(document);
 	}
 
-	// Returns the queue list
+	// Returns the print queue
 	public List<Document> returnList() {
 		return printerQueue;
+	}
+	
+	// Prints the print queue
+	public void printList() {
+		for(int i = 0; i < printerQueue.size(); i++)
+		{
+			System.out.println(printerQueue.get(i).getID());
+			System.out.println(printerQueue.get(i).getName());
+			System.out.println(printerQueue.get(i).getPageCount());
+		}
 	}
 
 	// Returns the next item in queue
@@ -30,13 +40,19 @@ public class PrinterQueue implements ISimAssembly {
 		return printerQueue.get(0);
 	}
 
+	// Clears the print queue
 	public void clearQueue() {
 		printerQueue.clear();
 	}
 
-	// Removes a document from queue
-	public void remove(Document document) {
-
+	// Removes a document from print queue
+	public void remove(int id) {
+		for(int i = 0; i < printerQueue.size(); i++)
+		{
+			if (printerQueue.get(i).getID() == id) {
+				printerQueue.remove(i);
+			}
+		}
 	}
 
 	/**

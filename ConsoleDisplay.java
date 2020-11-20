@@ -107,7 +107,7 @@ public class ConsoleDisplay extends DisplayAssembly {
 
         if(activated && printer.exceptions().containsKey(AssemblyException.PrinterIssue.DRUM))
             System.out.print(printer.exceptions().get(AssemblyException.PrinterIssue.DRUM).getMessage());
-        if(activated && printer.printAssembly().isDrumWarning())
+        if(activated && printer.printAssembly().isWarning())
             System.out.print(printer.printAssembly().drumWarning());
     }
 
