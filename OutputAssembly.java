@@ -27,7 +27,7 @@ public class OutputAssembly extends AssemblyUnit implements ISimAssembly {
 	public void emptyTray () {
 		 
 		 numberOfPages = 0;
-		 
+
 	}
 
 	@Override
