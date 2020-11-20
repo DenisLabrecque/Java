@@ -1,13 +1,12 @@
-import javax.xml.transform.OutputKeys;
-
 public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
 	private static final int FULL_TONER = 2000;
 	private static final int TONER_LOW  = 300;
 	private static final int TONER_EMPTY= 25;
+	private int tonerLvl = 0;
 	
     LaserPrinter printer;
     AssemblyException exception = null;
-    private int tonerLvl = 0;
+    
     /**
      * Constructor.
      * @param printer Reference back to the printer for sending messages, warnings, and exceptions.
@@ -58,27 +57,18 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
     }
     
     public boolean isWarning() {
-    	if (tonerLvl <= TONER_LOW) {
-    		System.out.println("Toner is low.");
-    		return true;
-    	}
-    	else 
-    		return false;
+    	return (tonerLvl <= TONER_LOW);
         }
+    
     public boolean isEmpty() {
-    	if (tonerLvl <= TONER_EMPTY) {
-    		System.out.println("Toner is empty.");
-    		return true;
-    	}
-    	else 
-    		return false;
+    	return (tonerLvl <= TONER_EMPTY);
         }
 
     /**
      * Set levels back to 100%.
      */
     public void refill() {
-        setValue(100);
+        setValue(FULL_TONER);
     }
 
     /**
@@ -86,6 +76,9 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
      * @return Warning message.
      */
     public String warning() {
-        return "Toner almost empty.";
+    	if(isWarning())
+    		return "Toner almost empty.";
+    	else 
+    		return null;
     }
 }
