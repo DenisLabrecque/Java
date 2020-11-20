@@ -1,8 +1,13 @@
-public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
+import javax.xml.transform.OutputKeys;
 
+public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
+	private static final int FULL_TONER = 2000;
+	private static final int TONER_LOW  = 300;
+	private static final int TONER_EMPTY= 25;
+	
     LaserPrinter printer;
     AssemblyException exception = null;
-    int tonerLvl = 0;
+    private int tonerLvl = 0;
     /**
      * Constructor.
      * @param printer Reference back to the printer for sending messages, warnings, and exceptions.
@@ -11,6 +16,7 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
         super();
         this.printer = printer;
     }
+    
     @Override
     public void activate() throws AssemblyException {
         if(exception != null) // The issue was already present as the printer shut down, before activating again
@@ -35,7 +41,7 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
 
     @Override
     public void setValue(int newValue) {
-    	tonerLvl = newValue;
+    	this.tonerLvl = newValue;
     }
 
     @Override
@@ -50,10 +56,23 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
     public AssemblyException exception() {
         return exception;
     }
-
+    
     public boolean isWarning() {
-        return false; // TODO add a warning string that returns false when null and true when filled
-    }
+    	if (tonerLvl <= TONER_LOW) {
+    		System.out.println("Toner is low.");
+    		return true;
+    	}
+    	else 
+    		return false;
+        }
+    public boolean isEmpty() {
+    	if (tonerLvl <= TONER_EMPTY) {
+    		System.out.println("Toner is empty.");
+    		return true;
+    	}
+    	else 
+    		return false;
+        }
 
     /**
      * Set levels back to 100%.
