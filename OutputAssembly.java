@@ -1,6 +1,6 @@
 public class OutputAssembly extends AssemblyUnit implements ISimAssembly {
 
-	
+
 	AssemblyException.PrinterIssue issue = null;
 
     private final static int MAX_PAGES = 500;
@@ -20,7 +20,10 @@ public class OutputAssembly extends AssemblyUnit implements ISimAssembly {
 	public OutputAssembly(int numberOfPages) {
 		this.numberOfPages = numberOfPages;
 	}
-	
+
+	/**
+	 * Emptys out the tray
+	 */
 	public void emptyTray () {
 		 
 		 numberOfPages = 0;
