@@ -1,32 +1,55 @@
 public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
-
+	
+	LaserPrinter laserPrinter;
+	AssemblyException exception = null;
+	private static final int MAX_PAPER_PAGES = 1000;
+	private int currentPaperPages;
+	boolean paperJam = false;
+	
     /**
      * Constructor.
      * @param laserPrinter Reference back to the printer for sending messages, warnings, and exceptions.
      * @param sheets
      */
     public PaperAssembly(LaserPrinter laserPrinter, int sheets) {
-
+		super();
+		currentPaperPages = sheets;
     }
 
     @Override
     public void activate() throws AssemblyException {
+		if(exception != null)
+            throw exception;
+
+        try {
+            laserPrinter.push("Reading current paper pages.");
+            getValue();
+			if(currentPaperPages > 0){
+				activated = true;
+				laserPrinter.push("Paper ready.");
+			}
+			if(paperJam)
+				throw new InterruptedException();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }		
+		throw new AssemblyException(AssemblyException.PrinterIssue.PAPER_JAM, this);
 
     }
 
     @Override
     public void deactivate() throws AssemblyException {
-
+		activated = false;
     }
 
     @Override
     public void setValue(int newValue) {
-
+		currentPaperPages = newValue;
     }
 
     @Override
     public int getValue() {
-        return 0;
+        return currentPaperPages;
     }
 
     /**
@@ -34,26 +57,32 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
      * @param sheets
      */
     public void addPaper(int sheets) {
+		currentPaperPages += sheets;
     }
 
     /**
      * @return Current exception object (if an exception has occurred).
      */
     public AssemblyException exception() {
-        return null;
+        return exception;
     }
 
+	public void consumePaper(){
+		currentPaperPages -= 1;
+	}
+	
+	
     /**
      * Set paper levels back to 100%.
      */
     public void refill() {
-        // TODO
+        currentPaperPages = MAX_PAPER_PAGES;
     }
 
     /**
      * Solve a jam.
      */
     public void unjam() {
-        // TODO
+		paperJam = false;
     }
 }
