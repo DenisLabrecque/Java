@@ -207,7 +207,7 @@ public class LaserPrinter {
 	}
 
 	/**
-	 * @param document Remove this document from the print queue. If it is currently being printed, it is already out of
+	 * @param id Remove this document from the print queue. If it is currently being printed, it is already out of
 	 * the queue; cancel instead.
 	 */
 	public void remove(int id) {

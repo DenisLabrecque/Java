@@ -1,7 +1,10 @@
 public class Document {
+
 	private int id;
 	private String name;
 	private int pageCount;
+
+	public Document(){}
 	
 	public int getID() {
 		return id;

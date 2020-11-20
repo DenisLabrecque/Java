@@ -3,18 +3,18 @@ public class OutputAssembly extends AssemblyUnit implements ISimAssembly {
 
 	AssemblyException.PrinterIssue issue = null;
 
-    private final static int MAX_PAGES = 500;
-	 private int numberOfPages;
+    private final static int MAX_PAGES = 500; // Set pages to 500
+	 private int numberOfPages; // Number of pages in the tray
 	 
-	 /* Default constructor */
+	 /* *
+	 *Default constructor
+	 * */
 	public OutputAssembly(LaserPrinter printer) {
 		this.numberOfPages = MAX_PAGES;
 	}
-	
-	/* Sets the paper tray level to initial value */
 
 	/**
-	 *
+	 * Sets the paper tray level to initial value
 	 * @param numberOfPages
 	 */
 	public OutputAssembly(int numberOfPages) {
@@ -22,18 +22,12 @@ public class OutputAssembly extends AssemblyUnit implements ISimAssembly {
 	}
 
 	/**
-	 * Emptys out the tray
+	 * Empties out the tray
 	 */
 	public void emptyTray () {
 		 
 		 numberOfPages = 0;
 		 
-		/*for (int i = numberOfPages; i >= 0; i--)
-			if (i == 0)
-				System.out.println("Tray is empty");
-			else
-				System.out.println("Tray is not empty");*/
-	
 	}
 
 	@Override
