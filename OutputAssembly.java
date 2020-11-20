@@ -1,14 +1,22 @@
 public class OutputAssembly extends AssemblyUnit implements ISimAssembly {
+
 	
+	AssemblyException.PrinterIssue issue = null;
+
     private final static int MAX_PAGES = 500;
 	 private int numberOfPages;
 	 
 	 /* Default constructor */
-	public OutputAssembly(LaserPrinter laserPrinter) {
+	public OutputAssembly(LaserPrinter printer) {
 		this.numberOfPages = MAX_PAGES;
 	}
 	
 	/* Sets the paper tray level to initial value */
+
+	/**
+	 *
+	 * @param numberOfPages
+	 */
 	public OutputAssembly(int numberOfPages) {
 		this.numberOfPages = numberOfPages;
 	}
@@ -28,11 +36,15 @@ public class OutputAssembly extends AssemblyUnit implements ISimAssembly {
 	@Override
 	public void activate() throws AssemblyException {
 		activated = true;
+		throw new AssemblyException(AssemblyException.PrinterIssue.GENERAL,this);
 	}
 
 	@Override
 	public void deactivate() throws AssemblyException {
 		activated = false;
+
+		if(issue != null)
+			throw new AssemblyException(issue, this);
 	}
 
 	@Override
