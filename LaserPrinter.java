@@ -187,7 +187,7 @@ public class LaserPrinter {
 	}
 
 	public void loadToner(float cyan, float magenta, float yellow, float black) {
-		tonerCartridge.addToner(cyan, magenta, yellow, black);
+		tonerCartridge.refill();
 	}
 
 	public void replaceDrum() {
