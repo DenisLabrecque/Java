@@ -27,11 +27,12 @@ public class PrinterQueue implements ISimAssembly {
 	
 	// Prints the print queue
 	public void printList() {
+		System.out.println("Print queue:");
 		for(int i = 0; i < printerQueue.size(); i++)
 		{
-			System.out.println(printerQueue.get(i).getID());
-			System.out.println(printerQueue.get(i).getName());
-			System.out.println(printerQueue.get(i).getPageCount());
+			System.out.println("Document id: " + printerQueue.get(i).getID());
+			System.out.println("Document name: " + printerQueue.get(i).getName());
+			System.out.println("Document pageCount: " + printerQueue.get(i).getPageCount());
 		}
 	}
 

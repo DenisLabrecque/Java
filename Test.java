@@ -78,8 +78,8 @@ public class Test {
 
 	public static void cancelJob(Scanner scanner, LaserPrinter printer) {
 		System.out.print("Job to cancel: ");
-		String name = scanner.nextLine().toUpperCase();
-		printer.cancelJob(name);
+		int id = Integer.parseInt(scanner.nextLine());
+		printer.cancelJob(id);
 	}
 	
 	public static void displayHelp() {
