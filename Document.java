@@ -1,3 +1,6 @@
+/**
+ * Document that gets sent to print.
+ */
 public class Document {
 
 	private int id; // Id

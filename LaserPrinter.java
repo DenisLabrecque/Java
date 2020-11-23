@@ -229,10 +229,6 @@ public class LaserPrinter {
 		paperTray.addPaper(sheets);
 	}
 
-	public void loadToner(float cyan, float magenta, float yellow, float black) {
-		tonerCartridge.refill();
-	}
-
 	public void replaceDrum() {
 		printAssembly.replaceDrum();
 	}
@@ -326,6 +322,10 @@ public class LaserPrinter {
 		queue.printList();
 	}
 
+	/**
+	 * @param assembly The assembly that caused the error.
+	 * @return Whether an error has been pushed to the printer by a certain component.
+	 */
 	public AssemblyException containsErrorFor(AssemblyUnit assembly) {
 		for (Map.Entry<AssemblyException.PrinterIssue, AssemblyException> entry : exceptions.entrySet()) {
 			if (entry.getValue().cause() == null)
