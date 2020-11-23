@@ -4,7 +4,7 @@ public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
 	private static final int TEMP_INCREASE= 25;
 	
 
-	int targetTemp = 0;
+	int targetTemp = TEMP_MIN;
 	LaserPrinter printer;
 	AssemblyException issue = null;
 
