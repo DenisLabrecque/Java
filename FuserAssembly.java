@@ -46,7 +46,7 @@ public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
 
 	public int increase(int targetTemp) {
 		int currentTemp = 0; //placeholder value so it stops error
-		while (currentTemp < targetTemp) {
+		while (currentTemp < targetTemp && currentTemp <= TEMP_MAX) {
 			currentTemp = currentTemp + TEMP_INCREASE;
 			try {
 				printer.push("Heating up fuser.");
