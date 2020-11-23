@@ -2,7 +2,7 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
 	private static final int FULL_TONER = 2000;
 	private static final int TONER_LOW  = 300;
 	private static final int TONER_EMPTY= 25;
-	private int tonerLvl = 0;
+	private int tonerLvl = 3;
 	
     LaserPrinter printer;
     AssemblyException exception = null;

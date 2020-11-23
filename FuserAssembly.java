@@ -1,12 +1,11 @@
 public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
-	private static final int TEMP_MAX = 2000;
-	private static final int TEMP_MIN  = 450;
-	private static final int TEMP_INCREASE= 25;
-	
+	private static final int TEMP_MAX = 451;   //maximum heat of 451 (honestly thought it was a boring book)
+	private static final int TEMP_MIN  = 240;  //minimum heat of 240
+	private static final int TEMP_INCREASE= 25;//increments of 25 degrees
 
-	int targetTemp = TEMP_MIN;
+	private int targetTemp; //fuser requested temperature
+	AssemblyException.PrinterIssue issue = null;
 	LaserPrinter printer;
-	AssemblyException issue = null;
 
 	/**
 	 * Constructor.
@@ -15,13 +14,19 @@ public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
 	public FuserAssembly(LaserPrinter printer) {
 		this.printer = printer;
 	}
+	
+	/*public FuserAssembly(LaserPrinter printer) {
+		this.targetTemp = targetTemp;
+	}*/
 
+	public void noHeat () {
+		targetTemp = 0;
+	}
+	
+	
 	@Override
 	public void activate() throws AssemblyException {
-		if(issue != null) // The issue was already present as the printer shut down, before activating again
-			throw issue;
-		
-		
+		activated = true;
 		throw new AssemblyException(AssemblyException.PrinterIssue.FUSER, this); // TEST
 	}
 
@@ -30,17 +35,17 @@ public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
 		activated = false;
 
 		if(issue != null)
-			throw issue;
+			throw new AssemblyException(issue, this);
 	}
 
 	@Override
-	public void setValue(int newTemp) {
-
+	public void setValue(int targetTemp) {
+			this.targetTemp = targetTemp;
 	}
 
 	@Override
 	public int getValue() {
-		return (targetTemp);
+		return targetTemp;
 	}
 
 
@@ -66,7 +71,7 @@ public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
 	/**
 	 * @return Current exception object (if an exception has occurred).
 	 */
-	public AssemblyException exception() {
+	public AssemblyException.PrinterIssue exception() {
 		return issue;
 	}
 }
