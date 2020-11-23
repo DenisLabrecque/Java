@@ -83,14 +83,19 @@ public class Test {
 	}
 	
 	public static void displayHelp() {
-		System.out.println("Commands:");
-		System.out.println("  Quit/Exit:  Exit program");
-		System.out.println("     Report:  Generate printer report");
-		System.out.println("    PowerOn:  Turn the printer on");
-		System.out.println("   PowerOff:  Turn the printer off");
-		System.out.println("      Queue:  Report of jobs in queue");
-		System.out.println("      Print:  Print first job in queue");
-		System.out.println("     Cancel:  Cancel first job in queue");
-		System.out.println("        Add:  Add job to print queue");
+		System.out.println("     Commands:");
+		System.out.println("    Quit/Exit:  Exit program");
+		System.out.println("Report/Status:  Generate printer report");
+		System.out.println("   PowerOn/On:  Turn the printer on");
+		System.out.println(" PowerOff/Off:  Turn the printer off");
+		System.out.println("        Queue:  Report of jobs in queue");
+		System.out.println("        Print:  Print first job in queue");
+		System.out.println("       Cancel:  Cancel first job in queue");
+		System.out.println("          Add:  Add job to print queue");
+		System.out.println("        Reset:  Reset errors");
+		System.out.println("        Unjam:  The user solves a paper jam");
+		System.out.println("Replace Toner:  The user replaces the toner");
+		System.out.println("Replace Paper:  The user replaces the paper");
+		System.out.println(" Replace Drum:  The user replaces the drum");
 	}
   }
