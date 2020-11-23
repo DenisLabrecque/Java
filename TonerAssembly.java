@@ -26,6 +26,7 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
             Thread.sleep(100);
             activated = true;
             printer.push("Toner ready.");
+			tonerLvl = FULL_TONER;
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -35,7 +36,7 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
 
     @Override
     public void deactivate() throws AssemblyException {
-
+		activated = false;
     }
 
     @Override

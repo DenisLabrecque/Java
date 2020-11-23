@@ -34,8 +34,7 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }		
-		throw new AssemblyException(AssemblyException.PrinterIssue.PAPER_JAM, this);
-
+		//throw new AssemblyException(AssemblyException.PrinterIssue.PAPER_JAM, this);
     }
 
     @Override
