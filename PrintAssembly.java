@@ -30,7 +30,7 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 		spinUpLaserMirror();
 		chargeCoronaWire();
 		turnOnDischargeLamp();
-
+		
 		activated = true;
 	}
 
@@ -117,15 +117,13 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 	}
 
 	@Override
-	public void setValue(int newValue) {
-		// TODO Auto-generated method stub
-
+	public void setValue(int sheetsPrinted) {
+		this.sheetsPrinted =  sheetsPrinted;
 	}
 
 	@Override
 	public int getValue() {
-		// TODO Auto-generated method stub
-		return 0;
+		return sheetsPrinted;
 	}
 
 	/**

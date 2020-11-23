@@ -301,12 +301,17 @@ public class LaserPrinter {
 	 * Display information about the queue.
 	 */
 	public void reportQueue() {
-		display.reportQueue();
+		queue.printList();
+		//display.reportQueue();
 	}
 
 	public void printJob() {
-		// TODO follow steps for printing
-		// TODO if in error, we cannot print
+		Document printDocument = queue.nextQueue();
+		queue.remove(printDocument.getID());
+		paperTray.setValue(paperTray.getValue() - printDocument.getPageCount());
+		printAssembly.setValue(printAssembly.getValue() + printDocument.getPageCount());
+		tonerCartridge.setValue(tonerCartridge.getValue() - printDocument.getPageCount());
+		outputTray.setValue(outputTray.getValue() + printDocument.getPageCount());
 	}
 
 	public void cancelJob(int id) {

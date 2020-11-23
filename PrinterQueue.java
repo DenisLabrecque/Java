@@ -3,7 +3,7 @@ import java.util.List;
 
 public class PrinterQueue implements ISimAssembly {
 
-	private List<Document> printerQueue;
+	private static List<Document> printerQueue;
 
 	/**
 	 * Constructor.
@@ -71,8 +71,7 @@ public class PrinterQueue implements ISimAssembly {
 
 	@Override
 	public int getValue() {
-		// TODO Auto-generated method stub
-		return 0;
+		return printerQueue.size();
 	}
 
 	@Override

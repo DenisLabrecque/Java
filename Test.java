@@ -15,7 +15,8 @@ public class Test {
 		String userResponse = input.nextLine().toUpperCase();
 		
 		switch(userResponse) {
-			case "?":  
+			case "?":
+			case "HELP":
 				displayHelp();
 				break;
 			case "REPORT":
