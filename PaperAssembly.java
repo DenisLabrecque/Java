@@ -13,6 +13,7 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
      */
     public PaperAssembly(LaserPrinter laserPrinter, int sheets) {
 		super();
+		this.laserPrinter = laserPrinter;
 		currentPaperPages = sheets;
     }
 
