@@ -10,7 +10,7 @@ public class OutputAssembly extends AssemblyUnit implements ISimAssembly {
 	 *Default constructor
 	 * */
 	public OutputAssembly(LaserPrinter printer) {
-		this.numberOfPages = MAX_PAGES;
+		this.numberOfPages = 0;
 	}
 
 	/**
