@@ -11,7 +11,7 @@ public class Test {
 	Scanner input = new Scanner(System.in);
 	
 	while(continueLoop) {
-		System.out.print("\nEnter command (?=help): ");
+		System.out.print("\nEnter command (? or HELP for commands): ");
 		String userResponse = input.nextLine().toUpperCase();
 		
 		switch(userResponse) {

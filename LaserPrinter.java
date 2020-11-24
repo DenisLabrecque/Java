@@ -306,12 +306,14 @@ public class LaserPrinter {
 	}
 
 	public void printJob() {
-		Document printDocument = queue.nextQueue();
-		queue.remove(printDocument.getID());
-		paperTray.setValue(paperTray.getValue() - printDocument.getPageCount());
-		printAssembly.setValue(printAssembly.getValue() + printDocument.getPageCount());
-		tonerCartridge.setValue(tonerCartridge.getValue() - printDocument.getPageCount());
-		outputTray.setValue(outputTray.getValue() + printDocument.getPageCount());
+		if(isOn) {
+			Document printDocument = queue.nextQueue();
+			queue.remove(printDocument.getID());
+			paperTray.consumePaper();
+			printAssembly.setValue(printAssembly.getValue() + printDocument.getPageCount());
+			tonerCartridge.setValue(tonerCartridge.getValue() - printDocument.getPageCount());
+			outputTray.setValue(outputTray.getValue() + printDocument.getPageCount());
+		}
 	}
 
 	public void cancelJob(int id) {
