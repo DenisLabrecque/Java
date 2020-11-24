@@ -1,3 +1,6 @@
+import java.util.UUID;
+import java.util.function.DoubleConsumer;
+
 /**
  * Document that gets sent to print.
  */
@@ -9,6 +12,12 @@ public class Document {
 
 	/* Default constructor */
 	public Document(){}
+
+	public Document(String newName, int newPageCount){
+		this.name = newName;
+		this.pageCount = newPageCount;
+	}
+
 
 	/* Get the ID */
 	public int getID() {
