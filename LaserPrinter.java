@@ -296,7 +296,8 @@ public class LaserPrinter {
 	}
 
 	public void printJob() {
-		if(isOn && !queue.isEmpty()) {
+		System.out.println("exceptions " + exceptions);
+		if(isOn && !queue.isEmpty() && exceptions.isEmpty()) {
 			Document printDocument = queue.nextQueue();
 			queue.remove(printDocument.getID());
 			paperTray.consumePaper(paperTray.getValue() - printDocument.getPageCount());
