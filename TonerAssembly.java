@@ -49,6 +49,11 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
         return tonerLvl;
     }
 
+	public boolean isActive() {
+		return activated;
+	}
+
+
     /**
      * Retrieve the exception object (if an exception has occurred).
      */

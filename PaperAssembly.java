@@ -52,6 +52,10 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
         return currentPaperPages;
     }
 
+	public boolean isActive() {
+		return activated;
+	}
+
     /**
      * Add sheets to the paper tray.
      * @param sheets
@@ -67,8 +71,8 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
         return exception;
     }
 
-	public void consumePaper(){
-		currentPaperPages -= 1;
+	public void consumePaper(int newValue){
+		currentPaperPages = newValue;
 	}
 	
 	

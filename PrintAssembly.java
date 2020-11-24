@@ -44,6 +44,10 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 		activated = false;
 	}
 
+	public boolean isActive() {
+		return activated;
+	}
+
 	// Spins up the laser mirror
 	public void spinUpLaserMirror() {
 		while (rotationalSpeed < MIRROR_RPM) {

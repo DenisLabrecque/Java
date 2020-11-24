@@ -5,7 +5,7 @@ public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
 
 	private int targetTemp; //fuser requested temperature
 	private int currentTemp;
-	AssemblyException issue = null;
+	AssemblyException exception = null;
 	LaserPrinter printer;
 	/**
 	 * Constructor.
@@ -20,10 +20,11 @@ public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
 	
 	
 	@Override
-	public void activate() throws AssemblyException {
-		if(issue != null)
-			throw issue;
+    public void activate() throws AssemblyException {
+		if(exception != null)
+			throw exception;
 		increase();
+		activated = true;
 		
 	}
 
@@ -48,6 +49,10 @@ public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
 	}
 
 	
+	public boolean isActive() {
+		return activated;
+	}
+
 
 	public int increase() {
 		printer.push("Heating up fuser.");
@@ -73,6 +78,6 @@ public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
 	 * @return Current exception object (if an exception has occurred).
 	 */
 	public AssemblyException exception() {
-		return issue;
+		return exception;
 	}
 }

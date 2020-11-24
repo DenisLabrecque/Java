@@ -53,4 +53,9 @@ public class OutputAssembly extends AssemblyUnit implements ISimAssembly {
 	public int getValue() {
 		return numberOfPages;
 	}
+	
+	public boolean isActive() {
+		return activated;
+	}
+	
 }

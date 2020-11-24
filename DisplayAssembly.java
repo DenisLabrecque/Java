@@ -70,6 +70,10 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
         return 0;
     }
 
+	public boolean isActive() {
+		return activated;
+	}
+
     /**
      * Pass a message to display. Will not do anything if the display is not activated. Refreshes the screen with the
      * new message.

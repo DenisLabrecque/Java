@@ -61,7 +61,7 @@ public class ConsoleDisplay extends DisplayAssembly {
         System.out.println("PRINT ASSEMBLY");
         System.out.println("   " + printer.printAssembly().getValue());
 
-        System.out.println("FUSER");
+        System.out.println("FUSER TEMPERATURE");
         System.out.println("   " + printer.fuser().getValue());
 
         System.out.println("TONER");
