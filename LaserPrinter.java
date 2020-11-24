@@ -296,7 +296,6 @@ public class LaserPrinter {
 	}
 
 	public void printJob() {
-		System.out.println("exceptions " + exceptions);
 		if(isOn && !queue.isEmpty() && exceptions.isEmpty()) {
 			Document printDocument = queue.nextQueue();
 			queue.remove(printDocument.getID());
@@ -304,6 +303,10 @@ public class LaserPrinter {
 			printAssembly.setValue(printAssembly.getValue() + printDocument.getPageCount());
 			tonerCartridge.setValue(tonerCartridge.getValue() - printDocument.getPageCount());
 			outputTray.setValue(outputTray.getValue() + printDocument.getPageCount());
+		}
+		else if(!exceptions.isEmpty())
+		{
+			display.pushMessage("Please fix the error before printing.");
 		}
 	}
 
