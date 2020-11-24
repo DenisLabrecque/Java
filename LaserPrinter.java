@@ -314,6 +314,10 @@ public class LaserPrinter {
 			tonerCartridge.setValue(tonerCartridge.getValue() - printDocument.getPageCount());
 			outputTray.setValue(outputTray.getValue() + printDocument.getPageCount());
 		}
+		else
+		{
+			System.out.println("No documents to print in queue");
+		}
 	}
 
 	public void cancelJob(int id) {
