@@ -73,6 +73,10 @@ public class PrinterQueue implements ISimAssembly {
 	public int getValue() {
 		return printerQueue.size();
 	}
+	
+	public boolean isEmpty() {
+		return printerQueue.size() == 0;
+	}
 
 	@Override
 	public void setError(int newValue) {
