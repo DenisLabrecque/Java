@@ -238,16 +238,6 @@ public class LaserPrinter {
 	}
 
 	/**
-	 * Stop printing this document. Does nothing if this document is not currently
-	 * being printed.
-	 * 
-	 * @param document
-	 */
-	public void cancel(Document document) {
-		// TODO
-	}
-
-	/**
 	 * @param id Remove this document from the print queue. If it is currently being
 	 *           printed, it is already out of the queue; cancel instead.
 	 */
