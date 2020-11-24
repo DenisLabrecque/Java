@@ -306,12 +306,18 @@ public class LaserPrinter {
 	}
 
 	public void printJob() {
-		Document printDocument = queue.nextQueue();
-		queue.remove(printDocument.getID());
-		paperTray.setValue(paperTray.getValue() - printDocument.getPageCount());
-		printAssembly.setValue(printAssembly.getValue() + printDocument.getPageCount());
-		tonerCartridge.setValue(tonerCartridge.getValue() - printDocument.getPageCount());
-		outputTray.setValue(outputTray.getValue() + printDocument.getPageCount());
+		if (queue.getValue() != 0) {
+			Document printDocument = queue.nextQueue();
+			queue.remove(printDocument.getID());
+			paperTray.setValue(paperTray.getValue() - printDocument.getPageCount());
+			printAssembly.setValue(printAssembly.getValue() + printDocument.getPageCount());
+			tonerCartridge.setValue(tonerCartridge.getValue() - printDocument.getPageCount());
+			outputTray.setValue(outputTray.getValue() + printDocument.getPageCount());
+		}
+		else
+		{
+			System.out.println("No documents to print in queue");
+		}
 	}
 
 	public void cancelJob(int id) {
