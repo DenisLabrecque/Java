@@ -74,8 +74,11 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
     /**
      * Consume Toner
      */
-    public void consumeToner(int tonerLvl) {
-    	tonerLvl -= 1;
+    public int consumeToner() {
+    	if (tonerLvl > TONER_EMPTY)
+    		return tonerLvl -= 1;
+    	else 
+    		return TONER_EMPTY;
     }
     
     /**
