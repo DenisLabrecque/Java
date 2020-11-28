@@ -22,3 +22,5 @@
 .classpath
 .project
 .project
+/PrinterScreen.class
+*.class
