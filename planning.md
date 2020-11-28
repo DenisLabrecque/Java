@@ -24,4 +24,4 @@
 * Status lights (toner, drum, error, ready)
 * Power on/off button
 * Clear errors button
-* Refresh screen button
+* Refresh screen button (not convinced we need this)
