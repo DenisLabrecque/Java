@@ -1,0 +1,12 @@
+Button {
+    -fx-background-color: green;
+    -fx-text-fill: white;
+}
+Button:hover {
+    -fx-background-color: purple;
+    -fx-text-fill: white;
+}
+Button:pressed {
+    -fx-background-color: white;
+    -fx-text-fill: purple;
+}

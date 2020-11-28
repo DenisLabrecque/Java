@@ -70,7 +70,12 @@ public class PrinterScreen extends Application {
 
         // Right side
         VBox rightBox = new VBox();
-        Button button = new Button("I/O");
+        Button button = new Button("Power");
+        button.setOnAction(e -> {
+            Media sound = new Media(new File("Java/351209__gokhanbiyik__beep-02.wav").toURI().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(sound);
+            mediaPlayer.play();
+        });
         rightBox.getChildren().add(button);
         pane.getChildren().add(rightBox);
 
@@ -85,12 +90,9 @@ public class PrinterScreen extends Application {
         //pane.getChildren().add(imageView);
 
         Scene scene = new Scene(pane);
+        scene.getStylesheets().add("printerStyles.css");
         primaryStage.setTitle("Laser Printer");
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        Media sound = new Media(new File("Java/351209__gokhanbiyik__beep-02.wav").toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.play();
     }
 }
