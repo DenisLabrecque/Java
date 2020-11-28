@@ -1,3 +1,4 @@
+import javafx.scene.layout.Pane;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,8 +26,8 @@ public class LaserPrinter {
 	/**
 	 * Constructor. Creates all the assemblies the printer needs.
 	 */
-	public LaserPrinter() {
-		display = new ConsoleDisplay(this);
+	public LaserPrinter(Pane pane) {
+		display = new ScreenDisplay(this, pane);
 		paperTray = new PaperAssembly(this, 300);
 		tonerCartridge = new TonerAssembly(this);
 		fuser = new FuserAssembly(this);

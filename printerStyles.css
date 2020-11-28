@@ -10,3 +10,10 @@ Button:pressed {
     -fx-background-color: white;
     -fx-text-fill: purple;
 }
+
+Button.power {
+    -fx-background-color: red;
+    -fx-height: 20px;
+    -fx-width: 20px;
+    -fx-background-radius: 10px;
+}

@@ -19,6 +19,8 @@ import java.io.File;
 
 public class PrinterScreen extends Application {
 
+    public LaserPrinter printer;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -61,22 +63,27 @@ public class PrinterScreen extends Application {
 
         // Screen
         VBox centerBox = new VBox();
-        Rectangle rectScreen = new Rectangle(400, 300, Color.BLACK);
+        Rectangle rectScreen = new Rectangle(400, 300, Color.LIGHTGREY);
         centerBox.getChildren().add(rectScreen); // TODO there should probably be a switch screen function that switches
                                               // the FX element to simulate changing the window
         pane.getChildren().add(centerBox);
+        printer = new LaserPrinter(centerBox);
 
 
 
         // Right side
         VBox rightBox = new VBox();
-        Button button = new Button("Power");
-        button.setOnAction(e -> {
-            Media sound = new Media(new File("Java/351209__gokhanbiyik__beep-02.wav").toURI().toString());
-            MediaPlayer mediaPlayer = new MediaPlayer(sound);
-            mediaPlayer.play();
+        Button btnPower = new Button("Power");
+        btnPower.getStyleClass().add("power");
+        btnPower.setOnAction(e -> {
+            if(!printer.isOnOrPowering()) {
+                printer.powerOn();
+                Media sound = new Media(new File("Java/351209__gokhanbiyik__beep-02.wav").toURI().toString());
+                MediaPlayer mediaPlayer = new MediaPlayer(sound);
+                mediaPlayer.play();
+            }
         });
-        rightBox.getChildren().add(button);
+        rightBox.getChildren().add(btnPower);
         pane.getChildren().add(rightBox);
 
 

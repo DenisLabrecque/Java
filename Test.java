@@ -1,3 +1,5 @@
+import javafx.scene.layout.Pane;
+
 import java.util.Scanner;
 
 /**
@@ -7,7 +9,7 @@ public class Test {
   public static void main(String[] args) {
 	
 	boolean continueLoop = true;
-    LaserPrinter printer = new LaserPrinter();
+    LaserPrinter printer = new LaserPrinter(new Pane());
 	Scanner input = new Scanner(System.in);
 	
 	while(continueLoop) {
