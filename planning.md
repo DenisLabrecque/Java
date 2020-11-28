@@ -1,13 +1,13 @@
 # Graphs
-Paper graph (display a percentage and number of sheets)
-Amount of toner percent (percentage bar or graph)
-Remaining life of transfer drum
-Fuser temperature (progress bar)
-Print queue
-Output tray (how full)
+* Paper graph (display a percentage and number of sheets)
+* Amount of toner percent (percentage bar or graph)
+* Remaining life of transfer drum
+* Fuser temperature (progress bar)
+* Print queue
+* Output tray (how full)
 
 # Touch Screen UI
-Error message(s)
+* Error message(s)
  - thick paper (+15-max) / thin paper (-15-min)
  - print button
  - cancel job button
@@ -21,7 +21,7 @@ Error message(s)
  - remove output (simulate removing paper from the output tray)
 
 # Physical UI
-Status lights (toner, drum, error, ready)
-Power on/off button
-Clear errors button
-Refresh screen button
+* Status lights (toner, drum, error, ready)
+* Power on/off button
+* Clear errors button
+* Refresh screen button
