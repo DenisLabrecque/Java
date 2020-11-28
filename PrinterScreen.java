@@ -72,7 +72,7 @@ public class PrinterScreen extends Application {
         VBox rightBox = new VBox();
         Button button = new Button("Power");
         button.setOnAction(e -> {
-            Media sound = new Media(new File("Java/351209__gokhanbiyik__beep-02.wav").toURI().toString());
+            Media sound = new Media(new File("351209__gokhanbiyik__beep-02.wav").toURI().toString());
             MediaPlayer mediaPlayer = new MediaPlayer(sound);
             mediaPlayer.play();
         });
