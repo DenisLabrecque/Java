@@ -78,7 +78,7 @@ public class PrinterScreen extends Application {
         btnPower.setOnAction(e -> {
             if(!printer.isOnOrPowering()) {
                 printer.powerOn();
-                Media sound = new Media(new File("Java/351209__gokhanbiyik__beep-02.wav").toURI().toString());
+                Media sound = new Media(new File("351209__gokhanbiyik__beep-02.wav").toURI().toString());
                 MediaPlayer mediaPlayer = new MediaPlayer(sound);
                 mediaPlayer.play();
             }
