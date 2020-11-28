@@ -9,6 +9,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.media.*;
 
@@ -25,13 +28,53 @@ public class PrinterScreen extends Application {
         Pane pane = new HBox(10);
 
         // Left indicator light pane
-        VBox lightPane = new VBox();
+        VBox leftBox = new VBox();
+
+        HBox hbxToner = new HBox(10);
         Label lblToner = new Label("Toner");
+        Circle crcToner = new Circle(10, 10, 5, Color.YELLOW);
+        crcToner.setOpacity(0.5);
+        hbxToner.getChildren().addAll(lblToner, crcToner);
+
+        HBox hbxDrum = new HBox(10);
         Label lblDrum = new Label("Drum");
+        Circle crcDrum = new Circle(10, 10, 5, Color.YELLOW);
+        crcDrum.setOpacity(0.5);
+        hbxDrum.getChildren().addAll(lblDrum, crcDrum);
+
+        HBox hbxError = new HBox(10);
         Label lblError = new Label("Error");
+        Circle crcError = new Circle(10, 10, 5, Color.YELLOW);
+        crcError.setOpacity(0.5);
+        hbxError.getChildren().addAll(lblError, crcError);
+
+        HBox hbxReady = new HBox(10);
         Label lblReady = new Label("Ready");
-        lightPane.getChildren().addAll(lblToner, lblDrum, lblError, lblReady);
-        pane.getChildren().add(lightPane);
+        Circle crcReady = new Circle(10, 10, 5, Color.YELLOW);
+        crcReady.setOpacity(0.5);
+        hbxReady.getChildren().addAll(lblReady, crcReady);
+
+        leftBox.getChildren().addAll(hbxToner, hbxDrum, hbxError, hbxReady);
+        pane.getChildren().add(leftBox);
+
+
+
+        // Screen
+        VBox centerBox = new VBox();
+        Rectangle rectScreen = new Rectangle(400, 300, Color.BLACK);
+        centerBox.getChildren().add(rectScreen); // TODO there should probably be a switch screen function that switches
+                                              // the FX element to simulate changing the window
+        pane.getChildren().add(centerBox);
+
+
+
+        // Right side
+        VBox rightBox = new VBox();
+        Button button = new Button("I/O");
+        rightBox.getChildren().add(button);
+        pane.getChildren().add(rightBox);
+
+
 
 
 
