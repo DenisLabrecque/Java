@@ -27,6 +27,7 @@ public class ScreenDisplay extends DisplayAssembly {
         super(printer);
         pane.setPrefSize(400, 300);
         this.pane = pane;
+        displayWindowOff();
     }
 
     /**
@@ -44,13 +45,15 @@ public class ScreenDisplay extends DisplayAssembly {
         displayDrumWarningError();
         displayGeneralError();
         displayReadyState();
+
+        displayWindow(currentWindow);
     }
 
     public void clearScreen() {
         for (int i = 0; i < 10; i++)
             System.out.println();
 
-        pane.getChildren().clear();
+        //pane.getChildren().clear();
     }
 
     private void printMessages() {
@@ -153,20 +156,35 @@ public class ScreenDisplay extends DisplayAssembly {
     @Override
     public void displayReadyState() {
         setReadyLightState();
-        Label message = new Label("Ready");
-        pane.getChildren().add(message);
-        pane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         System.out.println("READY");
         System.out.println("   " + readyLED);
     }
 
+
+
+
     @Override
     protected void displayWindowOff() {
+        System.out.println("DEBUG: window " + currentWindow);
+        pane.getChildren().clear();
+        pane.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+    }
 
+    @Override
+    protected void displayWelcomeWindow() {
+        System.out.println("DEBUG: window " + currentWindow);
+        pane.getChildren().clear();
+        pane.setBackground(new Background(new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY)));
+        Text greeting = new Text("Welcome");
+        greeting.getStyleClass().add("white");
+        greeting.getStyleClass().add("h1");
+        Text info = new Text(currentMessage);
+        pane.getChildren().addAll(greeting, info);
     }
 
     @Override
     protected void displayExitWindow() {
+        System.out.println("DEBUG: window " + currentWindow);
         pane.getChildren().clear();
         Text text = new Text("Exit Window"); // TODO this is just a stub; put a panel here with your graphics
         pane.getChildren().add(text);
@@ -174,6 +192,7 @@ public class ScreenDisplay extends DisplayAssembly {
 
     @Override
     protected void displayErrorWindow() {
+        System.out.println("DEBUG: window " + currentWindow);
         pane.getChildren().clear();
         Text text = new Text("Error Screen"); // TODO this is just a stub; put a panel here with your graphics
         pane.getChildren().add(text);
@@ -181,6 +200,7 @@ public class ScreenDisplay extends DisplayAssembly {
 
     @Override
     protected void displayPrintQueueWindow() {
+        System.out.println("DEBUG: window " + currentWindow);
         pane.getChildren().clear();
         Text text = new Text("Print Queue"); // TODO this is just a stub; put a panel here with your graphics
         pane.getChildren().add(text);
@@ -188,6 +208,7 @@ public class ScreenDisplay extends DisplayAssembly {
 
     @Override
     protected void displayFuserWindow() {
+        System.out.println("DEBUG: window " + currentWindow);
         pane.getChildren().clear();
         Text text = new Text("Fuser Screen"); // TODO this is just a stub; put a panel here with your graphics
         pane.getChildren().add(text);
@@ -195,6 +216,7 @@ public class ScreenDisplay extends DisplayAssembly {
 
     @Override
     protected void displayTonerAndDrumWindow() {
+        System.out.println("DEBUG: window " + currentWindow);
         pane.getChildren().clear();
         Text text = new Text("Toner and Drum Screen"); // TODO this is just a stub; put a panel here with your graphics
         pane.getChildren().add(text);
@@ -202,15 +224,9 @@ public class ScreenDisplay extends DisplayAssembly {
 
     @Override
     protected void displayPaperWindow() {
+        System.out.println("DEBUG: window " + currentWindow);
         pane.getChildren().clear();
         Text text = new Text("Paper Trays Screen"); // TODO this is just a stub; put a panel here with your graphics
-        pane.getChildren().add(text);
-    }
-
-    @Override
-    protected void displayWelcomeWindow() {
-        pane.getChildren().clear();
-        Text text = new Text("Welcome"); // TODO this is just a stub; put a panel here with your graphics
         pane.getChildren().add(text);
     }
 }

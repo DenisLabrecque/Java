@@ -142,7 +142,7 @@ public class ConsoleDisplay extends DisplayAssembly {
 
     @Override
     protected void displayWindowOff() {
-        
+
     }
 
     @Override

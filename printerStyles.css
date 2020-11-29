@@ -39,3 +39,11 @@ Button:pressed {
     -fx-background-radius: 8px;
     -fx-margin-top: 10px;
 }
+
+.h1 {
+    -fx-font-size: 25px;
+    -fx-text-align: center;
+}
+.white {
+    -fx-text-fill: white !important;
+}

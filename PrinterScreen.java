@@ -1,5 +1,6 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -32,39 +33,44 @@ public class PrinterScreen extends Application {
 
         // Left indicator light pane
         VBox leftBox = new VBox();
+        leftBox.setAlignment(Pos.BOTTOM_CENTER);
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setPadding(new Insets(10, 10, 15, 20));
+        grid.setHgap(10);
+        grid.setVgap(10);
 
-        HBox hbxToner = new HBox(10);
         Label lblToner = new Label("Toner");
         Circle crcToner = new Circle(10, 10, 5, Color.YELLOW);
         crcToner.setOpacity(0.5);
-        hbxToner.getChildren().addAll(lblToner, crcToner);
+        grid.add(lblToner, 0, 0);
+        grid.add(crcToner, 1, 0);
 
-        HBox hbxDrum = new HBox(10);
         Label lblDrum = new Label("Drum");
         Circle crcDrum = new Circle(10, 10, 5, Color.YELLOW);
         crcDrum.setOpacity(0.5);
-        hbxDrum.getChildren().addAll(lblDrum, crcDrum);
+        grid.add(lblDrum, 0, 1);
+        grid.add(crcDrum, 1, 1);
 
-        HBox hbxError = new HBox(10);
         Label lblError = new Label("Error");
         Circle crcError = new Circle(10, 10, 5, Color.YELLOW);
         crcError.setOpacity(0.5);
-        hbxError.getChildren().addAll(lblError, crcError);
+        grid.add(lblError, 0, 2);
+        grid.add(crcError, 1, 2);
 
-        HBox hbxReady = new HBox(10);
         Label lblReady = new Label("Ready");
         Circle crcReady = new Circle(10, 10, 5, Color.YELLOW);
         crcReady.setOpacity(0.5);
-        hbxReady.getChildren().addAll(lblReady, crcReady);
+        grid.add(lblReady, 0, 3);
+        grid.add(crcReady, 1, 3);
 
-        leftBox.getChildren().addAll(hbxToner, hbxDrum, hbxError, hbxReady);
+        leftBox.getChildren().add(grid);
         pane.getChildren().add(leftBox);
 
 
 
         // Screen
         VBox centerBox = new VBox();
-        centerBox.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         pane.getChildren().add(centerBox);
         printer = new LaserPrinter(centerBox);
 
@@ -115,6 +121,9 @@ public class PrinterScreen extends Application {
             if(!printer.isOnOrPowering()) {
                 printer.powerOn();
                 playSound(SOUND_DOUBLE_BEEP);
+            }
+            else {
+                printer.powerOff();
             }
         });
 

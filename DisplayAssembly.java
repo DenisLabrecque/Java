@@ -23,7 +23,7 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     protected Light errorLED = new Light(Light.Color.RED); // Flashing red if error
     protected Light readyLED = new Light(Light.Color.GREEN); // Solid green, flashing green while powering up/printing
 
-    Window currentWindow = Window.WELCOME_WINDOW;
+    Window currentWindow = Window.OFF;
     String currentMessage = null;
 
     /**
@@ -45,15 +45,7 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
             return;
         }
 
-        // Print a startup message, wait for this component to turn on
-        try {
-            pushMessage("Screen turning on.");
-            Thread.sleep(500); // Time for the screen to turn on
-            activated = true;
-            pushMessage("Screen on.");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        displayWindow(Window.WELCOME_WINDOW);
     }
 
     /**
@@ -63,14 +55,9 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     @Override
     public void deactivate() throws AssemblyException {
         if(activated) {
-            try {
-                pushMessage("Shutting down screen.");
-                Thread.sleep(300);
-                activated = false;
-                pushMessage("Screen shut down.");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            activated = false;
+            displayExitWindow();
+            displayWindowOff();
         }
     }
 
@@ -206,7 +193,7 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
      * @param window The window to display.
      */
     public void displayWindow(ScreenDisplay.Window window) {
-        System.out.println("DEBUG: display window " + window);
+        currentWindow = window;
         switch(window) {
             case OFF:
                 displayWindowOff();
