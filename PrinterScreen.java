@@ -65,9 +65,6 @@ public class PrinterScreen extends Application {
         // Screen
         VBox centerBox = new VBox();
         centerBox.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-
- // TODO there should probably be a switch screen function that switches
-                                              // the FX element to simulate changing the window
         pane.getChildren().add(centerBox);
         printer = new LaserPrinter(centerBox);
 

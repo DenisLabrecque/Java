@@ -207,17 +207,35 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
         System.out.println("DEBUG: display window " + window);
         switch(window) {
             case WELCOME_SCREEN:
+                displayWelcomeScreen();
                 return;
             case PAPER_TRAYS:
+                displayPaperTrayScreen();
                 return;
             case TONER_AND_DRUM:
+                displayTonerAndDrumScreen();
                 return;
             case FUSER:
+                displayFuserScreen();
                 return;
             case PRINT_QUEUE:
+                displayPrintQueueScreen();
                 return;
             case ERRORS:
+                displayErrorScreen();
                 return;
         }
     }
+
+    protected abstract void displayErrorScreen();
+
+    protected abstract void displayPrintQueueScreen();
+
+    protected abstract void displayFuserScreen();
+
+    protected abstract void displayTonerAndDrumScreen();
+
+    protected abstract void displayPaperTrayScreen();
+
+    protected abstract void displayWelcomeScreen();
 }

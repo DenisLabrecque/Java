@@ -1,6 +1,13 @@
+import javafx.geometry.Insets;
 import javafx.scene.SubScene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+
 import java.util.Map;
 
 /**
@@ -148,8 +155,50 @@ public class ScreenDisplay extends DisplayAssembly {
         setReadyLightState();
         Label message = new Label("Ready");
         pane.getChildren().add(message);
-
+        pane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         System.out.println("READY");
         System.out.println("   " + readyLED);
+    }
+
+    @Override
+    protected void displayErrorScreen() {
+        pane.getChildren().clear();
+        Text text = new Text("Error Screen"); // TODO this is just a stub; put a panel here with your graphics
+        pane.getChildren().add(text);
+    }
+
+    @Override
+    protected void displayPrintQueueScreen() {
+        pane.getChildren().clear();
+        Text text = new Text("Print Queue"); // TODO this is just a stub; put a panel here with your graphics
+        pane.getChildren().add(text);
+    }
+
+    @Override
+    protected void displayFuserScreen() {
+        pane.getChildren().clear();
+        Text text = new Text("Fuser Screen"); // TODO this is just a stub; put a panel here with your graphics
+        pane.getChildren().add(text);
+    }
+
+    @Override
+    protected void displayTonerAndDrumScreen() {
+        pane.getChildren().clear();
+        Text text = new Text("Toner and Drum Screen"); // TODO this is just a stub; put a panel here with your graphics
+        pane.getChildren().add(text);
+    }
+
+    @Override
+    protected void displayPaperTrayScreen() {
+        pane.getChildren().clear();
+        Text text = new Text("Paper Trays Screen"); // TODO this is just a stub; put a panel here with your graphics
+        pane.getChildren().add(text);
+    }
+
+    @Override
+    protected void displayWelcomeScreen() {
+        pane.getChildren().clear();
+        Text text = new Text("Welcome"); // TODO this is just a stub; put a panel here with your graphics
+        pane.getChildren().add(text);
     }
 }

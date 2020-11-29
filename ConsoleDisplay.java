@@ -139,4 +139,34 @@ public class ConsoleDisplay extends DisplayAssembly {
         System.out.println("READY");
         System.out.println("   " + readyLED);
     }
+
+    @Override
+    protected void displayErrorScreen() {
+
+    }
+
+    @Override
+    protected void displayPrintQueueScreen() {
+
+    }
+
+    @Override
+    protected void displayFuserScreen() {
+
+    }
+
+    @Override
+    protected void displayTonerAndDrumScreen() {
+
+    }
+
+    @Override
+    protected void displayPaperTrayScreen() {
+
+    }
+
+    @Override
+    protected void displayWelcomeScreen() {
+
+    }
 }

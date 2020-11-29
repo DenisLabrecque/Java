@@ -1,14 +1,17 @@
 Button {
-    -fx-background-color: lightgrey;
+    -fx-background-color: grey;
     -fx-text-fill: white;
+    -fx-padding: 8px;
+    -fx-border-insets: 2px;
+    -fx-background-insets: 2px;
 }
 Button:hover {
-    -fx-background-color: whitesmoke;
-    -fx-text-fill: grey;
+    -fx-background-color: darkgrey;
+    -fx-text-fill: white;
 }
 Button:pressed {
-    -fx-background-color: white;
-    -fx-text-fill: darkgrey;
+    -fx-background-color: lightgrey;
+    -fx-text-fill: white;
 }
 
 .power {
@@ -22,13 +25,17 @@ Button:pressed {
     -fx-min-width: 50px;
     -fx-max-width: 50px;
     -fx-background-radius: 50px;
-    -fx-border-radius: 50px;
-    -fx-border-color: rgb(242, 109, 103);
-    -fx-border-width: 5px;
 }
 .power:hover {
-    -fx-border-color: rgb(224, 51, 79);
+    -fx-background-color: rgb(242, 109, 103);
 }
 .power:pressed {
-    -fx-border-color: white;
+    -fx-background-color: rgb(224, 51, 79);
+}
+
+.tabButton {
+    -fx-min-width: 75px;
+    -fx-max-width: 750px;
+    -fx-background-radius: 8px;
+    -fx-margin-top: 10px;
 }
