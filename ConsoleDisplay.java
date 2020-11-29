@@ -141,32 +141,42 @@ public class ConsoleDisplay extends DisplayAssembly {
     }
 
     @Override
-    protected void displayErrorScreen() {
+    protected void displayWindowOff() {
+        
+    }
+
+    @Override
+    protected void displayExitWindow() {
 
     }
 
     @Override
-    protected void displayPrintQueueScreen() {
+    protected void displayErrorWindow() {
 
     }
 
     @Override
-    protected void displayFuserScreen() {
+    protected void displayPrintQueueWindow() {
 
     }
 
     @Override
-    protected void displayTonerAndDrumScreen() {
+    protected void displayFuserWindow() {
 
     }
 
     @Override
-    protected void displayPaperTrayScreen() {
+    protected void displayTonerAndDrumWindow() {
 
     }
 
     @Override
-    protected void displayWelcomeScreen() {
+    protected void displayPaperWindow() {
+
+    }
+
+    @Override
+    protected void displayWelcomeWindow() {
 
     }
 }

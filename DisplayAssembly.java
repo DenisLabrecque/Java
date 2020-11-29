@@ -6,12 +6,14 @@
 public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssembly {
 
     public enum Window {
-        WELCOME_SCREEN,
+        OFF,
+        WELCOME_WINDOW,
+        EXIT_WINDOW,
         PAPER_TRAYS,
         TONER_AND_DRUM,
         FUSER,
         PRINT_QUEUE,
-        ERRORS
+        ERRORS;
     }
 
     protected LaserPrinter printer;
@@ -21,7 +23,7 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     protected Light errorLED = new Light(Light.Color.RED); // Flashing red if error
     protected Light readyLED = new Light(Light.Color.GREEN); // Solid green, flashing green while powering up/printing
 
-    Window currentWindow = Window.WELCOME_SCREEN;
+    Window currentWindow = Window.WELCOME_WINDOW;
     String currentMessage = null;
 
     /**
@@ -206,36 +208,45 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     public void displayWindow(ScreenDisplay.Window window) {
         System.out.println("DEBUG: display window " + window);
         switch(window) {
-            case WELCOME_SCREEN:
-                displayWelcomeScreen();
+            case OFF:
+                displayWindowOff();
                 return;
+            case WELCOME_WINDOW:
+                displayWelcomeWindow();
+                return;
+            case EXIT_WINDOW:
+                displayExitWindow();
             case PAPER_TRAYS:
-                displayPaperTrayScreen();
+                displayPaperWindow();
                 return;
             case TONER_AND_DRUM:
-                displayTonerAndDrumScreen();
+                displayTonerAndDrumWindow();
                 return;
             case FUSER:
-                displayFuserScreen();
+                displayFuserWindow();
                 return;
             case PRINT_QUEUE:
-                displayPrintQueueScreen();
+                displayPrintQueueWindow();
                 return;
             case ERRORS:
-                displayErrorScreen();
+                displayErrorWindow();
                 return;
         }
     }
 
-    protected abstract void displayErrorScreen();
+    protected abstract void displayWindowOff();
 
-    protected abstract void displayPrintQueueScreen();
+    protected abstract void displayExitWindow();
 
-    protected abstract void displayFuserScreen();
+    protected abstract void displayErrorWindow();
 
-    protected abstract void displayTonerAndDrumScreen();
+    protected abstract void displayPrintQueueWindow();
 
-    protected abstract void displayPaperTrayScreen();
+    protected abstract void displayFuserWindow();
 
-    protected abstract void displayWelcomeScreen();
+    protected abstract void displayTonerAndDrumWindow();
+
+    protected abstract void displayPaperWindow();
+
+    protected abstract void displayWelcomeWindow();
 }
