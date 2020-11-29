@@ -9,7 +9,6 @@ import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.media.*;
 
@@ -76,6 +75,53 @@ public class PrinterScreen extends Application {
 
         // Right side
         VBox rightBox = new VBox();
+
+        // Paper tab
+        Button btnPaper = new Button("Paper");
+        btnPaper.getStyleClass().add("tabButton");
+        btnPaper.setOnAction(e -> {
+            if(printer.isOnOrPowering()) {
+                playSound(SOUND_BEEP);
+            }
+        });
+
+        // Toner tab
+        Button btnToner = new Button("Toner");
+        btnToner.getStyleClass().add("tabButton");
+        btnToner.setOnAction(e -> {
+            if(printer.isOnOrPowering()) {
+                playSound(SOUND_BEEP);
+            }
+        });
+
+        // Fuser tab
+        Button btnFuser = new Button("Fuser");
+        btnFuser.getStyleClass().add("tabButton");
+        btnFuser.setOnAction(e -> {
+            if(printer.isOnOrPowering()) {
+                playSound(SOUND_BEEP);
+            }
+        });
+
+        // Queue tab
+        Button btnQueue = new Button("Queue");
+        btnQueue.getStyleClass().add("tabButton");
+        btnQueue.setOnAction(e -> {
+            if(printer.isOnOrPowering()) {
+                playSound(SOUND_BEEP);
+            }
+        });
+
+        // Error tab
+        Button btnErrors = new Button("Errors");
+        btnErrors.getStyleClass().add("tabButton");
+        btnErrors.setOnAction(e -> {
+            if(printer.isOnOrPowering()) {
+                playSound(SOUND_BEEP);
+            }
+        });
+
+        // Power
         Button btnPower = new Button();
         btnPower.getStyleClass().add("power");
         btnPower.setOnAction(e -> {
@@ -84,7 +130,8 @@ public class PrinterScreen extends Application {
                 playSound(SOUND_DOUBLE_BEEP);
             }
         });
-        rightBox.getChildren().add(btnPower);
+
+        rightBox.getChildren().addAll(btnPaper, btnToner, btnFuser, btnQueue, btnErrors, btnPower);
         pane.getChildren().add(rightBox);
 
 
