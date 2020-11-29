@@ -47,6 +47,7 @@ public class ScreenDisplay extends DisplayAssembly {
         displayGeneralError();
         displayReadyState();
 
+        System.out.println("DEBUG: refresh() called and displaying window ->");
         displayWindow(currentWindow);
     }
 

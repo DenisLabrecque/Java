@@ -73,14 +73,43 @@ public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
 		while (currentTemp < targetTemp) {
 			currentTemp += TEMP_INCREASE * sign;
 
-			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), new EventHandler<ActionEvent>() {
+			Task<Void> sleeper = new Task<Void>() {
 				@Override
-				public void handle(ActionEvent event) {
-					System.out.println("Current: " + currentTemp);
-					printer.push("Fuser warming up... " + currentTemp);
+				protected Void call() {
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+					}
+					return null;
 				}
-			}));
-			timeline.play();
+			};
+			sleeper.setOnSucceeded(event -> {
+				System.out.println("Current: " + currentTemp);
+				printer.push("Fuser warming up... " + currentTemp);
+			});
+			new Thread(sleeper).start();
+
+
+			
+//			Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), new EventHandler<ActionEvent>() {
+//				@Override
+//				public void handle(ActionEvent event) {
+//					System.out.println("Current: " + currentTemp);
+//					printer.push("Fuser warming up... " + currentTemp);
+//				}
+//			}));
+//			timeline.play();
+
+
+
+//			try {
+//				Thread.sleep(100);
+//				System.out.println("Current: " + currentTemp);
+//				printer.push("Fuser warming up... " + currentTemp);
+//				printer.display().refresh();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 		}
 		printer.push("Fuser on.");
 		return currentTemp;
