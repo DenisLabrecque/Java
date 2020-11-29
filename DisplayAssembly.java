@@ -8,7 +8,7 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     public enum Window {
         OFF,
         WELCOME_WINDOW,
-        EXIT_WINDOW,
+        EXIT,
         PAPER_TRAYS,
         TONER_AND_DRUM,
         FUSER,
@@ -56,8 +56,8 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     public void deactivate() throws AssemblyException {
         if(activated) {
             activated = false;
-            displayExitWindow();
-            displayWindowOff();
+            displayWindow(Window.EXIT);
+            displayWindow(Window.OFF);
         }
     }
 
@@ -201,7 +201,7 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
             case WELCOME_WINDOW:
                 displayWelcomeWindow();
                 return;
-            case EXIT_WINDOW:
+            case EXIT:
                 displayExitWindow();
             case PAPER_TRAYS:
                 displayPaperWindow();

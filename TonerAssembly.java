@@ -24,7 +24,7 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
 
         try {
             printer.push("Reading toner values.");
-            Thread.sleep(100);
+            Thread.sleep(0);
             activated = true;
             printer.push("Toner ready.");
         } catch (InterruptedException e) {

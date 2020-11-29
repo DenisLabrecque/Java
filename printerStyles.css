@@ -45,5 +45,7 @@ Button:pressed {
     -fx-text-align: center;
 }
 .white {
-    -fx-text-fill: white !important;
+    -fx-text-fill: white;
+    -fx-text-base-color: white;
+    -fx-text-background-color: white;
 }

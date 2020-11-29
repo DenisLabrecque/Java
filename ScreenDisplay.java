@@ -1,6 +1,7 @@
 import javafx.geometry.Insets;
 import javafx.scene.SubScene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -175,10 +176,11 @@ public class ScreenDisplay extends DisplayAssembly {
         System.out.println("DEBUG: window " + currentWindow);
         pane.getChildren().clear();
         pane.setBackground(new Background(new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY)));
-        Text greeting = new Text("Welcome");
+        Label greeting = new Label("Welcome");
         greeting.getStyleClass().add("white");
         greeting.getStyleClass().add("h1");
-        Text info = new Text(currentMessage);
+        Label info = new Label(currentMessage);
+        info.getStyleClass().add("white");
         pane.getChildren().addAll(greeting, info);
     }
 

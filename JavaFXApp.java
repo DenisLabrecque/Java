@@ -15,7 +15,7 @@ import javafx.scene.media.*;
 
 import java.io.File;
 
-public class PrinterScreen extends Application {
+public class JavaFXApp extends Application {
 
     public static final String SOUND_BEEP = "351208__gokhanbiyik__beep-03.wav";
     public static final String SOUND_DOUBLE_BEEP = "351209__gokhanbiyik__beep-02.wav";
