@@ -80,45 +80,35 @@ public class PrinterScreen extends Application {
         Button btnPaper = new Button("Paper");
         btnPaper.getStyleClass().add("tabButton");
         btnPaper.setOnAction(e -> {
-            if(printer.isOnOrPowering()) {
-                playSound(SOUND_BEEP);
-            }
+            displayWindow(DisplayAssembly.Window.PAPER_TRAYS);
         });
 
         // Toner tab
         Button btnToner = new Button("Toner");
         btnToner.getStyleClass().add("tabButton");
         btnToner.setOnAction(e -> {
-            if(printer.isOnOrPowering()) {
-                playSound(SOUND_BEEP);
-            }
+            displayWindow(DisplayAssembly.Window.TONER_AND_DRUM);
         });
 
         // Fuser tab
         Button btnFuser = new Button("Fuser");
         btnFuser.getStyleClass().add("tabButton");
         btnFuser.setOnAction(e -> {
-            if(printer.isOnOrPowering()) {
-                playSound(SOUND_BEEP);
-            }
+            displayWindow(DisplayAssembly.Window.FUSER);
         });
 
         // Queue tab
         Button btnQueue = new Button("Queue");
         btnQueue.getStyleClass().add("tabButton");
         btnQueue.setOnAction(e -> {
-            if(printer.isOnOrPowering()) {
-                playSound(SOUND_BEEP);
-            }
+            displayWindow(DisplayAssembly.Window.PRINT_QUEUE);
         });
 
         // Error tab
         Button btnErrors = new Button("Errors");
         btnErrors.getStyleClass().add("tabButton");
         btnErrors.setOnAction(e -> {
-            if(printer.isOnOrPowering()) {
-                playSound(SOUND_BEEP);
-            }
+            displayWindow(DisplayAssembly.Window.ERRORS);
         });
 
         // Power
@@ -149,6 +139,13 @@ public class PrinterScreen extends Application {
         primaryStage.setTitle("Laser Printer");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public void displayWindow(DisplayAssembly.Window window) {
+        if(printer.isOnOrPowering()) {
+            playSound(SOUND_BEEP);
+            printer.display().displayWindow(window);
+        }
     }
 
     /**

@@ -11,16 +11,6 @@ import java.util.Map;
 public class ScreenDisplay extends DisplayAssembly {
 
     Pane pane;
-    Window currentWindow = Window.WELCOME_SCREEN;
-
-    enum Window {
-        WELCOME_SCREEN,
-        PAPER_TRAYS,
-        TONER_AND_DRUM,
-        FUSER,
-        PRINT_QUEUE,
-        ERRORS
-    }
 
     /**
      * Constructor. Create a console display with a reference back to the printer.
@@ -161,27 +151,5 @@ public class ScreenDisplay extends DisplayAssembly {
 
         System.out.println("READY");
         System.out.println("   " + readyLED);
-    }
-
-
-    /**
-     * Display a certain window.
-     * @param window The window to display.
-     */
-    public void displayWindow(Window window) {
-        switch(window) {
-            case WELCOME_SCREEN:
-                return;
-            case PAPER_TRAYS:
-                return;
-            case TONER_AND_DRUM:
-                return;
-            case FUSER:
-                return;
-            case PRINT_QUEUE:
-                return;
-            case ERRORS:
-                return;
-        }
     }
 }

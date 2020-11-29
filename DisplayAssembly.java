@@ -5,6 +5,15 @@
  */
 public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssembly {
 
+    public enum Window {
+        WELCOME_SCREEN,
+        PAPER_TRAYS,
+        TONER_AND_DRUM,
+        FUSER,
+        PRINT_QUEUE,
+        ERRORS
+    }
+
     protected LaserPrinter printer;
 
     protected Light tonerLED = new Light(); // Solid yellow if warning, flashing red if error
@@ -12,6 +21,7 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     protected Light errorLED = new Light(Light.Color.RED); // Flashing red if error
     protected Light readyLED = new Light(Light.Color.GREEN); // Solid green, flashing green while powering up/printing
 
+    Window currentWindow = Window.WELCOME_SCREEN;
     String currentMessage = null;
 
     /**
@@ -187,5 +197,27 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     protected void reset() {
         printer.exceptions().clear();
         currentMessage = null;
+    }
+
+    /**
+     * Display a certain window.
+     * @param window The window to display.
+     */
+    public void displayWindow(ScreenDisplay.Window window) {
+        System.out.println("DEBUG: display window " + window);
+        switch(window) {
+            case WELCOME_SCREEN:
+                return;
+            case PAPER_TRAYS:
+                return;
+            case TONER_AND_DRUM:
+                return;
+            case FUSER:
+                return;
+            case PRINT_QUEUE:
+                return;
+            case ERRORS:
+                return;
+        }
     }
 }
