@@ -41,10 +41,11 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     @Override
     public void activate() throws AssemblyException {
         if(activated == true) {
-            pushMessage("Display already activated.");
+            pushMessage("DEBUG: display already activated.");
             return;
         }
 
+        activated = true;
         displayWindow(Window.WELCOME_WINDOW);
     }
 
@@ -55,9 +56,9 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     @Override
     public void deactivate() throws AssemblyException {
         if(activated) {
-            activated = false;
             displayWindow(Window.EXIT);
             displayWindow(Window.OFF);
+            activated = false;
         }
     }
 

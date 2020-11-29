@@ -119,10 +119,11 @@ public class JavaFXApp extends Application {
         btnPower.getStyleClass().add("power");
         btnPower.setOnAction(e -> {
             if(!printer.isOnOrPowering()) {
-                printer.powerOn();
                 playSound(SOUND_DOUBLE_BEEP);
+                printer.powerOn();
             }
             else {
+                playSound(SOUND_BEEP);
                 printer.powerOff();
             }
         });
