@@ -1,13 +1,11 @@
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -18,6 +16,10 @@ import javafx.scene.media.*;
 import java.io.File;
 
 public class PrinterScreen extends Application {
+
+    public static final String SOUND_BEEP = "351208__gokhanbiyik__beep-03.wav";
+    public static final String SOUND_DOUBLE_BEEP = "351209__gokhanbiyik__beep-02.wav";
+    public static final String SOUND_ERROR = "445978__breviceps__error-signal-2.wav";
 
     public LaserPrinter printer;
 
@@ -63,8 +65,9 @@ public class PrinterScreen extends Application {
 
         // Screen
         VBox centerBox = new VBox();
-        Rectangle rectScreen = new Rectangle(400, 300, Color.LIGHTGREY);
-        centerBox.getChildren().add(rectScreen); // TODO there should probably be a switch screen function that switches
+        centerBox.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+
+ // TODO there should probably be a switch screen function that switches
                                               // the FX element to simulate changing the window
         pane.getChildren().add(centerBox);
         printer = new LaserPrinter(centerBox);
@@ -73,14 +76,12 @@ public class PrinterScreen extends Application {
 
         // Right side
         VBox rightBox = new VBox();
-        Button btnPower = new Button("Power");
+        Button btnPower = new Button();
         btnPower.getStyleClass().add("power");
         btnPower.setOnAction(e -> {
             if(!printer.isOnOrPowering()) {
                 printer.powerOn();
-                Media sound = new Media(new File("351209__gokhanbiyik__beep-02.wav").toURI().toString());
-                MediaPlayer mediaPlayer = new MediaPlayer(sound);
-                mediaPlayer.play();
+                playSound(SOUND_DOUBLE_BEEP);
             }
         });
         rightBox.getChildren().add(btnPower);
@@ -101,5 +102,14 @@ public class PrinterScreen extends Application {
         primaryStage.setTitle("Laser Printer");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    /**
+     * Play a sound by file name.
+     */
+    private void playSound(String fileName) {
+        Media sound = new Media(new File(fileName).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
     }
 }

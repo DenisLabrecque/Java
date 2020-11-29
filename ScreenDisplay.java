@@ -1,3 +1,4 @@
+import javafx.scene.SubScene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import java.util.Map;
@@ -17,6 +18,7 @@ public class ScreenDisplay extends DisplayAssembly {
      */
     public ScreenDisplay(LaserPrinter printer, Pane pane) {
         super(printer);
+        pane.setPrefSize(400, 300);
         this.pane = pane;
     }
 
@@ -143,7 +145,6 @@ public class ScreenDisplay extends DisplayAssembly {
     public void displayReadyState() {
         setReadyLightState();
         Label message = new Label("Ready");
-        pane.getChildren().clear();
         pane.getChildren().add(message);
 
         System.out.println("READY");
