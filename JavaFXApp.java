@@ -59,10 +59,6 @@ public class JavaFXApp extends Application {
 
         Label lblReady = new Label("Ready");
         Circle crcReady = new Circle(10, 10, 5, Color.WHITE);
-        FillTransition transition = new FillTransition(Duration.millis(1000), crcReady, Color.GREEN, Color.WHITE);
-        transition.setCycleCount(Timeline.INDEFINITE);
-        transition.setAutoReverse(true);
-        transition.play();
         grid.add(lblReady, 0, 3);
         grid.add(crcReady, 1, 3);
 

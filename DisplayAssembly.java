@@ -1,3 +1,5 @@
+import javafx.scene.paint.Color;
+
 /**
  * Represents a printer's display. To connect to an actual display, this class must be extended by a subclass
  * that represents the screen. For purposes of this homework, that is either the console or JavaFX.
@@ -20,8 +22,8 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
 
     protected Light tonerLED = new Light(); // Solid yellow if warning, flashing red if error
     protected Light drumLED  = new Light(); // Solid yellow if warning, flashing red if error
-    protected Light errorLED = new Light(Light.Color.RED); // Flashing red if error
-    protected Light readyLED = new Light(Light.Color.GREEN); // Solid green, flashing green while powering up/printing
+    protected Light errorLED = new Light(Color.RED); // Flashing red if error
+    protected Light readyLED = new Light(Color.GREEN); // Solid green, flashing green while powering up/printing
 
     Window currentWindow = Window.OFF;
     String currentMessage = null;
@@ -118,15 +120,15 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     protected void setTonerLightState() {
         if (printer.toner().isActive()) {
             if (printer.toner().isError()) {
-                tonerLED.setColor(Light.Color.RED);
+                tonerLED.setColor(Color.RED);
                 tonerLED.setPattern(Light.Pattern.FLASHING);
             }
             else if (printer.toner().isWarning()) {
-                tonerLED.setColor(Light.Color.YELLOW);
+                tonerLED.setColor(Color.YELLOW);
                 tonerLED.setPattern(Light.Pattern.SOLID);
             }
             else {
-                tonerLED.setColor(Light.Color.GREEN);
+                tonerLED.setColor(Color.GREEN);
                 tonerLED.setPattern(Light.Pattern.SOLID);
             }
         }
@@ -140,13 +142,13 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     protected void setDrumLightState() {
         if (printer.printAssembly().drumIsActive()) {
             if (printer.exceptions().containsKey(AssemblyException.PrinterIssue.DRUM)) {
-                drumLED.setColor(Light.Color.RED);
+                drumLED.setColor(Color.RED);
                 drumLED.setPattern(Light.Pattern.FLASHING);
             } else if (printer.printAssembly().isWarning()) {
-                drumLED.setColor(Light.Color.YELLOW);
+                drumLED.setColor(Color.YELLOW);
                 drumLED.setPattern(Light.Pattern.SOLID);
             } else {
-                drumLED.setColor(Light.Color.GREEN);
+                drumLED.setColor(Color.GREEN);
                 drumLED.setPattern(Light.Pattern.SOLID);
             }
         }

@@ -128,11 +128,13 @@ public class ScreenDisplay extends DisplayAssembly {
     }
 
     /**
-     * Display toner warning/error.
+     * Display toner warning/error LED.
+     * Yellow if warning, flashing red if error.
      */
     @Override
     public void displayTonerWarningError() {
         setTonerLightState();
+        setLED(tonerLED, tonerLight);
         System.out.println("TONER");
         System.out.println("   " + tonerLED);
 
@@ -144,11 +146,13 @@ public class ScreenDisplay extends DisplayAssembly {
     }
 
     /**
-     * Display drum warning/error.
+     * Display drum warning/error LED.
+     * Yellow if warning, flashing red if error.
      */
     @Override
     public void displayDrumWarningError() {
         setDrumLightState();
+        setLED(drumLED, drumLight);
         System.out.println("DRUM");
         System.out.println("   " + drumLED);
 
@@ -159,11 +163,13 @@ public class ScreenDisplay extends DisplayAssembly {
     }
 
     /**
-     * Display general error (jam typically).
+     * Display general error LED (jam typically).
+     * Flashing red if error.
      */
     @Override
     public void displayGeneralError() {
         setErrorLightState();
+        setLED(errorLED, errorLight);
         System.out.println("ERROR");
         System.out.println("   " + errorLED);
 
@@ -178,16 +184,45 @@ public class ScreenDisplay extends DisplayAssembly {
     }
 
     /**
-     * Display powering up, printing, waiting.
+     * Display powering up, printing, waiting LED.
+     * Flashing green while powering up or printing, solid green otherwise.
      */
     @Override
     public void displayReadyState() {
         setReadyLightState();
+        setLED(readyLED, readyLight);
         System.out.println("READY");
         System.out.println("   " + readyLED);
     }
 
+    /**
+     * Set the JavaFX circle that represents the LED to match its object representation.
+     * @param lightObject Object that contains what the light's pattern and color should be
+     * @param circle JavaFX light that represents a real-world LED
+     */
+    private void setLED(Light lightObject, Circle circle) {
+        // Off or color
+        if(lightObject.isLit())
+            circle.setFill(lightObject.color());
+        else {
+            circle.setFill(Color.WHITE);
+            return;
+        }
 
+        // Flashing transition
+        if(lightObject.pattern() == Light.Pattern.FLASHING) {
+            FillTransition transition = new FillTransition(Duration.millis(1000), circle, lightObject.color(), Color.WHITE);
+            transition.setCycleCount(Timeline.INDEFINITE);
+            transition.setAutoReverse(true);
+            transition.play();
+        }
+        else {
+            FillTransition transition = new FillTransition(Duration.ZERO, circle, lightObject.color(), lightObject.color());
+            transition.setCycleCount(1);
+            transition.play();
+            transition.stop();
+        }
+    }
 
 
     @Override
@@ -265,7 +300,7 @@ public class ScreenDisplay extends DisplayAssembly {
      * Empty the window of any contents, and change the background color.
      * @param color Black if the printer is supposed to be off, and white if the printer is on.
      */
-    protected void clearWithColor(Color color) {
+    private void clearWithColor(Color color) {
         System.out.println("DEBUG: window " + currentWindow);
         pane.getChildren().clear();
         pane.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
