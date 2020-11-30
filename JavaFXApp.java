@@ -4,8 +4,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
@@ -18,8 +16,9 @@ import java.io.File;
 public class JavaFXApp extends Application {
 
     public static final String SOUND_BEEP = "351208__gokhanbiyik__beep-03.wav";
-    public static final String SOUND_DOUBLE_BEEP = "351209__gokhanbiyik__beep-02.wav";
+    public static final String SOUND_ON = "351209__gokhanbiyik__beep-02.wav";
     public static final String SOUND_ERROR = "445978__breviceps__error-signal-2.wav";
+    public static final String SOUND_OFF = "351209__gokhanbiyik__beep-02_down.wav";
 
     public LaserPrinter printer;
 
@@ -120,11 +119,11 @@ public class JavaFXApp extends Application {
         btnPower.getStyleClass().add("power");
         btnPower.setOnAction(e -> {
             if(!printer.isOnOrPowering()) {
-                playSound(SOUND_DOUBLE_BEEP);
+                playSound(SOUND_ON);
                 printer.powerOn();
             }
             else {
-                playSound(SOUND_BEEP);
+                playSound(SOUND_OFF);
                 printer.powerOff();
             }
         });
