@@ -1,3 +1,5 @@
+import javafx.animation.FillTransition;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.scene.media.*;
+import javafx.util.Duration;
 
 import java.io.File;
 
@@ -41,25 +44,25 @@ public class JavaFXApp extends Application {
 
         Label lblToner = new Label("Toner");
         Circle crcToner = new Circle(10, 10, 5, Color.YELLOW);
-        crcToner.setOpacity(0.5);
         grid.add(lblToner, 0, 0);
         grid.add(crcToner, 1, 0);
 
         Label lblDrum = new Label("Drum");
         Circle crcDrum = new Circle(10, 10, 5, Color.YELLOW);
-        crcDrum.setOpacity(0.5);
         grid.add(lblDrum, 0, 1);
         grid.add(crcDrum, 1, 1);
 
         Label lblError = new Label("Error");
         Circle crcError = new Circle(10, 10, 5, Color.YELLOW);
-        crcError.setOpacity(0.5);
         grid.add(lblError, 0, 2);
         grid.add(crcError, 1, 2);
 
         Label lblReady = new Label("Ready");
-        Circle crcReady = new Circle(10, 10, 5, Color.YELLOW);
-        crcReady.setOpacity(0.5);
+        Circle crcReady = new Circle(10, 10, 5, Color.WHITE);
+        FillTransition transition = new FillTransition(Duration.millis(1000), crcReady, Color.GREEN, Color.WHITE);
+        transition.setCycleCount(Timeline.INDEFINITE);
+        transition.setAutoReverse(true);
+        transition.play();
         grid.add(lblReady, 0, 3);
         grid.add(crcReady, 1, 3);
 
@@ -73,6 +76,7 @@ public class JavaFXApp extends Application {
         centerBox.setPadding(new Insets(20, 20, 20, 20));
         pane.getChildren().add(centerBox);
         printer = new LaserPrinter(centerBox);
+        printer.screenDisplay().addLights(crcToner, crcDrum, crcError, crcReady);
 
 
 
