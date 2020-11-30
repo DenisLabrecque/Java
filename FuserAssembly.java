@@ -75,7 +75,7 @@ public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
 
 			try {
 				Thread.sleep(0);
-				System.out.println("Current: " + currentTemp);
+				//System.out.println("Current: " + currentTemp);
 				printer.push("Fuser warming up... " + currentTemp);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
