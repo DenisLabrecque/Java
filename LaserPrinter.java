@@ -1,4 +1,6 @@
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +46,13 @@ public class LaserPrinter {
 	public DisplayAssembly display() {
 		return display;
 	}
+
+	/**
+	 * Property.
+	 * @return This printer's DisplayAssembly as a ScreenDisplay. Will only work if the printer is connected to a
+	 * screen as opposed to a console.
+	 */
+	public ScreenDisplay screenDisplay() { return (ScreenDisplay)display; }
 
 	/**
 	 * Property.

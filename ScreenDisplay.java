@@ -1,3 +1,7 @@
+import javafx.animation.FadeTransition;
+import javafx.animation.FillTransition;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.SubScene;
 import javafx.scene.control.Label;
@@ -7,7 +11,9 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.util.Map;
 
@@ -19,16 +25,35 @@ import java.util.Map;
 public class ScreenDisplay extends DisplayAssembly {
 
     Pane pane;
+    Circle tonerLight;
+    Circle drumLight;
+    Circle errorLight;
+    Circle readyLight;
 
     /**
      * Constructor. Create a console display with a reference back to the printer.
      * @param printer The printer this display is showing information for.
      */
-    public ScreenDisplay(LaserPrinter printer, Pane pane) {
+    public ScreenDisplay(LaserPrinter printer, Pane screen) {
         super(printer);
-        pane.setPrefSize(400, 300);
-        this.pane = pane;
+        screen.setPrefSize(400, 300);
+        this.pane = screen;
         displayWindowOff();
+    }
+
+    /**
+     * Passes in the different JavaFX LEDs so they can be updated and animated by the display.
+     * @param tonerLight
+     * @param drumLight
+     * @param errorLight
+     * @param readyLight
+     */
+    public void addLights(Circle tonerLight, Circle drumLight, Circle errorLight, Circle readyLight) {
+        System.out.println("DEBUG: lights added");
+        this.tonerLight = tonerLight;
+        this.drumLight = drumLight;
+        this.errorLight = errorLight;
+        this.readyLight = readyLight;
     }
 
     /**
@@ -236,6 +261,10 @@ public class ScreenDisplay extends DisplayAssembly {
         pane.getChildren().add(text);
     }
 
+    /**
+     * Empty the window of any contents, and change the background color.
+     * @param color Black if the printer is supposed to be off, and white if the printer is on.
+     */
     protected void clearWithColor(Color color) {
         System.out.println("DEBUG: window " + currentWindow);
         pane.getChildren().clear();
