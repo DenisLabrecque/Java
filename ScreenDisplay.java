@@ -174,62 +174,71 @@ public class ScreenDisplay extends DisplayAssembly {
 
     @Override
     protected void displayWelcomeWindow() {
-        System.out.println("DEBUG: window " + currentWindow);
-        pane.getChildren().clear();
-        pane.setBackground(new Background(new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY)));
-        Label greeting = new Label("Welcome");
+        clearWithColor(Color.BLACK);
+        Label greeting = new Label("Laser Printer");
         greeting.getStyleClass().add("white");
         greeting.getStyleClass().add("h1");
-        Label info = new Label(currentMessage);
-        info.getStyleClass().add("white");
-        pane.getChildren().addAll(greeting, info);
+
+        Label label1 = new Label("A project presented by:");
+        label1.getStyleClass().add("white");
+        Label label2 = new Label("Joel Luther");
+        label2.getStyleClass().add("white");
+        Label label3 = new Label("Cameron Keefe");
+        label3.getStyleClass().add("white");
+        Label label4 = new Label("Denis Labrecque");
+        label4.getStyleClass().add("white");
+        Label label5 = new Label("Hendy Nathaniel");
+        label5.getStyleClass().add("white");
+        Label label6 = new Label("Zahin Uriostegui");
+        label6.getStyleClass().add("white");
+        pane.getChildren().addAll(greeting, label1, label2, label3, label4, label5, label6);
     }
 
     @Override
     protected void displayExitWindow() {
-        System.out.println("DEBUG: window " + currentWindow);
-        pane.getChildren().clear();
+        clearWithColor(Color.WHITE);
         Text text = new Text("Exit Window"); // TODO this is just a stub; put a panel here with your graphics
         pane.getChildren().add(text);
     }
 
     @Override
     protected void displayErrorWindow() {
-        System.out.println("DEBUG: window " + currentWindow);
-        pane.getChildren().clear();
+        clearWithColor(Color.WHITE);
         Text text = new Text("Error Screen"); // TODO this is just a stub; put a panel here with your graphics
         pane.getChildren().add(text);
     }
 
     @Override
     protected void displayPrintQueueWindow() {
-        System.out.println("DEBUG: window " + currentWindow);
-        pane.getChildren().clear();
+        clearWithColor(Color.WHITE);
         Text text = new Text("Print Queue"); // TODO this is just a stub; put a panel here with your graphics
         pane.getChildren().add(text);
     }
 
     @Override
     protected void displayFuserWindow() {
-        System.out.println("DEBUG: window " + currentWindow);
-        pane.getChildren().clear();
+        clearWithColor(Color.WHITE);
         Text text = new Text("Fuser Screen"); // TODO this is just a stub; put a panel here with your graphics
         pane.getChildren().add(text);
     }
 
     @Override
     protected void displayTonerAndDrumWindow() {
-        System.out.println("DEBUG: window " + currentWindow);
-        pane.getChildren().clear();
+        clearWithColor(Color.WHITE);
         Text text = new Text("Toner and Drum Screen"); // TODO this is just a stub; put a panel here with your graphics
         pane.getChildren().add(text);
     }
 
     @Override
     protected void displayPaperWindow() {
-        System.out.println("DEBUG: window " + currentWindow);
-        pane.getChildren().clear();
+        clearWithColor(Color.WHITE);
         Text text = new Text("Paper Trays Screen"); // TODO this is just a stub; put a panel here with your graphics
         pane.getChildren().add(text);
+    }
+
+    protected void clearWithColor(Color color) {
+        System.out.println("DEBUG: window " + currentWindow);
+        pane.getChildren().clear();
+        pane.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 }

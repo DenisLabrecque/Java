@@ -71,6 +71,7 @@ public class JavaFXApp extends Application {
 
         // Screen
         VBox centerBox = new VBox();
+        centerBox.setPadding(new Insets(20, 20, 20, 20));
         pane.getChildren().add(centerBox);
         printer = new LaserPrinter(centerBox);
 
