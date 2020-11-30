@@ -201,27 +201,28 @@ public class ScreenDisplay extends DisplayAssembly {
      * @param circle JavaFX light that represents a real-world LED
      */
     private void setLED(Light lightObject, Circle circle) {
-        // Off or color
-        if(lightObject.isLit())
-            circle.setFill(lightObject.color());
-        else {
+        if(lightObject.pattern() == Light.Pattern.OFF) {
             circle.setFill(Color.WHITE);
             return;
         }
-
-        // Flashing transition
-        if(lightObject.pattern() == Light.Pattern.FLASHING) {
-            FillTransition transition = new FillTransition(Duration.millis(1000), circle, lightObject.color(), Color.WHITE);
-            transition.setCycleCount(Timeline.INDEFINITE);
-            transition.setAutoReverse(true);
-            transition.play();
-        }
         else {
-            FillTransition transition = new FillTransition(Duration.ZERO, circle, lightObject.color(), lightObject.color());
-            transition.setCycleCount(1);
-            transition.play();
-            transition.stop();
+            circle.setFill(lightObject.color());
         }
+
+
+//        // Flashing transition
+//        if(lightObject.pattern() == Light.Pattern.FLASHING) {
+//            FillTransition transition = new FillTransition(Duration.millis(1000), circle, lightObject.color(), Color.WHITE);
+//            transition.setCycleCount(Timeline.INDEFINITE);
+//            transition.setAutoReverse(true);
+//            transition.play();
+//        }
+//        else {
+//            FillTransition transition = new FillTransition(Duration.ZERO, circle, lightObject.color(), lightObject.color());
+//            transition.setCycleCount(1);
+//            transition.play();
+//            transition.stop();
+//        }
     }
 
 

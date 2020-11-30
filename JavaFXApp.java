@@ -43,17 +43,17 @@ public class JavaFXApp extends Application {
         grid.setVgap(10);
 
         Label lblToner = new Label("Toner");
-        Circle crcToner = new Circle(10, 10, 5, Color.YELLOW);
+        Circle crcToner = new Circle(10, 10, 5, Color.WHITE);
         grid.add(lblToner, 0, 0);
         grid.add(crcToner, 1, 0);
 
         Label lblDrum = new Label("Drum");
-        Circle crcDrum = new Circle(10, 10, 5, Color.YELLOW);
+        Circle crcDrum = new Circle(10, 10, 5, Color.WHITE);
         grid.add(lblDrum, 0, 1);
         grid.add(crcDrum, 1, 1);
 
         Label lblError = new Label("Error");
-        Circle crcError = new Circle(10, 10, 5, Color.YELLOW);
+        Circle crcError = new Circle(10, 10, 5, Color.WHITE);
         grid.add(lblError, 0, 2);
         grid.add(crcError, 1, 2);
 
