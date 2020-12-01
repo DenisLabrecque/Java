@@ -1,3 +1,12 @@
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.util.Duration;
+import java.util.concurrent.TimeUnit;
+
 public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
 	private static final int TEMP_MAX = 450;   //maximum heat of 451 (honestly thought it was a boring book)
 	private static final int TEMP_MIN  = 240;  //minimum heat of 240
@@ -63,9 +72,11 @@ public class FuserAssembly extends AssemblyUnit implements ISimAssembly {
 			sign = -1;
 		while (currentTemp < targetTemp) {
 			currentTemp += TEMP_INCREASE * sign;
+
 			try {
-				Thread.sleep(10);
-				System.out.println("Current: " + currentTemp);
+				Thread.sleep(0);
+				//System.out.println("Current: " + currentTemp);
+				printer.push("Fuser warming up... " + currentTemp);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

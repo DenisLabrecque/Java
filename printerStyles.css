@@ -1,0 +1,51 @@
+Button {
+    -fx-background-color: grey;
+    -fx-text-fill: white;
+    -fx-padding: 8px;
+    -fx-border-insets: 2px;
+    -fx-background-insets: 2px;
+}
+Button:hover {
+    -fx-background-color: darkgrey;
+    -fx-text-fill: white;
+}
+Button:pressed {
+    -fx-background-color: lightgrey;
+    -fx-text-fill: white;
+}
+
+.power {
+    -fx-background-color: rgb(224, 51, 79);
+    -fx-background-image: url("power-icon.png");
+    -fx-background-size: 50%;
+    -fx-background-position: center, center;
+    -fx-background-repeat: no-repeat;
+    -fx-min-height: 50px;
+    -fx-max-height: 50px;
+    -fx-min-width: 50px;
+    -fx-max-width: 50px;
+    -fx-background-radius: 50px;
+}
+.power:hover {
+    -fx-background-color: rgb(242, 109, 103);
+}
+.power:pressed {
+    -fx-background-color: rgb(224, 51, 79);
+}
+
+.tabButton {
+    -fx-min-width: 75px;
+    -fx-max-width: 750px;
+    -fx-background-radius: 8px;
+    -fx-margin-top: 10px;
+}
+
+.h1 {
+    -fx-font-size: 25px;
+    -fx-text-align: center;
+}
+.white {
+    -fx-text-fill: white;
+    -fx-text-base-color: white;
+    -fx-text-background-color: white;
+}

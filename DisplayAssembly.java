@@ -1,3 +1,5 @@
+import javafx.scene.paint.Color;
+
 /**
  * Represents a printer's display. To connect to an actual display, this class must be extended by a subclass
  * that represents the screen. For purposes of this homework, that is either the console or JavaFX.
@@ -5,13 +7,25 @@
  */
 public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssembly {
 
+    public enum Window {
+        OFF,
+        WELCOME_WINDOW,
+        EXIT,
+        PAPER_TRAYS,
+        TONER_AND_DRUM,
+        FUSER,
+        PRINT_QUEUE,
+        ERRORS;
+    }
+
     protected LaserPrinter printer;
 
     protected Light tonerLED = new Light(); // Solid yellow if warning, flashing red if error
     protected Light drumLED  = new Light(); // Solid yellow if warning, flashing red if error
-    protected Light errorLED = new Light(Light.Color.RED); // Flashing red if error
-    protected Light readyLED = new Light(Light.Color.GREEN); // Solid green, flashing green while powering up/printing
+    protected Light errorLED = new Light(Color.RED); // Flashing red if error
+    protected Light readyLED = new Light(Color.GREEN); // Solid green, flashing green while powering up/printing
 
+    Window currentWindow = Window.OFF;
     String currentMessage = null;
 
     /**
@@ -29,19 +43,12 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     @Override
     public void activate() throws AssemblyException {
         if(activated == true) {
-            pushMessage("Display already activated.");
+            pushMessage("DEBUG: display already activated.");
             return;
         }
 
-        // Print a startup message, wait for this component to turn on
-        try {
-            pushMessage("Screen turning on.");
-            Thread.sleep(500); // Time for the screen to turn on
-            activated = true;
-            pushMessage("Screen on.");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        activated = true;
+        displayWindow(Window.WELCOME_WINDOW);
     }
 
     /**
@@ -51,14 +58,9 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     @Override
     public void deactivate() throws AssemblyException {
         if(activated) {
-            try {
-                pushMessage("Shutting down screen.");
-                Thread.sleep(300);
-                activated = false;
-                pushMessage("Screen shut down.");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            displayWindow(Window.EXIT);
+            displayWindow(Window.OFF);
+            activated = false;
         }
     }
 
@@ -118,15 +120,15 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     protected void setTonerLightState() {
         if (printer.toner().isActive()) {
             if (printer.toner().isError()) {
-                tonerLED.setColor(Light.Color.RED);
+                tonerLED.setColor(Color.RED);
                 tonerLED.setPattern(Light.Pattern.FLASHING);
             }
             else if (printer.toner().isWarning()) {
-                tonerLED.setColor(Light.Color.YELLOW);
+                tonerLED.setColor(Color.YELLOW);
                 tonerLED.setPattern(Light.Pattern.SOLID);
             }
             else {
-                tonerLED.setColor(Light.Color.GREEN);
+                tonerLED.setColor(Color.GREEN);
                 tonerLED.setPattern(Light.Pattern.SOLID);
             }
         }
@@ -140,13 +142,13 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     protected void setDrumLightState() {
         if (printer.printAssembly().drumIsActive()) {
             if (printer.exceptions().containsKey(AssemblyException.PrinterIssue.DRUM)) {
-                drumLED.setColor(Light.Color.RED);
+                drumLED.setColor(Color.RED);
                 drumLED.setPattern(Light.Pattern.FLASHING);
             } else if (printer.printAssembly().isWarning()) {
-                drumLED.setColor(Light.Color.YELLOW);
+                drumLED.setColor(Color.YELLOW);
                 drumLED.setPattern(Light.Pattern.SOLID);
             } else {
-                drumLED.setColor(Light.Color.GREEN);
+                drumLED.setColor(Color.GREEN);
                 drumLED.setPattern(Light.Pattern.SOLID);
             }
         }
@@ -188,4 +190,53 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
         printer.exceptions().clear();
         currentMessage = null;
     }
+
+    /**
+     * Display a certain window.
+     * @param window The window to display.
+     */
+    public void displayWindow(ScreenDisplay.Window window) {
+        currentWindow = window;
+        switch(window) {
+            case OFF:
+                displayWindowOff();
+                return;
+            case WELCOME_WINDOW:
+                displayWelcomeWindow();
+                return;
+            case EXIT:
+                displayExitWindow();
+            case PAPER_TRAYS:
+                displayPaperWindow();
+                return;
+            case TONER_AND_DRUM:
+                displayTonerAndDrumWindow();
+                return;
+            case FUSER:
+                displayFuserWindow();
+                return;
+            case PRINT_QUEUE:
+                displayPrintQueueWindow();
+                return;
+            case ERRORS:
+                displayErrorWindow();
+                return;
+        }
+    }
+
+    protected abstract void displayWindowOff();
+
+    protected abstract void displayExitWindow();
+
+    protected abstract void displayErrorWindow();
+
+    protected abstract void displayPrintQueueWindow();
+
+    protected abstract void displayFuserWindow();
+
+    protected abstract void displayTonerAndDrumWindow();
+
+    protected abstract void displayPaperWindow();
+
+    protected abstract void displayWelcomeWindow();
 }

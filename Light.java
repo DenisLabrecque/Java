@@ -1,12 +1,9 @@
+import javafx.scene.paint.Color;
+
 /**
  * LED used to indicate the printer's status.
  */
 public class Light {
-    private static final float FLASH_SECONDS = 0.8f;
-
-    public enum Color {
-        RED, YELLOW, GREEN
-    }
     public enum Pattern {
         SOLID, FLASHING, OFF
     }
@@ -38,6 +35,12 @@ public class Light {
     public void setPattern(Pattern pattern) {
         this.pattern = pattern;
     }
+
+    /**
+     * Property.
+     * @return The current light's pattern.
+     */
+    public Pattern pattern() { return pattern; }
 
     /**
      * Property.

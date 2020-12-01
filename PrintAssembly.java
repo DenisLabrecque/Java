@@ -53,7 +53,7 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 		while (rotationalSpeed < MIRROR_RPM) {
 			rotationalSpeed += MIRROR_SPINUP;
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(0);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
@@ -65,7 +65,7 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 		while (rotationalSpeed > 0) {
 			rotationalSpeed -= MIRROR_SPINDOWN;
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(0);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}

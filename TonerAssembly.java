@@ -1,5 +1,5 @@
 public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
-	private static final int FULL_TONER = 2000;
+	private static final int FULL_TONER = 5000;
 	private static final int TONER_LOW  = 300;
 	private static final int TONER_EMPTY= 25;
 	private int tonerLvl;
@@ -14,6 +14,7 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
     public TonerAssembly(LaserPrinter printer) {
         super();
         this.printer = printer;
+        tonerLvl = FULL_TONER;
     }
     
     @Override
@@ -23,10 +24,9 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
 
         try {
             printer.push("Reading toner values.");
-            Thread.sleep(100);
+            Thread.sleep(0);
             activated = true;
             printer.push("Toner ready.");
-			tonerLvl = FULL_TONER;
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -38,7 +38,11 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
     public void deactivate() throws AssemblyException {
 		activated = false;
     }
-
+    
+    public boolean isActive() {
+		return activated;
+	}
+    
     @Override
     public void setValue(int newValue) {
     	this.tonerLvl = newValue;
@@ -49,9 +53,7 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
         return tonerLvl;
     }
 
-	public boolean isActive() {
-		return activated;
-	}
+	
 
 
     /**
@@ -68,14 +70,24 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
     public boolean isEmpty() {
     	return (tonerLvl <= TONER_EMPTY);
         }
-
+    
+    /**
+     * Consume Toner
+     */
+    public int consumeToner() {
+    	if (tonerLvl > TONER_EMPTY)
+    		return tonerLvl -= 1;
+    	else 
+    		return TONER_EMPTY;
+    }
+    
     /**
      * Set levels back to 100%.
      */
     public void refill() {
         setValue(FULL_TONER);
     }
-
+    
     /**
      * Property.
      * @return Warning message.
