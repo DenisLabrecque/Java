@@ -285,9 +285,12 @@ public class ScreenDisplay extends DisplayAssembly {
 
     @Override
     protected void displayTonerAndDrumWindow() {
-        clearWithColor(Color.WHITE);
-        Text text = new Text("Toner and Drum Screen"); // TODO this is just a stub; put a panel here with your graphics
-        pane.getChildren().add(text);
+        clearWithColor(Color.ORANGE);
+		Label screenHeader = new Label("Toner and Drum");
+        screenHeader.getStyleClass().add("black");
+		screenHeader.getStyleClass().add("h1");
+		// TODO this is just a stub; put a panel here with your graphics
+        pane.getChildren().add(screenHeader);
     }
 
     @Override
