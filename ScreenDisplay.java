@@ -3,8 +3,11 @@ import javafx.animation.FillTransition;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.SubScene;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -12,7 +15,12 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import javafx.scene.chart.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.Map;
@@ -29,6 +37,11 @@ public class ScreenDisplay extends DisplayAssembly {
     Circle drumLight;
     Circle errorLight;
     Circle readyLight;
+	
+	int tonerLevel = 65;
+	int drumLevel = 95;
+		
+	XYChart.Series series = new XYChart.Series();
 
     /**
      * Constructor. Create a console display with a reference back to the printer.
@@ -285,12 +298,64 @@ public class ScreenDisplay extends DisplayAssembly {
 
     @Override
     protected void displayTonerAndDrumWindow() {
+		
+		Stage mainStage = new Stage();
+		
+		Pane rootPane = new Pane();
+		Scene scene = new Scene(rootPane, 750, 500);
+		
+		mainStage.setScene(scene);
+		
         clearWithColor(Color.ORANGE);
-		Label screenHeader = new Label("Toner and Drum");
+		Label screenHeader = new Label("Toner and Drum Levels");
         screenHeader.getStyleClass().add("black");
 		screenHeader.getStyleClass().add("h1");
 		// TODO this is just a stub; put a panel here with your graphics
         pane.getChildren().add(screenHeader);
+		
+		CategoryAxis xAxis = new CategoryAxis();
+		xAxis.setLabel("Levels");
+		
+		NumberAxis yAxis = new NumberAxis();
+		yAxis.setLabel("Quanity %");
+		
+		BarChart barChart = new BarChart(xAxis, yAxis);
+		
+		series.getData().add(new XYChart.Data("Toner", tonerLevel));
+		series.getData().add(new XYChart.Data("Drum", drumLevel));
+		
+		barChart.getData().add(series);
+		
+		Button replaceTonerButton = new Button("Replace Toner");
+		replaceTonerButton.setOnAction( e -> replaceTonerAction());
+		Button replaceDrumButton = new Button("Replace Drum");
+		replaceDrumButton.setOnAction(e -> replaceDrumAction());
+		
+		HBox levelButtons = new HBox();
+		levelButtons.setSpacing(50);
+		levelButtons.setAlignment(Pos.CENTER);
+		levelButtons.getChildren().addAll(replaceTonerButton, replaceDrumButton);
+		
+		VBox levelLayout = new VBox(10);
+		levelLayout.setPadding(new Insets(5, 5, 5, 50));
+		levelLayout.getChildren().addAll(barChart, levelButtons);
+		
+		HBox displayElements = new HBox();
+		displayElements.setSpacing(10);
+		displayElements.setAlignment(Pos.CENTER);
+		displayElements.getChildren().addAll(levelLayout);
+		
+		Line sepLine = new Line(0, 0, 700, 0);
+		sepLine.setStrokeWidth(10);
+		sepLine.setStroke(Color.BLACK);
+		
+		VBox lastLayout = new VBox(10);
+		lastLayout.setPadding(new Insets(5, 5, 5, 50));
+		lastLayout.getChildren().addAll(displayElements, sepLine);
+		
+		scene.setRoot(lastLayout);
+		
+		mainStage.show();
     }
 
     @Override
@@ -309,4 +374,18 @@ public class ScreenDisplay extends DisplayAssembly {
         pane.getChildren().clear();
         pane.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
     }
+	
+	private void replaceTonerAction() {
+		tonerLevel = 100;
+		series.getData().clear();
+		series.getData().add(new XYChart.Data("Toner", tonerLevel));
+		series.getData().add(new XYChart.Data("Drum", drumLevel));
+	}
+	
+	private void replaceDrumAction() {
+		drumLevel = 100;
+		series.getData().clear();
+		series.getData().add(new XYChart.Data("Toner", tonerLevel));
+		series.getData().add(new XYChart.Data("Drum", drumLevel));
+	}
 }
