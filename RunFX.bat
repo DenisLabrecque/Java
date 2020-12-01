@@ -1,1 +1,1 @@
-java --module-path %PATH_TO_FX% --add-modules javafx.controls %1
+java --module-path %PATH_TO_FX% --add-modules javafx.controls,javafx.media JavaFXApp
