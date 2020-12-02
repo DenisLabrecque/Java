@@ -44,8 +44,8 @@ public class ScreenDisplay extends DisplayAssembly {
     Circle errorLight;
     Circle readyLight;
 	
-	int tonerLevel = 65;
-	int drumLevel = 95;
+	//int tonerLevel = 65;
+	//int drumLevel = 95;
 	int fuserLevel = 65;
 	
 	XYChart.Series series = new XYChart.Series();
@@ -403,7 +403,7 @@ public class ScreenDisplay extends DisplayAssembly {
 
     @Override
     protected void displayFuserWindow() {
-        Stage stageTwo = new Stage();
+        /*Stage stageTwo = new Stage();
 		
 		Pane rootTwo = new Pane();
 		Scene sceneTwo = new Scene(rootTwo, 750, 500);
@@ -458,7 +458,7 @@ public class ScreenDisplay extends DisplayAssembly {
 		
 		sceneTwo.setRoot(fuserLayout);
 		
-		stageTwo.show();
+		stageTwo.show();*/
     }
 
     @Override
@@ -486,8 +486,10 @@ public class ScreenDisplay extends DisplayAssembly {
 		
 		BarChart barChart = new BarChart(xAxis, yAxis);
 		
-		series.getData().add(new XYChart.Data("Toner", tonerLevel));
-		series.getData().add(new XYChart.Data("Drum", drumLevel));
+		series.getData().clear();
+		
+		series.getData().add(new XYChart.Data("Toner", printer.toner().getValue()));
+		series.getData().add(new XYChart.Data("Drum", printer.printAssembly().getDrumLife()));
 		
 		barChart.getData().add(series);
 		
@@ -577,17 +579,17 @@ public class ScreenDisplay extends DisplayAssembly {
    
 	
 	private void replaceTonerAction() {
-		tonerLevel = 100;
+		printer.toner().refill();
 		series.getData().clear();
-		series.getData().add(new XYChart.Data("Toner", tonerLevel));
-		series.getData().add(new XYChart.Data("Drum", drumLevel));
+		series.getData().add(new XYChart.Data("Toner", printer.toner().getValue()));
+		series.getData().add(new XYChart.Data("Drum", printer.printAssembly().getDrumLife()));
 	}
 	
 	private void replaceDrumAction() {
-		drumLevel = 100;
+		printer.printAssembly().resetDrumLife();
 		series.getData().clear();
-		series.getData().add(new XYChart.Data("Toner", tonerLevel));
-		series.getData().add(new XYChart.Data("Drum", drumLevel));
+		series.getData().add(new XYChart.Data("Toner", printer.toner().getValue()));
+		series.getData().add(new XYChart.Data("Drum", printer.printAssembly().getDrumLife()));
 	}
 	
 	private void normalFuserAction() {

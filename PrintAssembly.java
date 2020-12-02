@@ -3,13 +3,14 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 	private final int MIRROR_RPM = 200;
 	private final int MIRROR_SPINUP = 50;
 	private final int MIRROR_SPINDOWN = 25;
-	private final int MAX_DRUM_LIFE = 500;
+	private final int MAX_DRUM_LIFE = 5000;
 	private final int DRUM_LIFE_WARNING = 100;
 
 	private int rotationalSpeed;
 	private boolean coronaChargeStatus;
 	private boolean dischargeLampStatus;
 	private int sheetsPrinted;
+	private int drumLife;
 
 	/**
 	 * Constructor.
@@ -22,6 +23,7 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 		coronaChargeStatus = false;
 		dischargeLampStatus = false;
 		sheetsPrinted = 0;
+		drumLife = MAX_DRUM_LIFE;
 		
 	}
 
@@ -118,12 +120,12 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 
 	// Return true if PrintAssembly has low drum life
 	public boolean isWarning() {
-		return MAX_DRUM_LIFE - sheetsPrinted <= DRUM_LIFE_WARNING;
+		return drumLife <= DRUM_LIFE_WARNING;
 	}
 
 	@Override
 	public void setValue(int sheetsPrinted) {
-		this.sheetsPrinted =  sheetsPrinted;
+		this.sheetsPrinted = sheetsPrinted;
 	}
 
 	@Override
@@ -137,5 +139,17 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 	 */
 	public String drumWarning() {
 		return "Drum nearly worn out.";
+	}
+	
+	public void resetDrumLife() {
+		this.drumLife = MAX_DRUM_LIFE;
+	}
+	
+	public int getDrumLife() {
+		return this.drumLife;
+	}
+	
+	public void consumeDrum(int consumeDrum) {
+		this.drumLife -= consumeDrum;
 	}
 }
