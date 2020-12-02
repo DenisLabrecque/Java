@@ -56,3 +56,9 @@ Button:pressed {
     -fx-background-radius: 8px;
     -fx-margin-top: 10px;
 }
+
+.red {
+	-fx-text-fill: red;
+    -fx-text-base-color: red;
+    -fx-text-background-color: red;
+}

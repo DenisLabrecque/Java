@@ -365,7 +365,14 @@ public class ScreenDisplay extends DisplayAssembly {
 			refresh();
 		});
 		
-        pane.getChildren().addAll(title, totalQueueLabel, grid);
+		pane.getChildren().addAll(title, totalQueueLabel, grid);
+		
+		Label errorPrint = new Label();
+		if(!printer.exceptions().isEmpty()) {
+			errorPrint.setText("Please fix the error before printing.");
+			errorPrint.getStyleClass().add("red");
+			pane.getChildren().add(errorPrint);
+		}
 		
 		Label queueEmpty = new Label();
 		//queueEmpty.getStyleClass().add("white");
