@@ -536,7 +536,7 @@ public class ScreenDisplay extends DisplayAssembly {
 
     @Override
     protected void displayPaperWindow() {
-        clearWithColor(Color.WHITE);
+        clearWithColor(Color.ORANGE);
         Text title = new Text("Paper Tray");
         title.getStyleClass().add("h1");
         HBox hbox = new HBox();
