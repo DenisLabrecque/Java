@@ -49,6 +49,7 @@ public class ScreenDisplay extends DisplayAssembly {
 	int fuserLevel = 65;
 	
 	XYChart.Series series = new XYChart.Series();
+	
 
     /**
      * Constructor. Create a console display with a reference back to the printer.
@@ -405,11 +406,10 @@ public class ScreenDisplay extends DisplayAssembly {
         Stage stageTwo = new Stage();
 		
 		Pane rootTwo = new Pane();
-		Scene scene = new Scene(rootTwo, 750, 500);
+		Scene sceneTwo = new Scene(rootTwo, 750, 500);
 		
-		stageTwo.setScene(scene);
+		stageTwo.setScene(sceneTwo);
 		
-		final NumberAxis yAxis = new NumberAxis (0, 1, 0.1);
         clearWithColor(Color.ORANGE);
 		Label screenHeader = new Label("Fuser Screen");
         screenHeader.getStyleClass().add("black");
@@ -419,7 +419,15 @@ public class ScreenDisplay extends DisplayAssembly {
 		CategoryAxis xAxis = new CategoryAxis();
 		xAxis.setLabel("Temperature");
 		
+<<<<<<< Updated upstream
 		//NumberAxis yAxis = new NumberAxis();
+=======
+<<<<<<< HEAD
+		final NumberAxis yAxis = new NumberAxis(10, 450, 25);
+=======
+		//NumberAxis yAxis = new NumberAxis();
+>>>>>>> 0e9657490b5f7cc2d469f6a06760ee64b2b3acf9
+>>>>>>> Stashed changes
 		yAxis.setLabel("Degrees");
 		
 		BarChart barChart = new BarChart(xAxis, yAxis);
@@ -447,15 +455,12 @@ public class ScreenDisplay extends DisplayAssembly {
 		displayElements.setAlignment(Pos.CENTER);
 		displayElements.getChildren().addAll(levelLayout);
 		
-		Line sepLine = new Line(0, 0, 700, 0);
-		sepLine.setStrokeWidth(10);
-		sepLine.setStroke(Color.BLACK);
+
+		VBox fuserLayout = new VBox(10);
+		fuserLayout.setPadding(new Insets(5, 5, 5, 50));
+		fuserLayout.getChildren().addAll(displayElements);
 		
-		VBox lastLayout = new VBox(10);
-		lastLayout.setPadding(new Insets(5, 5, 5, 50));
-		lastLayout.getChildren().addAll(displayElements, sepLine);
-		
-		scene.setRoot(lastLayout);
+		sceneTwo.setRoot(fuserLayout);
 		
 		stageTwo.show();
     }
