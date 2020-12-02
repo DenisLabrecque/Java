@@ -46,7 +46,7 @@ public class ScreenDisplay extends DisplayAssembly {
 	
 	int tonerLevel = 65;
 	int drumLevel = 95;
-	int fuserLevel = 10;
+	int fuserLevel = 65;
 	
 	XYChart.Series series = new XYChart.Series();
 
@@ -398,7 +398,7 @@ public class ScreenDisplay extends DisplayAssembly {
         pane.getChildren().add(screenHeader);
 		
 		CategoryAxis xAxis = new CategoryAxis();
-		xAxis.setLabel("Temprature");
+		xAxis.setLabel("Temperature");
 		
 		NumberAxis yAxis = new NumberAxis();
 		yAxis.setLabel("Degrees");
@@ -420,7 +420,7 @@ public class ScreenDisplay extends DisplayAssembly {
 		levelButtons.getChildren().addAll(normalFuserButton, thickFuserButton);
 		
 		VBox levelLayout = new VBox(10);
-		levelLayout.setPadding(new Insets(5, 5, 5, 50));
+		levelLayout.setPadding(new Insets(5, 50, 5, 50));
 		levelLayout.getChildren().addAll(barChart, levelButtons);
 		
 		HBox displayElements = new HBox();
