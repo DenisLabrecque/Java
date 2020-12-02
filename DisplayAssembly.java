@@ -127,10 +127,8 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
                 tonerLED.setColor(Color.YELLOW);
                 tonerLED.setPattern(Light.Pattern.SOLID);
             }
-            else {
-                tonerLED.setColor(Color.GREEN);
-                tonerLED.setPattern(Light.Pattern.SOLID);
-            }
+            else
+                tonerLED.setPattern(Light.Pattern.OFF);
         }
         else
             tonerLED.setPattern(Light.Pattern.OFF);
@@ -147,10 +145,8 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
             } else if (printer.printAssembly().isWarning()) {
                 drumLED.setColor(Color.YELLOW);
                 drumLED.setPattern(Light.Pattern.SOLID);
-            } else {
-                drumLED.setColor(Color.GREEN);
-                drumLED.setPattern(Light.Pattern.SOLID);
-            }
+            } else
+                drumLED.setPattern(Light.Pattern.OFF);
         }
         else
             drumLED.setPattern(Light.Pattern.OFF);
