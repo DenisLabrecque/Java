@@ -391,6 +391,7 @@ public class ScreenDisplay extends DisplayAssembly {
 		
 		stageTwo.setScene(scene);
 		
+		final NumberAxis yAxis = new NumberAxis (0, 1, 0.1);
         clearWithColor(Color.ORANGE);
 		Label screenHeader = new Label("Fuser Screen");
         screenHeader.getStyleClass().add("black");
