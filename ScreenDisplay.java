@@ -583,6 +583,7 @@ public class ScreenDisplay extends DisplayAssembly {
 		series.getData().clear();
 		series.getData().add(new XYChart.Data("Toner", printer.toner().getValue()));
 		series.getData().add(new XYChart.Data("Drum", printer.printAssembly().getDrumLife()));
+		refresh();
 	}
 	
 	private void replaceDrumAction() {
@@ -590,6 +591,7 @@ public class ScreenDisplay extends DisplayAssembly {
 		series.getData().clear();
 		series.getData().add(new XYChart.Data("Toner", printer.toner().getValue()));
 		series.getData().add(new XYChart.Data("Drum", printer.printAssembly().getDrumLife()));
+		refresh();
 	}
 	
 	private void normalFuserAction() {
