@@ -289,11 +289,30 @@ public class ScreenDisplay extends DisplayAssembly {
 		title.getStyleClass().add("white");
         title.getStyleClass().add("h1");
 		
+		Label error = new Label();
+		error.getStyleClass().add("white");
+		if(printer.exceptions().isEmpty()) {
+			error.setText("There is no error.");
+		}
+		else {
+			StringBuilder builder = new StringBuilder();
+			for (Map.Entry<AssemblyException.PrinterIssue, AssemblyException> entry : printer.exceptions().entrySet())
+				builder.append("   " + entry.getValue().getMessage() + "\n");
+			error.setText(builder.toString());			
+		}
+		
+	
+		
 		Button clearErrorsButton = new Button("Clear Errors");
 		clearErrorsButton.getStyleClass().add("queueButton");
-		clearErrorsButton.setOnAction(e -> printer.display().reset());
 		
-        pane.getChildren().addAll(title, clearErrorsButton);
+		clearErrorsButton.setOnAction(e -> {
+			printer.display().reset();
+			//setLED(errorLED, errorLight);
+			displayErrorWindow();
+		});
+		
+        pane.getChildren().addAll(title, clearErrorsButton, error);
     }
 
     @Override
@@ -308,42 +327,6 @@ public class ScreenDisplay extends DisplayAssembly {
 		
 		Label totalQueueLabel = new Label("Total Queue : " + Integer.toString(totalQueue));
 		totalQueueLabel.getStyleClass().add("white");
-		
-        pane.getChildren().addAll(title, totalQueueLabel);
-		
-		Label queueEmpty = new Label();
-		queueEmpty.getStyleClass().add("white");
-		if(totalQueue == 0) {
-			queueEmpty.setText("There is no queue.");
-			pane.getChildren().add(queueEmpty);
-		}
-		else {
-			GridPane queueGrid = new GridPane();
-			Label[] separateQueue = new Label[totalQueue];
-			Label[] queueID = new Label[totalQueue];
-			Label[] queueName = new Label[totalQueue];
-			Label[] queuePages = new Label[totalQueue];
-			
-			for(int i = 0; i < totalQueue; i++)
-			{
-				separateQueue[i] = new Label("*****************************************************");
-				separateQueue[i].getStyleClass().add("white");
-
-
-				queueID[i] = new Label("ID: " + Integer.toString(printer.queue().getID(i)));
-				queueID[i].getStyleClass().add("white");
-
-				queueName[i] = new Label("Name: " + printer.queue().getName(i));
-				queueName[i].getStyleClass().add("white");
-								
-				queuePages[i] = new Label("Pages: " + printer.queue().getPages(i));
-				queuePages[i].getStyleClass().add("white");
-
-				
-				pane.getChildren().addAll(separateQueue[i], queueID[i], queueName[i], queuePages[i]);
-			}
-		}
-		
 		
 		/* Print, Cancel, Add, and Clear Button */
 		GridPane grid = new GridPane();
@@ -379,7 +362,40 @@ public class ScreenDisplay extends DisplayAssembly {
 			displayPrintQueueWindow();
 		});
 		
-		pane.getChildren().add(grid);
+        pane.getChildren().addAll(title, totalQueueLabel, grid);
+		
+		Label queueEmpty = new Label();
+		queueEmpty.getStyleClass().add("white");
+		if(totalQueue == 0) {
+			queueEmpty.setText("There is no queue.");
+			pane.getChildren().add(queueEmpty);
+		}
+		else {
+			GridPane queueGrid = new GridPane();
+			Label[] separateQueue = new Label[totalQueue];
+			Label[] queueID = new Label[totalQueue];
+			Label[] queueName = new Label[totalQueue];
+			Label[] queuePages = new Label[totalQueue];
+			
+			for(int i = 0; i < totalQueue; i++)
+			{
+				separateQueue[i] = new Label("*****************************************************");
+				separateQueue[i].getStyleClass().add("white");
+
+
+				queueID[i] = new Label("ID: " + Integer.toString(printer.queue().getID(i)));
+				queueID[i].getStyleClass().add("white");
+
+				queueName[i] = new Label("Name: " + printer.queue().getName(i));
+				queueName[i].getStyleClass().add("white");
+								
+				queuePages[i] = new Label("Pages: " + printer.queue().getPages(i));
+				queuePages[i].getStyleClass().add("white");
+
+				
+				pane.getChildren().addAll(separateQueue[i], queueID[i], queueName[i], queuePages[i]);
+			}
+		}
     }
 
     @Override
@@ -610,8 +626,6 @@ public class ScreenDisplay extends DisplayAssembly {
 		add.setOnAction(e -> {
 			if(!fieldName.getText().isEmpty() && !fieldPage.getText().isEmpty()) {
 				printer.addJob(fieldName.getText(), Integer.parseInt(fieldPage.getText()));
-				//labelName.setText(fieldName.getText());
-				//labelPage.setText(fieldPage.getText());
 				displayPrintQueueWindow();
 			}
 		});
