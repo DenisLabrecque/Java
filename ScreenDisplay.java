@@ -384,8 +384,23 @@ public class ScreenDisplay extends DisplayAssembly {
     @Override
     protected void displayFuserWindow() {
         clearWithColor(Color.WHITE);
-        Text text = new Text("Fuser Screen"); // TODO this is just a stub; put a panel here with your graphics
-        pane.getChildren().add(text);
+        Text text = new Text("Fuser Screen"); // TODO this is just a stub;
+         Rectangle bar = new Rectangle(200, 3); 
+         bar.setArcWidth(6);
+         bar.setArcHeight(6);
+         bar.setFill(COLOR);
+         Label label = new Label(TEXT);
+         label.setTextFill(COLOR);
+         label.setAlignment(Pos.CENTER);
+         label.setPadding(new Insets(0, 0, 10, 0));
+         GAUGE.setBarColor(COLOR);
+         GAUGE.setBarBackgroundColor(Color.rgb(39,44,50);
+         GAUGE.setAnimated(true);
+         VBox vBox = new VBox(bar, label, GAUGE);
+         vBox.setSpacing(3);
+         vBox.setAlignment(Pos.CENTER);
+         put a panel here with your graphics
+         pane.getChildren().add(text);
     }
 
     @Override
