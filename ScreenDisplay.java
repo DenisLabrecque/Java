@@ -417,7 +417,7 @@ public class ScreenDisplay extends DisplayAssembly {
 		CategoryAxis xAxis = new CategoryAxis();
 		xAxis.setLabel("Temperature");
 		
-		NumberAxis yAxis = new NumberAxis();
+		//NumberAxis yAxis = new NumberAxis();
 		yAxis.setLabel("Degrees");
 		
 		BarChart barChart = new BarChart(xAxis, yAxis);
