@@ -77,6 +77,18 @@ public class PrinterQueue implements ISimAssembly {
 	public boolean isEmpty() {
 		return printerQueue.size() == 0;
 	}
+	
+	public int getID(int i) {
+		return printerQueue.get(i).getID();
+	}
+	
+	public String getName(int i) {
+		return printerQueue.get(i).getName();
+	}
+	
+	public int getPages(int i) {
+		return printerQueue.get(i).getPageCount();
+	}
 
 	@Override
 	public void setError(int newValue) {

@@ -304,13 +304,43 @@ public class ScreenDisplay extends DisplayAssembly {
 		Label totalQueueLabel = new Label("Total Queue : " + Integer.toString(totalQueue));
 		totalQueueLabel.getStyleClass().add("white");
 		
-		Label queueList = new Label();
-		queueList.getStyleClass().add("white");
-		if(totalQueue == 0)
-			queueList.setText("There is no queue.");
+        pane.getChildren().addAll(title, totalQueueLabel);
 		
-		//queueList.setText(printer.queue().returnList());
+		Label queueEmpty = new Label();
+		queueEmpty.getStyleClass().add("white");
+		if(totalQueue == 0) {
+			queueEmpty.setText("There is no queue.");
+			pane.getChildren().add(queueEmpty);
+		}
+		else {
+			GridPane queueGrid = new GridPane();
+			Label[] separateQueue = new Label[totalQueue];
+			Label[] queueID = new Label[totalQueue];
+			Label[] queueName = new Label[totalQueue];
+			Label[] queuePages = new Label[totalQueue];
+			
+			for(int i = 0; i < totalQueue; i++)
+			{
+				separateQueue[i] = new Label("*****************************************************");
+				separateQueue[i].getStyleClass().add("white");
+
+
+				queueID[i] = new Label("ID: " + Integer.toString(printer.queue().getID(i)));
+				queueID[i].getStyleClass().add("white");
+
+				queueName[i] = new Label("Name: " + printer.queue().getName(i));
+				queueName[i].getStyleClass().add("white");
+								
+				queuePages[i] = new Label("Pages: " + printer.queue().getPages(i));
+				queuePages[i].getStyleClass().add("white");
+
+				
+				pane.getChildren().addAll(separateQueue[i], queueID[i], queueName[i], queuePages[i]);
+			}
+		}
 		
+		
+		/* Print, Cancel, Add, and Clear Button */
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.BOTTOM_CENTER);
         grid.setPadding(new Insets(10, 10, 15, 20));
@@ -326,7 +356,10 @@ public class ScreenDisplay extends DisplayAssembly {
 		Button cancelButton = new Button("Cancel");
 		cancelButton.getStyleClass().add("queueButton");
 		grid.add(cancelButton, 2, 0, 1, 1);
-		//add.setOnAction(e -> printer.queue().remove());
+		cancelButton.setOnAction(e -> {
+			printer.queue().remove(printer.queue().getID(0));
+			displayPrintQueueWindow();
+		});
 		
 		Button addButton = new Button("Add");
 		addButton.getStyleClass().add("queueButton");
@@ -340,8 +373,8 @@ public class ScreenDisplay extends DisplayAssembly {
 			printer.queue().clearQueue();
 			displayPrintQueueWindow();
 		});
-
-        pane.getChildren().addAll(title, totalQueueLabel, queueList, grid);
+		
+		pane.getChildren().add(grid);
     }
 
     @Override
