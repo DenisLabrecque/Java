@@ -384,7 +384,7 @@ public class ScreenDisplay extends DisplayAssembly {
 
     @Override
     protected void displayFuserWindow() {
-        Stage mainStage = new Stage();
+        Stage stageTwo = new Stage();
 		
 		Pane rootPane = new Pane();
 		Scene scene = new Scene(rootPane, 750, 500);
@@ -438,7 +438,7 @@ public class ScreenDisplay extends DisplayAssembly {
 		
 		scene.setRoot(lastLayout);
 		
-		mainStage.show();
+		stageTwo.show();
     }
 
     @Override
