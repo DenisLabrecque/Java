@@ -78,6 +78,11 @@ public class JavaFXApp extends Application {
 
         // Right side
         VBox rightBox = new VBox();
+        rightBox.setAlignment(Pos.BOTTOM_CENTER);
+        GridPane gridRight = new GridPane();
+        gridRight.setAlignment(Pos.CENTER);
+        gridRight.setPadding(new Insets(10, 20, 15, 10));
+        gridRight.setVgap(10);
 
         // Paper tab
         Button btnPaper = new Button("Paper");
@@ -85,6 +90,7 @@ public class JavaFXApp extends Application {
         btnPaper.setOnAction(e -> {
             displayWindow(DisplayAssembly.Window.PAPER_TRAYS);
         });
+        gridRight.add(btnPaper, 0, 0);
 
         // Toner tab
         Button btnToner = new Button("Toner");
@@ -92,6 +98,7 @@ public class JavaFXApp extends Application {
         btnToner.setOnAction(e -> {
             displayWindow(DisplayAssembly.Window.TONER_AND_DRUM);
         });
+        gridRight.add(btnToner, 0, 1);
 
         // Fuser tab
         Button btnFuser = new Button("Fuser");
@@ -99,6 +106,7 @@ public class JavaFXApp extends Application {
         btnFuser.setOnAction(e -> {
             displayWindow(DisplayAssembly.Window.FUSER);
         });
+        gridRight.add(btnFuser, 0, 2);
 
         // Queue tab
         Button btnQueue = new Button("Queue");
@@ -106,6 +114,7 @@ public class JavaFXApp extends Application {
         btnQueue.setOnAction(e -> {
             displayWindow(DisplayAssembly.Window.PRINT_QUEUE);
         });
+        gridRight.add(btnQueue, 0, 3);
 
         // Error tab
         Button btnErrors = new Button("Errors");
@@ -113,6 +122,7 @@ public class JavaFXApp extends Application {
         btnErrors.setOnAction(e -> {
             displayWindow(DisplayAssembly.Window.ERRORS);
         });
+        gridRight.add(btnErrors, 0, 4);
 
         // Power
         Button btnPower = new Button();
@@ -127,8 +137,10 @@ public class JavaFXApp extends Application {
                 printer.powerOff();
             }
         });
+        btnPower.setAlignment(Pos.CENTER);
+        gridRight.add(btnPower, 0, 5);
 
-        rightBox.getChildren().addAll(btnPaper, btnToner, btnFuser, btnQueue, btnErrors, btnPower);
+        rightBox.getChildren().add(gridRight);
         pane.getChildren().add(rightBox);
 
 
@@ -160,6 +172,7 @@ public class JavaFXApp extends Application {
      */
     private void playSound(String fileName) {
         Media sound = new Media(new File(fileName).toURI().toString());
+        System.out.println("play sound called");
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
     }

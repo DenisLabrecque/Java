@@ -46,8 +46,7 @@ public class ScreenDisplay extends DisplayAssembly {
 	
 	int tonerLevel = 65;
 	int drumLevel = 95;
-	int fuserLevel = 10;
-	
+		
 	XYChart.Series series = new XYChart.Series();
 
     /**
@@ -289,11 +288,28 @@ public class ScreenDisplay extends DisplayAssembly {
 		title.getStyleClass().add("white");
         title.getStyleClass().add("h1");
 		
+		Label error = new Label();
+		error.getStyleClass().add("white");
+		if(printer.exceptions().isEmpty()) {
+			error.setText("There is no error.");
+		}
+		else {
+			StringBuilder builder = new StringBuilder();
+			for (Map.Entry<AssemblyException.PrinterIssue, AssemblyException> entry : printer.exceptions().entrySet())
+				builder.append("   " + entry.getValue().getMessage() + "\n");
+			error.setText(builder.toString());			
+		}
+		
+		
 		Button clearErrorsButton = new Button("Clear Errors");
 		clearErrorsButton.getStyleClass().add("queueButton");
-		clearErrorsButton.setOnAction(e -> printer.display().reset());
+		clearErrorsButton.setOnAction(e -> {
+			printer.display().reset();
+			//setLED(errorLED, errorLight);
+			displayErrorWindow();
+		});
 		
-        pane.getChildren().addAll(title, clearErrorsButton);
+        pane.getChildren().addAll(title, clearErrorsButton, error);
     }
 
     @Override
@@ -308,42 +324,6 @@ public class ScreenDisplay extends DisplayAssembly {
 		
 		Label totalQueueLabel = new Label("Total Queue : " + Integer.toString(totalQueue));
 		totalQueueLabel.getStyleClass().add("white");
-		
-        pane.getChildren().addAll(title, totalQueueLabel);
-		
-		Label queueEmpty = new Label();
-		queueEmpty.getStyleClass().add("white");
-		if(totalQueue == 0) {
-			queueEmpty.setText("There is no queue.");
-			pane.getChildren().add(queueEmpty);
-		}
-		else {
-			GridPane queueGrid = new GridPane();
-			Label[] separateQueue = new Label[totalQueue];
-			Label[] queueID = new Label[totalQueue];
-			Label[] queueName = new Label[totalQueue];
-			Label[] queuePages = new Label[totalQueue];
-			
-			for(int i = 0; i < totalQueue; i++)
-			{
-				separateQueue[i] = new Label("*****************************************************");
-				separateQueue[i].getStyleClass().add("white");
-
-
-				queueID[i] = new Label("ID: " + Integer.toString(printer.queue().getID(i)));
-				queueID[i].getStyleClass().add("white");
-
-				queueName[i] = new Label("Name: " + printer.queue().getName(i));
-				queueName[i].getStyleClass().add("white");
-								
-				queuePages[i] = new Label("Pages: " + printer.queue().getPages(i));
-				queuePages[i].getStyleClass().add("white");
-
-				
-				pane.getChildren().addAll(separateQueue[i], queueID[i], queueName[i], queuePages[i]);
-			}
-		}
-		
 		
 		/* Print, Cancel, Add, and Clear Button */
 		GridPane grid = new GridPane();
@@ -379,11 +359,46 @@ public class ScreenDisplay extends DisplayAssembly {
 			displayPrintQueueWindow();
 		});
 		
-		pane.getChildren().add(grid);
+        pane.getChildren().addAll(title, totalQueueLabel, grid);
+		
+		/* Queue Lists */
+		Label queueEmpty = new Label();
+		queueEmpty.getStyleClass().add("white");
+		if(totalQueue == 0) {
+			queueEmpty.setText("There is no queue.");
+			pane.getChildren().add(queueEmpty);
+		}
+		else {
+			GridPane queueGrid = new GridPane();
+			Label[] separateQueue = new Label[totalQueue];
+			Label[] queueID = new Label[totalQueue];
+			Label[] queueName = new Label[totalQueue];
+			Label[] queuePages = new Label[totalQueue];
+			
+			for(int i = 0; i < totalQueue; i++)
+			{
+				separateQueue[i] = new Label("*****************************************************");
+				separateQueue[i].getStyleClass().add("white");
+
+
+				queueID[i] = new Label("ID: " + Integer.toString(printer.queue().getID(i)));
+				queueID[i].getStyleClass().add("white");
+
+				queueName[i] = new Label("Name: " + printer.queue().getName(i));
+				queueName[i].getStyleClass().add("white");
+								
+				queuePages[i] = new Label("Pages: " + printer.queue().getPages(i));
+				queuePages[i].getStyleClass().add("white");
+
+				
+				pane.getChildren().addAll(separateQueue[i], queueID[i], queueName[i], queuePages[i]);
+			}
+		}
     }
 
     @Override
     protected void displayFuserWindow() {
+<<<<<<< HEAD
         Stage stageTwo = new Stage();
 		
 		Pane rootPane = new Pane();
@@ -439,6 +454,37 @@ public class ScreenDisplay extends DisplayAssembly {
 		scene.setRoot(lastLayout);
 		
 		stageTwo.show();
+=======
+//    	GridPane pane = new GridPane();
+//    	GaugeBuilder builder = GaugeBuilder.create().skin(SlimSkin.class);
+//        fuserGague = builder.decimals(0).maxValue(2200).unit("KCAL").build();
+//        VBox actvCaloriesBox = getTopicBox("FUSER TEMP", Color.rgb(229,115,115), fuserGague);
+//
+//        pane = new GridPane();
+//        pane.setPadding(new Insets(20));
+//        pane.setHgap(10);
+//        pane.setVgap(15);
+//        pane.setBackground(new Background(new BackgroundFill(Color.rgb(39,44,50), CornerRadii.EMPTY, Insets.EMPTY)));
+//        pane.add(fuserGaugeBox, 0, 2);
+//
+//
+//    	Text text = new Text("Fuser Screen");
+//        Rectangle bar = new Rectangle(200, 3);
+//        bar.setArcWidth(6);
+//        bar.setArcHeight(6);
+//        bar.setFill(COLOR);
+//        Label label = new Label("Temp");
+//        label.setTextFill(COLOR);
+//        label.setAlignment(Pos.CENTER);
+//        label.setPadding(new Insets(0, 0, 10, 0));
+//        GAUGE.setBarColor(COLOR);
+//        GAUGE.setBarBackgroundColor(Color.rgb(39,44,50));
+//        GAUGE.setAnimated(true);
+//        VBox vBox = new VBox(bar, label, GAUGE);
+//        vBox.setSpacing(3);
+//        vBox.setAlignment(Pos.CENTER);
+//        pane.getChildren().add(text);
+>>>>>>> d5f6bee05a19f02bf09606052f005d4866d1166b
     }
 
     @Override
@@ -568,16 +614,6 @@ public class ScreenDisplay extends DisplayAssembly {
 		series.getData().add(new XYChart.Data("Drum", drumLevel));
 	}
 	
-	private void normalFuserAction() {
-		fuserLevel = 240;
-		series.getData().clear();
-		series.getData().add(new XYChart.Data("Fuser", fuserLevel));
-	}
-	private void thickFuserAction() {
-		fuserLevel = 350;
-		series.getData().clear();
-		series.getData().add(new XYChart.Data("Fuser", fuserLevel));
-	}
 	private void displayAddQueueWindow() {
 		pane.getChildren().clear();
 		
@@ -610,8 +646,6 @@ public class ScreenDisplay extends DisplayAssembly {
 		add.setOnAction(e -> {
 			if(!fieldName.getText().isEmpty() && !fieldPage.getText().isEmpty()) {
 				printer.addJob(fieldName.getText(), Integer.parseInt(fieldPage.getText()));
-				//labelName.setText(fieldName.getText());
-				//labelPage.setText(fieldPage.getText());
 				displayPrintQueueWindow();
 			}
 		});
