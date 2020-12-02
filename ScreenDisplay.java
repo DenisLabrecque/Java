@@ -49,6 +49,7 @@ public class ScreenDisplay extends DisplayAssembly {
 	int fuserLevel = 65;
 	
 	XYChart.Series series = new XYChart.Series();
+	
 
     /**
      * Constructor. Create a console display with a reference back to the printer.
@@ -284,13 +285,13 @@ public class ScreenDisplay extends DisplayAssembly {
 
     @Override
     protected void displayErrorWindow() {
-        clearWithColor(Color.BLACK);
+        clearWithColor(Color.ORANGE);
 		Label title = new Label("Error Screen");
-		title.getStyleClass().add("white");
+		//title.getStyleClass().add("white");
         title.getStyleClass().add("h1");
 		
 		Label error = new Label();
-		error.getStyleClass().add("white");
+		//error.getStyleClass().add("white");
 		if(printer.exceptions().isEmpty()) {
 			error.setText("There is no error.");
 		}
@@ -310,6 +311,7 @@ public class ScreenDisplay extends DisplayAssembly {
 			printer.display().reset();
 			//setLED(errorLED, errorLight);
 			displayErrorWindow();
+			refresh();
 		});
 		
         pane.getChildren().addAll(title, clearErrorsButton, error);
@@ -320,13 +322,13 @@ public class ScreenDisplay extends DisplayAssembly {
 		
 		int totalQueue = printer.queue().getValue();
 		
-		clearWithColor(Color.BLACK);
+		clearWithColor(Color.ORANGE);
 		Label title = new Label("Print Queue");
-		title.getStyleClass().add("white");
+		//title.getStyleClass().add("white");
         title.getStyleClass().add("h1");
 		
 		Label totalQueueLabel = new Label("Total Queue : " + Integer.toString(totalQueue));
-		totalQueueLabel.getStyleClass().add("white");
+		//totalQueueLabel.getStyleClass().add("white");
 		
 		/* Print, Cancel, Add, and Clear Button */
 		GridPane grid = new GridPane();
@@ -338,15 +340,16 @@ public class ScreenDisplay extends DisplayAssembly {
 		grid.add(printButton, 1, 0, 1, 1);
 		printButton.setOnAction(e -> {
 			printer.printJob();
-			displayPrintQueueWindow();
+			refresh();
 		});
 
 		Button cancelButton = new Button("Cancel");
 		cancelButton.getStyleClass().add("queueButton");
 		grid.add(cancelButton, 2, 0, 1, 1);
 		cancelButton.setOnAction(e -> {
-			printer.queue().remove(printer.queue().getID(0));
-			displayPrintQueueWindow();
+			if(printer.queue().getValue() != 0)
+				printer.queue().remove(printer.queue().getID(0));
+			refresh();
 		});
 		
 		Button addButton = new Button("Add");
@@ -359,13 +362,13 @@ public class ScreenDisplay extends DisplayAssembly {
 		grid.add(clearButton, 4, 0, 1, 1);
 		clearButton.setOnAction(e -> {
 			printer.queue().clearQueue();
-			displayPrintQueueWindow();
+			refresh();
 		});
 		
         pane.getChildren().addAll(title, totalQueueLabel, grid);
 		
 		Label queueEmpty = new Label();
-		queueEmpty.getStyleClass().add("white");
+		//queueEmpty.getStyleClass().add("white");
 		if(totalQueue == 0) {
 			queueEmpty.setText("There is no queue.");
 			pane.getChildren().add(queueEmpty);
@@ -380,17 +383,17 @@ public class ScreenDisplay extends DisplayAssembly {
 			for(int i = 0; i < totalQueue; i++)
 			{
 				separateQueue[i] = new Label("*****************************************************");
-				separateQueue[i].getStyleClass().add("white");
+				//separateQueue[i].getStyleClass().add("white");
 
 
 				queueID[i] = new Label("ID: " + Integer.toString(printer.queue().getID(i)));
-				queueID[i].getStyleClass().add("white");
+				//queueID[i].getStyleClass().add("white");
 
 				queueName[i] = new Label("Name: " + printer.queue().getName(i));
-				queueName[i].getStyleClass().add("white");
+				//queueName[i].getStyleClass().add("white");
 								
 				queuePages[i] = new Label("Pages: " + printer.queue().getPages(i));
-				queuePages[i].getStyleClass().add("white");
+				//queuePages[i].getStyleClass().add("white");
 
 				
 				pane.getChildren().addAll(separateQueue[i], queueID[i], queueName[i], queuePages[i]);
@@ -403,11 +406,10 @@ public class ScreenDisplay extends DisplayAssembly {
         Stage stageTwo = new Stage();
 		
 		Pane rootTwo = new Pane();
-		Scene scene = new Scene(rootTwo, 750, 500);
+		Scene sceneTwo = new Scene(rootTwo, 750, 500);
 		
-		stageTwo.setScene(scene);
+		stageTwo.setScene(sceneTwo);
 		
-		final NumberAxis yAxis = new NumberAxis (0, 1, 0.1);
         clearWithColor(Color.ORANGE);
 		Label screenHeader = new Label("Fuser Screen");
         screenHeader.getStyleClass().add("black");
@@ -417,7 +419,11 @@ public class ScreenDisplay extends DisplayAssembly {
 		CategoryAxis xAxis = new CategoryAxis();
 		xAxis.setLabel("Temperature");
 		
-		//NumberAxis yAxis = new NumberAxis();
+		
+
+		final NumberAxis yAxis = new NumberAxis(10, 450, 25);
+		
+
 		yAxis.setLabel("Degrees");
 		
 		BarChart barChart = new BarChart(xAxis, yAxis);
@@ -445,15 +451,12 @@ public class ScreenDisplay extends DisplayAssembly {
 		displayElements.setAlignment(Pos.CENTER);
 		displayElements.getChildren().addAll(levelLayout);
 		
-		Line sepLine = new Line(0, 0, 700, 0);
-		sepLine.setStrokeWidth(10);
-		sepLine.setStroke(Color.BLACK);
+
+		VBox fuserLayout = new VBox(10);
+		fuserLayout.setPadding(new Insets(5, 5, 5, 50));
+		fuserLayout.getChildren().addAll(displayElements);
 		
-		VBox lastLayout = new VBox(10);
-		lastLayout.setPadding(new Insets(5, 5, 5, 50));
-		lastLayout.getChildren().addAll(displayElements, sepLine);
-		
-		scene.setRoot(lastLayout);
+		sceneTwo.setRoot(fuserLayout);
 		
 		stageTwo.show();
     }
@@ -599,16 +602,16 @@ public class ScreenDisplay extends DisplayAssembly {
 		pane.getChildren().clear();
 		
 		Label title = new Label("Add Queue");
-		title.getStyleClass().add("white");
+		//title.getStyleClass().add("white");
         title.getStyleClass().add("h1");
 		
 		
 		Label labelName = new Label("Name: ");
-		labelName.getStyleClass().add("white");
+		//labelName.getStyleClass().add("white");
 		TextField fieldName = new TextField();
 
 		Label labelPage = new Label("Pages: ");
-		labelPage.getStyleClass().add("white");
+		//labelPage.getStyleClass().add("white");
 		TextField fieldPage = new TextField();
 		
 		
@@ -619,7 +622,7 @@ public class ScreenDisplay extends DisplayAssembly {
 		Button cancel = new Button("Cancel");
 		cancel.getStyleClass().add("queueButton");
 		grid.add(cancel, 1, 0, 1, 1);
-		cancel.setOnAction(e -> displayPrintQueueWindow());
+		cancel.setOnAction(e -> refresh());
 		
 		Button add = new Button("Add");
 		add.getStyleClass().add("queueButton");
@@ -627,7 +630,7 @@ public class ScreenDisplay extends DisplayAssembly {
 		add.setOnAction(e -> {
 			if(!fieldName.getText().isEmpty() && !fieldPage.getText().isEmpty()) {
 				printer.addJob(fieldName.getText(), Integer.parseInt(fieldPage.getText()));
-				displayPrintQueueWindow();
+				refresh();
 			}
 		});
 		
