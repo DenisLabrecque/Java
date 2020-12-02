@@ -326,7 +326,16 @@ public class LaserPrinter {
 
 	public void addJob(String name, int pageCount) {
 		Document job = new Document();
-		job.setID((int)(Math.random() * 21));
+		int currentSize = queue.getValue();
+		int currentID;
+		
+		if(currentSize == 0)
+			currentID = 0;
+		else
+			currentID = queue.getID(currentSize - 1);
+		
+		//job.setID((int)(Math.random() * 21));
+		job.setID(currentID + 1);
 		job.setName(name);
 		job.setPageCount(pageCount);
 		queue.add(job);
