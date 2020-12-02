@@ -389,7 +389,7 @@ public class ScreenDisplay extends DisplayAssembly {
 		Pane rootPane = new Pane();
 		Scene scene = new Scene(rootPane, 750, 500);
 		
-		mainStage.setScene(scene);
+		stageTwo.setScene(scene);
 		
         clearWithColor(Color.ORANGE);
 		Label screenHeader = new Label("Fuser Screen");
