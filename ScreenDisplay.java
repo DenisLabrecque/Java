@@ -464,19 +464,19 @@ public class ScreenDisplay extends DisplayAssembly {
     @Override
     protected void displayTonerAndDrumWindow() {
 		
-		Stage mainStage = new Stage();
+		//Stage mainStage = new Stage();
 		
-		Pane rootPane = new Pane();
-		Scene scene = new Scene(rootPane, 750, 500);
+		//Pane rootPane = new Pane();
+		//Scene scene = new Scene(rootPane, 750, 500);
 		
-		mainStage.setScene(scene);
+		//mainStage.setScene(scene);
 		
         clearWithColor(Color.ORANGE);
 		Label screenHeader = new Label("Toner and Drum Levels");
         screenHeader.getStyleClass().add("black");
 		screenHeader.getStyleClass().add("h1");
 		// TODO this is just a stub; put a panel here with your graphics
-        pane.getChildren().add(screenHeader);
+        //pane.getChildren().add(screenHeader);
 		
 		CategoryAxis xAxis = new CategoryAxis();
 		xAxis.setLabel("Levels");
@@ -510,17 +510,19 @@ public class ScreenDisplay extends DisplayAssembly {
 		displayElements.setAlignment(Pos.CENTER);
 		displayElements.getChildren().addAll(levelLayout);
 		
-		Line sepLine = new Line(0, 0, 700, 0);
-		sepLine.setStrokeWidth(10);
-		sepLine.setStroke(Color.BLACK);
+		//Line sepLine = new Line(0, 0, 700, 0);
+		//sepLine.setStrokeWidth(10);
+		//sepLine.setStroke(Color.BLACK);
 		
-		VBox lastLayout = new VBox(10);
-		lastLayout.setPadding(new Insets(5, 5, 5, 50));
-		lastLayout.getChildren().addAll(displayElements, sepLine);
+		//VBox lastLayout = new VBox(10);
+		//lastLayout.setPadding(new Insets(5, 5, 5, 50));
+		//lastLayout.getChildren().addAll(displayElements, sepLine);
 		
-		scene.setRoot(lastLayout);
+		//scene.setRoot(lastLayout);
 		
-		mainStage.show();
+		//mainStage.show();
+		
+		pane.getChildren().addAll(screenHeader, levelButtons, levelLayout, displayElements);
     }
 
     @Override
