@@ -386,8 +386,8 @@ public class ScreenDisplay extends DisplayAssembly {
     protected void displayFuserWindow() {
         Stage stageTwo = new Stage();
 		
-		Pane rootPane = new Pane();
-		Scene scene = new Scene(rootPane, 750, 500);
+		Pane rootTwo = new Pane();
+		Scene scene = new Scene(rootTwo, 750, 500);
 		
 		stageTwo.setScene(scene);
 		
