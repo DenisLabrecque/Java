@@ -398,35 +398,35 @@ public class ScreenDisplay extends DisplayAssembly {
 
     @Override
     protected void displayFuserWindow() {
-    	GridPane pane = new GridPane();
-    	GaugeBuilder builder = GaugeBuilder.create().skin(SlimSkin.class);
-        fuserGague = builder.decimals(0).maxValue(2200).unit("KCAL").build();
-        VBox actvCaloriesBox = getTopicBox("FUSER TEMP", Color.rgb(229,115,115), fuserGague);
-
-        pane = new GridPane();
-        pane.setPadding(new Insets(20));
-        pane.setHgap(10);
-        pane.setVgap(15);
-        pane.setBackground(new Background(new BackgroundFill(Color.rgb(39,44,50), CornerRadii.EMPTY, Insets.EMPTY)));
-        pane.add(fuserGaugeBox, 0, 2);
-    	
-    	
-    	Text text = new Text("Fuser Screen");
-        Rectangle bar = new Rectangle(200, 3); 
-        bar.setArcWidth(6);
-        bar.setArcHeight(6);
-        bar.setFill(COLOR);
-        Label label = new Label("Temp");
-        label.setTextFill(COLOR);
-        label.setAlignment(Pos.CENTER);
-        label.setPadding(new Insets(0, 0, 10, 0));
-        GAUGE.setBarColor(COLOR);
-        GAUGE.setBarBackgroundColor(Color.rgb(39,44,50));
-        GAUGE.setAnimated(true);
-        VBox vBox = new VBox(bar, label, GAUGE);
-        vBox.setSpacing(3);
-        vBox.setAlignment(Pos.CENTER);
-        pane.getChildren().add(text);
+//    	GridPane pane = new GridPane();
+//    	GaugeBuilder builder = GaugeBuilder.create().skin(SlimSkin.class);
+//        fuserGague = builder.decimals(0).maxValue(2200).unit("KCAL").build();
+//        VBox actvCaloriesBox = getTopicBox("FUSER TEMP", Color.rgb(229,115,115), fuserGague);
+//
+//        pane = new GridPane();
+//        pane.setPadding(new Insets(20));
+//        pane.setHgap(10);
+//        pane.setVgap(15);
+//        pane.setBackground(new Background(new BackgroundFill(Color.rgb(39,44,50), CornerRadii.EMPTY, Insets.EMPTY)));
+//        pane.add(fuserGaugeBox, 0, 2);
+//
+//
+//    	Text text = new Text("Fuser Screen");
+//        Rectangle bar = new Rectangle(200, 3);
+//        bar.setArcWidth(6);
+//        bar.setArcHeight(6);
+//        bar.setFill(COLOR);
+//        Label label = new Label("Temp");
+//        label.setTextFill(COLOR);
+//        label.setAlignment(Pos.CENTER);
+//        label.setPadding(new Insets(0, 0, 10, 0));
+//        GAUGE.setBarColor(COLOR);
+//        GAUGE.setBarBackgroundColor(Color.rgb(39,44,50));
+//        GAUGE.setAnimated(true);
+//        VBox vBox = new VBox(bar, label, GAUGE);
+//        vBox.setSpacing(3);
+//        vBox.setAlignment(Pos.CENTER);
+//        pane.getChildren().add(text);
     }
 
     @Override
