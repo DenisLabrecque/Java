@@ -309,11 +309,10 @@ public class LaserPrinter {
 		if(isOn && !queue.isEmpty() && exceptions.isEmpty()) {
 			Document printDocument = queue.nextQueue();
 			queue.remove(printDocument.getID());
-			paperTray.consumePaper(paperTray.getValue() - printDocument.getPageCount());
+			paperTray.consumePaper(printDocument.getPageCount());
 			printAssembly.setValue(printAssembly.getValue() + printDocument.getPageCount());
 			printAssembly.consumeDrum(printDocument.getPageCount());
 			tonerCartridge.setValue(tonerCartridge.getValue() - printDocument.getPageCount());
-			System.out.println("DEBUG: asd " + printDocument.getPageCount());
 			outputTray.setValue(outputTray.getValue() + printDocument.getPageCount());
 		}
 		else if(!exceptions.isEmpty())

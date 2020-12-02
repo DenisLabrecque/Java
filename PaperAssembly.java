@@ -78,8 +78,10 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
         return exception;
     }
 
-	public void consumePaper(int newValue){
-		currentPaperPages = newValue;
+	public void consumePaper(int paperConsumed){
+		currentPaperPages -= paperConsumed;
+		if(currentPaperPages < 0)
+			currentPaperPages = 0;
 	}
 	
 	
