@@ -419,15 +419,11 @@ public class ScreenDisplay extends DisplayAssembly {
 		CategoryAxis xAxis = new CategoryAxis();
 		xAxis.setLabel("Temperature");
 		
-<<<<<<< Updated upstream
-		//NumberAxis yAxis = new NumberAxis();
-=======
-<<<<<<< HEAD
+		
+
 		final NumberAxis yAxis = new NumberAxis(10, 450, 25);
-=======
-		//NumberAxis yAxis = new NumberAxis();
->>>>>>> 0e9657490b5f7cc2d469f6a06760ee64b2b3acf9
->>>>>>> Stashed changes
+		
+
 		yAxis.setLabel("Degrees");
 		
 		BarChart barChart = new BarChart(xAxis, yAxis);
