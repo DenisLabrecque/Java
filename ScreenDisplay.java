@@ -9,10 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -277,16 +279,69 @@ public class ScreenDisplay extends DisplayAssembly {
 
     @Override
     protected void displayErrorWindow() {
-        clearWithColor(Color.WHITE);
-        Text text = new Text("Error Screen"); // TODO this is just a stub; put a panel here with your graphics
-        pane.getChildren().add(text);
+        clearWithColor(Color.BLACK);
+		Label title = new Label("Error Screen");
+		title.getStyleClass().add("white");
+        title.getStyleClass().add("h1");
+		
+		Button clearErrorsButton = new Button("Clear Errors");
+		clearErrorsButton.getStyleClass().add("queueButton");
+		clearErrorsButton.setOnAction(e -> printer.display().reset());
+		
+        pane.getChildren().addAll(title, clearErrorsButton);
     }
 
     @Override
     protected void displayPrintQueueWindow() {
-        clearWithColor(Color.WHITE);
-        Text text = new Text("Print Queue"); // TODO this is just a stub; put a panel here with your graphics
-        pane.getChildren().add(text);
+		
+		int totalQueue = printer.queue().getValue();
+		
+		clearWithColor(Color.BLACK);
+		Label title = new Label("Print Queue");
+		title.getStyleClass().add("white");
+        title.getStyleClass().add("h1");
+		
+		Label totalQueueLabel = new Label("Total Queue : " + Integer.toString(totalQueue));
+		totalQueueLabel.getStyleClass().add("white");
+		
+		Label queueList = new Label();
+		queueList.getStyleClass().add("white");
+		if(totalQueue == 0)
+			queueList.setText("There is no queue.");
+		
+		//queueList.setText(printer.queue().returnList());
+		
+		GridPane grid = new GridPane();
+		grid.setAlignment(Pos.BOTTOM_CENTER);
+        grid.setPadding(new Insets(10, 10, 15, 20));
+		
+		Button printButton = new Button("Print");
+		printButton.getStyleClass().add("queueButton");
+		grid.add(printButton, 1, 0, 1, 1);
+		printButton.setOnAction(e -> {
+			printer.printJob();
+			displayPrintQueueWindow();
+		});
+
+		Button cancelButton = new Button("Cancel");
+		cancelButton.getStyleClass().add("queueButton");
+		grid.add(cancelButton, 2, 0, 1, 1);
+		//add.setOnAction(e -> printer.queue().remove());
+		
+		Button addButton = new Button("Add");
+		addButton.getStyleClass().add("queueButton");
+		grid.add(addButton, 3, 0, 1, 1);
+		addButton.setOnAction(e -> displayAddQueueWindow());
+		
+		Button clearButton = new Button("Clear");
+		clearButton.getStyleClass().add("queueButton");
+		grid.add(clearButton, 4, 0, 1, 1);
+		clearButton.setOnAction(e -> {
+			printer.queue().clearQueue();
+			displayPrintQueueWindow();
+		});
+
+        pane.getChildren().addAll(title, totalQueueLabel, queueList, grid);
     }
 
     @Override
@@ -387,5 +442,47 @@ public class ScreenDisplay extends DisplayAssembly {
 		series.getData().clear();
 		series.getData().add(new XYChart.Data("Toner", tonerLevel));
 		series.getData().add(new XYChart.Data("Drum", drumLevel));
+	}
+	
+	private void displayAddQueueWindow() {
+		pane.getChildren().clear();
+		
+		Label title = new Label("Add Queue");
+		title.getStyleClass().add("white");
+        title.getStyleClass().add("h1");
+		
+		
+		Label labelName = new Label("Name: ");
+		labelName.getStyleClass().add("white");
+		TextField fieldName = new TextField();
+
+		Label labelPage = new Label("Pages: ");
+		labelPage.getStyleClass().add("white");
+		TextField fieldPage = new TextField();
+		
+		
+		GridPane grid = new GridPane();
+		grid.setAlignment(Pos.BOTTOM_CENTER);
+        grid.setPadding(new Insets(10, 10, 15, 20));
+				
+		Button cancel = new Button("Cancel");
+		cancel.getStyleClass().add("queueButton");
+		grid.add(cancel, 1, 0, 1, 1);
+		cancel.setOnAction(e -> displayPrintQueueWindow());
+		
+		Button add = new Button("Add");
+		add.getStyleClass().add("queueButton");
+		grid.add(add, 2, 0, 1, 1);
+		add.setOnAction(e -> {
+			if(!fieldName.getText().isEmpty() && !fieldPage.getText().isEmpty()) {
+				printer.addJob(fieldName.getText(), Integer.parseInt(fieldPage.getText()));
+				//labelName.setText(fieldName.getText());
+				//labelPage.setText(fieldPage.getText());
+				displayPrintQueueWindow();
+			}
+		});
+		
+		
+		pane.getChildren().addAll(title, labelName, fieldName, labelPage, fieldPage, grid);
 	}
 }

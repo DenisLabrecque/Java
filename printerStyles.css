@@ -49,3 +49,10 @@ Button:pressed {
     -fx-text-base-color: white;
     -fx-text-background-color: white;
 }
+
+.queueButton {
+    -fx-min-width: 80px;
+    -fx-max-width: 80px;
+    -fx-background-radius: 8px;
+    -fx-margin-top: 10px;
+}
