@@ -61,7 +61,14 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
      * @param sheets
      */
     public void addPaper(int sheets) {
-		currentPaperPages += sheets;
+    	if(currentPaperPages + sheets <= MAX_PAPER_PAGES)
+    	{
+    		currentPaperPages += sheets;
+    	}
+    	else 
+    	{
+    		currentPaperPages = MAX_PAPER_PAGES;
+    	}
     }
 
     /**

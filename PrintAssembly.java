@@ -22,6 +22,7 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 		coronaChargeStatus = false;
 		dischargeLampStatus = false;
 		sheetsPrinted = 0;
+		
 	}
 
 	// Activates the PrintAssembly

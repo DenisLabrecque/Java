@@ -30,7 +30,7 @@ public class LaserPrinter {
 	 */
 	public LaserPrinter(Pane pane) {
 		display = new ScreenDisplay(this, pane);
-		paperTray = new PaperAssembly(this, 300);
+		paperTray = new PaperAssembly(this, 100);
 		tonerCartridge = new TonerAssembly(this);
 		fuser = new FuserAssembly(this);
 		printAssembly = new PrintAssembly(this);

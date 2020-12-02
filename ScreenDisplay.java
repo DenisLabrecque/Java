@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.SubScene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.*;
@@ -16,8 +17,11 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Box;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.chart.*;
 import javafx.scene.layout.HBox;
@@ -449,8 +453,41 @@ public class ScreenDisplay extends DisplayAssembly {
     @Override
     protected void displayPaperWindow() {
         clearWithColor(Color.WHITE);
-        Text text = new Text("Paper Trays Screen"); // TODO this is just a stub; put a panel here with your graphics
-        pane.getChildren().add(text);
+        Text title = new Text("Paper Tray");
+        title.getStyleClass().add("h1");
+        HBox hbox = new HBox();
+        HBox hboxPaper = new HBox();
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(0, 20, 20, 20));
+        vbox.setSpacing(5);
+        hboxPaper.setPadding(new Insets(20, 20, 20, 0));
+        hboxPaper.setSpacing(10);
+        
+        Text pageCount = new Text("Paper Count = " + printer.paperTray().getValue());
+        HBox hboxVisual = new HBox();
+        Rectangle paperVisual = new Rectangle(200, 200, 150, printer.paperTray().getValue() / 10);
+        Rectangle paperFullVisual = new Rectangle(200, 200, 5, 100);
+        hboxVisual.setAlignment(Pos.BOTTOM_LEFT);
+        paperVisual.fillProperty().set(Color.BEIGE);
+        paperVisual.strokeProperty().set(Color.BLACK);
+        
+        pageCount.setY(20);
+        // Adds paper to the printer
+        Button addPaperButton = new Button("Add paper");
+        addPaperButton.setPrefSize(100, 20);
+        addPaperButton.setOnAction(e -> {printer.paperTray().addPaper(20); displayPaperWindow();});
+        
+        // Unjams the printer and refreshes the error leds
+        Button unjamPrinterButton = new Button("Unjam Printer");
+        unjamPrinterButton.setPrefSize(100, 20);
+        unjamPrinterButton.setOnAction(e -> {printer.paperTray().unjam(); refresh();});
+        
+        
+        hboxVisual.getChildren().addAll(paperVisual);
+        vbox.getChildren().addAll(pageCount, addPaperButton, unjamPrinterButton);
+        hboxPaper.getChildren().addAll(paperFullVisual, hboxVisual);
+        hbox.getChildren().addAll(hboxPaper, vbox);
+        pane.getChildren().addAll(title, hbox);
     }
 
     /**
@@ -462,6 +499,7 @@ public class ScreenDisplay extends DisplayAssembly {
         pane.getChildren().clear();
         pane.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
     }
+   
 	
 	private void replaceTonerAction() {
 		tonerLevel = 100;
