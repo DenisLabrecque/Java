@@ -599,7 +599,7 @@ public class ScreenDisplay extends DisplayAssembly {
         // Remove printed paper from the output tray
         Button removePaperButton = new Button("Empty paper");
         removePaperButton.setPrefSize(100, 20);
-        removePaperButton.setOnAction(e -> {printer.outputTray().emptyTray();});
+        removePaperButton.setOnAction(e -> {printer.outputTray().emptyTray(); displayPaperWindow();});
         
         hboxVisual2.getChildren().addAll(paperVisual2);
         vbox2.getChildren().addAll(pageCount2, removePaperButton);
