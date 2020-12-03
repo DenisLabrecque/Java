@@ -537,7 +537,9 @@ public class ScreenDisplay extends DisplayAssembly {
     @Override
     protected void displayPaperWindow() {
         clearWithColor(Color.ORANGE);
-        Text title = new Text("Paper Tray");
+        
+        // Input Paper Tray
+        Text title = new Text("Input Paper Tray");
         title.getStyleClass().add("h1");
         HBox hbox = new HBox();
         HBox hboxPaper = new HBox();
@@ -549,13 +551,14 @@ public class ScreenDisplay extends DisplayAssembly {
         
         Text pageCount = new Text("Paper Count = " + printer.paperTray().getValue());
         HBox hboxVisual = new HBox();
-        Rectangle paperVisual = new Rectangle(200, 200, 150, printer.paperTray().getValue() / 10);
-        Rectangle paperFullVisual = new Rectangle(200, 200, 5, 100);
-        hboxVisual.setAlignment(Pos.BOTTOM_LEFT);
+        HBox hboxFullVisual = new HBox();
+        Rectangle paperVisual = new Rectangle(200, 200, 150, printer.paperTray().getValue() / 20);
+        Rectangle paperFullVisual = new Rectangle(200, 200, 5, 50);
+        hboxVisual.setAlignment(Pos.BOTTOM_CENTER);
+        hboxFullVisual.setAlignment(Pos.BOTTOM_CENTER);
         paperVisual.fillProperty().set(Color.BEIGE);
         paperVisual.strokeProperty().set(Color.BLACK);
         
-        pageCount.setY(20);
         // Adds paper to the printer
         Button addPaperButton = new Button("Add paper");
         addPaperButton.setPrefSize(100, 20);
@@ -566,12 +569,44 @@ public class ScreenDisplay extends DisplayAssembly {
         unjamPrinterButton.setPrefSize(100, 20);
         unjamPrinterButton.setOnAction(e -> {printer.paperTray().unjam(); refresh();});
         
-        
         hboxVisual.getChildren().addAll(paperVisual);
+        hboxFullVisual.getChildren().addAll(paperFullVisual);
         vbox.getChildren().addAll(pageCount, addPaperButton, unjamPrinterButton);
-        hboxPaper.getChildren().addAll(paperFullVisual, hboxVisual);
+        hboxPaper.getChildren().addAll(hboxFullVisual, hboxVisual);
         hbox.getChildren().addAll(hboxPaper, vbox);
-        pane.getChildren().addAll(title, hbox);
+        
+        
+        // Output Paper Tray
+        Text title2 = new Text("Output Paper Tray");
+        title2.getStyleClass().add("h1");
+        HBox hbox2 = new HBox();
+        HBox hboxPaper2 = new HBox();
+        VBox vbox2 = new VBox();
+        vbox2.setPadding(new Insets(0, 20, 20, 20));
+        vbox2.setSpacing(5);
+        hboxPaper2.setPadding(new Insets(20, 20, 20, 0));
+        hboxPaper2.setSpacing(10);
+        
+        Text pageCount2 = new Text("Paper Count = " + printer.outputTray().getValue());
+        HBox hboxVisual2 = new HBox();
+        Rectangle paperVisual2 = new Rectangle(200, 200, 150, printer.outputTray().getValue() / 20);
+        Rectangle paperFullVisual2 = new Rectangle(200, 200, 5, 50);
+        hboxVisual2.setAlignment(Pos.BOTTOM_LEFT);
+        paperVisual2.fillProperty().set(Color.BEIGE);
+        paperVisual2.strokeProperty().set(Color.BLACK);
+        
+        
+        // Remove printed paper from the output tray
+        Button removePaperButton = new Button("Empty paper");
+        removePaperButton.setPrefSize(100, 20);
+        removePaperButton.setOnAction(e -> {printer.outputTray().emptyTray();});
+        
+        hboxVisual2.getChildren().addAll(paperVisual2);
+        vbox2.getChildren().addAll(pageCount2, removePaperButton);
+        hboxPaper2.getChildren().addAll(paperFullVisual2, hboxVisual2);
+        hbox2.getChildren().addAll(hboxPaper2, vbox2);
+        
+        pane.getChildren().addAll(title, hbox, title2, hbox2);
     }
 
     /**
