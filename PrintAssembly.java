@@ -1,3 +1,5 @@
+import java.awt.print.PrinterException;
+
 public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 
 	private final int MIRROR_RPM = 200;
@@ -6,11 +8,12 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 	private final int MAX_DRUM_LIFE = 5000;
 	private final int DRUM_LIFE_WARNING = 100;
 
+	private LaserPrinter printer;
+	private AssemblyException assemblyException;
 	private int rotationalSpeed;
 	private boolean coronaChargeStatus;
 	private boolean dischargeLampStatus;
 	private int sheetsPrinted;
-	private int drumLife;
 
 	/**
 	 * Constructor.
@@ -23,8 +26,7 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 		coronaChargeStatus = false;
 		dischargeLampStatus = false;
 		sheetsPrinted = 0;
-		drumLife = MAX_DRUM_LIFE;
-		
+		printer = laserPrinter;
 	}
 
 	// Activates the PrintAssembly
@@ -55,11 +57,6 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 	public void spinUpLaserMirror() {
 		while (rotationalSpeed < MIRROR_RPM) {
 			rotationalSpeed += MIRROR_SPINUP;
-			try {
-				Thread.sleep(0);
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-			}
 		}
 	}
 
@@ -67,11 +64,6 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 	public void spinDownLaserMirror() {
 		while (rotationalSpeed > 0) {
 			rotationalSpeed -= MIRROR_SPINDOWN;
-			try {
-				Thread.sleep(0);
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-			}
 		}
 	}
 
@@ -95,12 +87,6 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 		dischargeLampStatus = false;
 	}
 
-	// Increases the sheet counter each time the drum life is decreased by a new
-	// page being printed
-	public void updateDrumLife() {
-		sheetsPrinted++;
-	}
-
 	// Resets the sheet counter when the drum is replaced
 	public void replaceDrum() {
 		sheetsPrinted = 0;
@@ -120,17 +106,25 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 
 	// Return true if PrintAssembly has low drum life
 	public boolean isWarning() {
-		return drumLife <= DRUM_LIFE_WARNING;
+		return sheetsPrinted >= MAX_DRUM_LIFE - DRUM_LIFE_WARNING;
 	}
 
+	/**
+	 * Sets how many sheets have gone through the drum.
+	 * @param sheetsPrinted
+	 */
 	@Override
 	public void setValue(int sheetsPrinted) {
 		this.sheetsPrinted = sheetsPrinted;
 	}
 
+	/**
+	 * Gets a percent of how many sheets the drum can still print.
+	 * @return
+	 */
 	@Override
 	public int getValue() {
-		return sheetsPrinted;
+		return sheetsPrinted / MAX_DRUM_LIFE;
 	}
 
 	/**
@@ -140,16 +134,17 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 	public String drumWarning() {
 		return "Drum nearly worn out.";
 	}
-	
-	public void resetDrumLife() {
-		this.drumLife = MAX_DRUM_LIFE;
-	}
-	
-	public int getDrumLife() {
-		return this.drumLife;
-	}
-	
-	public void consumeDrum(int consumeDrum) {
-		this.drumLife -= consumeDrum;
+
+	/**
+	 * Pass one sheet of paper through the drum. This must to be done for each sheet printed,
+	 * because the drum can become used along the way.
+	 */
+	public void consumeDrum() {
+		if(sheetsPrinted + 1 < MAX_DRUM_LIFE)
+			sheetsPrinted++;
+		else {
+			assemblyException = new AssemblyException(AssemblyException.PrinterIssue.DRUM, this);
+			printer.raiseException(assemblyException);
+		}
 	}
 }

@@ -181,8 +181,10 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
     /**
      * Remove errors the printer has flagged. (Note that if they have not been properly resolved, they may get reported
      * again by the printer). Also clear the current message.
+     * Replaces the print assembly drum.
      */
     protected void reset() {
+        printer.printAssembly().replaceDrum();
         printer.exceptions().clear();
         currentMessage = null;
     }

@@ -311,7 +311,10 @@ public class LaserPrinter {
 			queue.remove(printDocument.getID());
 			paperTray.consumePaper(printDocument.getPageCount());
 			printAssembly.setValue(printAssembly.getValue() + printDocument.getPageCount());
-			printAssembly.consumeDrum(printDocument.getPageCount());
+
+			for(int i = 1; i <= printDocument.getPageCount(); i++)
+				printAssembly.consumeDrum(); // TODO figure out how to stop
+
 			tonerCartridge.setValue(tonerCartridge.getValue() - printDocument.getPageCount());
 			outputTray.setValue(outputTray.getValue() + printDocument.getPageCount());
 		}
