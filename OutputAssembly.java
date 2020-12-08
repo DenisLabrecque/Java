@@ -58,4 +58,9 @@ public class OutputAssembly extends AssemblyUnit implements ISimAssembly {
 		return activated;
 	}
 	
+	public void printPaper()
+	{
+		
+		numberOfPages += 1;
+	}
 }

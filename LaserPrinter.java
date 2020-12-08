@@ -309,7 +309,7 @@ public class LaserPrinter {
 		if(isOn && !queue.isEmpty() && exceptions.isEmpty()) {
 			Document printDocument = queue.nextQueue();
 			queue.remove(printDocument.getID());
-			paperTray.consumePaper(printDocument.getPageCount());
+			paperTray.consumePaper();
 			printAssembly.setValue(printAssembly.getValue() + printDocument.getPageCount());
 
 			for(int i = 1; i <= printDocument.getPageCount(); i++)
