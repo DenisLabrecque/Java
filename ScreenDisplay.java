@@ -416,54 +416,50 @@ public class ScreenDisplay extends DisplayAssembly {
 		stageTwo.setScene(sceneTwo);
 		
         clearWithColor(Color.ORANGE);
-		Label screenHeader = new Label("Fuser Screen");
-        screenHeader.getStyleClass().add("black");
-		screenHeader.getStyleClass().add("h1");
-        pane.getChildren().add(screenHeader);
+		Label fscreenHeader = new Label("Fuser Screen");
+        fscreenHeader.getStyleClass().add("black");
+		fscreenHeader.getStyleClass().add("h1");
+        rootTwo.getChildren().add(fscreenHeader);
 		
-		CategoryAxis xAxis = new CategoryAxis();
-		xAxis.setLabel("Temperature");
-		
-		
+		CategoryAxis fxAxis = new CategoryAxis();
+		fxAxis.setLabel("Temperature");
 
-		final NumberAxis yAxis = new NumberAxis(10, 450, 25);
-		
+		final NumberAxis fyAxis = new NumberAxis(10, 410, 25);
 
-		yAxis.setLabel("Degrees");
+		fyAxis.setLabel("Degrees");
 		
-		BarChart barChart = new BarChart(xAxis, yAxis);
+		BarChart barChart = new BarChart(fxAxis, fyAxis);
 		
-		series.getData().add(new XYChart.Data("Fuser", fuserLevel));
+		series.getData().clear();
+		
+		series.getData().add(new XYChart.Data("Fuser", printer.fuser().getValue()));
 		
 		barChart.getData().add(series);
 		
-		Button normalFuserButton = new Button("Noraml");
+		Button normalFuserButton = new Button("Normal");
 		normalFuserButton.setOnAction( e -> normalFuserAction());
 		Button thickFuserButton = new Button("Thick");
 		thickFuserButton.setOnAction(e -> thickFuserAction());
 		
-		HBox levelButtons = new HBox();
-		levelButtons.setSpacing(50);
-		levelButtons.setAlignment(Pos.CENTER);
-		levelButtons.getChildren().addAll(normalFuserButton, thickFuserButton);
+		HBox flevelButtons = new HBox();
+		flevelButtons.setSpacing(50);
+		flevelButtons.setAlignment(Pos.CENTER);
+		flevelButtons.getChildren().addAll(normalFuserButton, thickFuserButton);
 		
-		VBox levelLayout = new VBox(10);
-		levelLayout.setPadding(new Insets(5, 50, 5, 50));
-		levelLayout.getChildren().addAll(barChart, levelButtons);
+		VBox flevelLayout = new VBox(10);
+		flevelLayout.setPadding(new Insets(5, 50, 5, 5));
+		flevelLayout.getChildren().addAll(barChart, flevelButtons);
 		
 		HBox displayElements = new HBox();
 		displayElements.setSpacing(10);
 		displayElements.setAlignment(Pos.CENTER);
-		displayElements.getChildren().addAll(levelLayout);
+		displayElements.getChildren().addAll(flevelLayout);
 		
 
-		VBox fuserLayout = new VBox(10);
-		fuserLayout.setPadding(new Insets(5, 5, 5, 50));
-		fuserLayout.getChildren().addAll(displayElements);
 		
-		sceneTwo.setRoot(fuserLayout);
 		
-		stageTwo.show();
+		
+		pane.getChildren().addAll(fscreenHeader, flevelButtons, flevelLayout, displayElements);
     }
 
     @Override
