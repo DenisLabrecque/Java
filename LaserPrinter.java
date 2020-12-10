@@ -235,6 +235,17 @@ public class LaserPrinter {
 		}
 	}
 
+	/**
+	 * Remove an exception from the display.
+	 * @param exception Exception to remove.
+	 */
+	public void removeException(AssemblyException exception) {
+		if(exception != null) {
+			exceptions.remove(exception.issue());
+			display.refresh();
+		}
+	}
+
 	public void loadPaper(int sheets) {
 		paperTray.addPaper(sheets);
 	}

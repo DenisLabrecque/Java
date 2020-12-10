@@ -90,6 +90,8 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 	// Resets the sheet counter when the drum is replaced
 	public void replaceDrum() {
 		sheetsPrinted = 0;
+		printer.removeException(assemblyException);
+		assemblyException = null;
 	}
 
 	/**
