@@ -16,16 +16,6 @@ public class AssemblyException extends Exception
 	private AssemblyUnit cause;
 
 	/**
-	 * Default constructor. Not recommended to use this, as the cause is generic. This means that multiple issues
-	 * could replace each other in a listing, because they will all have the same cause.
-	 * @param message Whatever message the user should see for this problem.
-	 */
-	public AssemblyException(String message) {
-		super(message);
-		issue = PrinterIssue.GENERAL;
-	}
-
-	/**
 	 * Property.
 	 * @return The problem causing this exception.
 	 */
@@ -45,6 +35,7 @@ public class AssemblyException extends Exception
 	 */
 	public AssemblyException(PrinterIssue issue, AssemblyUnit cause) {
 		super(messageFromIssue(issue));
+		this.issue = issue;
 		this.cause = cause;
 	}
 

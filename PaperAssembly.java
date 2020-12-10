@@ -4,7 +4,7 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
 	AssemblyException exception = null;
 	private static final int MAX_PAPER_PAGES = 1000;
 	private int currentPaperPages;
-	boolean paperJam = false;
+	boolean isPaperJammed = false;
 
 	/**
 	 * Constructor.
@@ -29,7 +29,7 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
 				activated = true;
 				laserPrinter.push("Paper ready.");
 			}
-			if(paperJam)
+			if(isPaperJammed)
 				throw new InterruptedException();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -80,18 +80,14 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
 
 	public void consumePaper(){
 		int jam = 1 + (int) (Math.random () * 20);
-		try { 
-			if(jam == 20) {
-				paperJam = true;
-				throw new AssemblyException(AssemblyException.PrinterIssue.PAPER_JAM, this);
-			}
-			else {
-				currentPaperPages -= 1;
-				} 
-			}
-		catch (AssemblyException e) {
-				e.printStackTrace();
-			}
+		if(jam == 20 || isPaperJammed) {
+			isPaperJammed = true;
+			exception = new AssemblyException(AssemblyException.PrinterIssue.PAPER_JAM, this);
+			laserPrinter.raiseException(exception);
+		}
+		else {
+			currentPaperPages -= 1;
+		}
 	}
 
 
@@ -106,6 +102,6 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
 	 * Solve a jam.
 	 */
 	public void unjam() {
-		paperJam = false;
+		isPaperJammed = false;
 	}
 }

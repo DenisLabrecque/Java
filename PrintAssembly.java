@@ -96,7 +96,7 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 	 * @return Current exception object (if an exception has occurred).
 	 */
 	public AssemblyException exception() {
-		return null;
+		return assemblyException;
 	}
 
 	// Status of PrintAssembly

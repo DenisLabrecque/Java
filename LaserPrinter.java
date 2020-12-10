@@ -348,7 +348,7 @@ public class LaserPrinter {
 
 	/**
 	 * @param assembly The assembly that caused the error.
-	 * @return Whether an error has been pushed to the printer by a certain component.
+	 * @return The exception that was pushed for the assembly passed.
 	 */
 	public AssemblyException containsErrorFor(AssemblyUnit assembly) {
 		for (Map.Entry<AssemblyException.PrinterIssue, AssemblyException> entry : exceptions.entrySet()) {

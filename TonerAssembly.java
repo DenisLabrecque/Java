@@ -30,8 +30,6 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        throw new AssemblyException(AssemblyException.PrinterIssue.TONER, this);
     }
 
     @Override

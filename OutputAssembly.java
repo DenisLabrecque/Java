@@ -33,7 +33,6 @@ public class OutputAssembly extends AssemblyUnit implements ISimAssembly {
 	@Override
 	public void activate() throws AssemblyException {
 		activated = true;
-		throw new AssemblyException(AssemblyException.PrinterIssue.GENERAL,this);
 	}
 
 	@Override
@@ -60,7 +59,6 @@ public class OutputAssembly extends AssemblyUnit implements ISimAssembly {
 	
 	public void printPaper()
 	{
-		
 		numberOfPages += 1;
 	}
 }
