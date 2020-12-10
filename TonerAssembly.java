@@ -81,7 +81,7 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
     		return TONER_EMPTY;
     }*/
 	 
-	 public int consumeToner() {
+	 public void consumeToner() {
 	 if(tonerLvl > TONER_EMPTY)
 			tonerLvl -= 1;
 		else {
@@ -95,6 +95,7 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
      */
     public void refill() {
         setValue(FULL_TONER);
+        printer.removeException(exception);
     }
     
     /**

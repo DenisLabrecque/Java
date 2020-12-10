@@ -7,9 +7,11 @@ public class AssemblyException extends Exception
 		GENERAL,
 		UNKNOWN,
 		PAPER_JAM,
+		PAPERSUPPLY,
 		FUSER,
 		TONER,
-		DRUM
+		DRUM,
+		OUTPUTTRAY
 	}
 
 	private PrinterIssue issue;
@@ -51,6 +53,10 @@ public class AssemblyException extends Exception
 				return "Out of toner";
 			case DRUM:
 				return "Drum worn out";
+			case OUTPUTTRAY:
+				return "Output tray is full";
+			case PAPERSUPPLY:
+				return "Please add more paper";
 			default:
 				return "General error";
 		}

@@ -13,7 +13,7 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 	private int rotationalSpeed;
 	private boolean coronaChargeStatus;
 	private boolean dischargeLampStatus;
-	private int sheetsPrinted;
+	private int sheetsLeft;
 
 	/**
 	 * Constructor.
@@ -25,7 +25,7 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 		super();
 		coronaChargeStatus = false;
 		dischargeLampStatus = false;
-		sheetsPrinted = 0;
+		sheetsLeft = 0;
 		printer = laserPrinter;
 	}
 
@@ -89,7 +89,7 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 
 	// Resets the sheet counter when the drum is replaced
 	public void replaceDrum() {
-		this.sheetsPrinted = MAX_DRUM_LIFE;
+		this.sheetsLeft = MAX_DRUM_LIFE;
 		printer.removeException(assemblyException);
 		assemblyException = null;
 	}
@@ -108,7 +108,7 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 
 	// Return true if PrintAssembly has low drum life
 	public boolean isWarning() {
-		return sheetsPrinted >= MAX_DRUM_LIFE - DRUM_LIFE_WARNING;
+		return sheetsLeft <= DRUM_LIFE_WARNING;
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 	 */
 	@Override
 	public void setValue(int sheetsPrinted) {
-		this.sheetsPrinted = sheetsPrinted;
+		this.sheetsLeft = sheetsPrinted;
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 	 */
 	@Override
 	public int getValue() {
-		sheetsPrinted = MAX_DRUM_LIFE;
+		return sheetsLeft;
 	}
 
 	/**
@@ -142,8 +142,8 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 	 * because the drum can become used along the way.
 	 */
 	public void consumeDrum() {
-		if(sheetsPrinted + 1 < MAX_DRUM_LIFE)
-			sheetsPrinted++;
+		if(sheetsLeft > 0)
+			sheetsLeft--;
 		else {
 			assemblyException = new AssemblyException(AssemblyException.PrinterIssue.DRUM, this);
 			printer.raiseException(assemblyException);

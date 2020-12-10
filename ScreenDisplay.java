@@ -540,7 +540,7 @@ public class ScreenDisplay extends DisplayAssembly {
         // Unjams the printer and refreshes the error leds
         Button unjamPrinterButton = new Button("Unjam Printer");
         unjamPrinterButton.setPrefSize(100, 20);
-        unjamPrinterButton.setOnAction(e -> {printer.paperTray().unjam(); refresh();});
+        unjamPrinterButton.setOnAction(e -> {printer.paperTray().unjam(); printer.display().reset(); refresh();});
         
         hboxVisual.getChildren().addAll(paperVisual);
         hboxFullVisual.getChildren().addAll(paperFullVisual);
@@ -650,8 +650,13 @@ public class ScreenDisplay extends DisplayAssembly {
 		grid.add(add, 2, 0, 1, 1);
 		add.setOnAction(e -> {
 			if(!fieldName.getText().isEmpty() && !fieldPage.getText().isEmpty()) {
+				try {
 				printer.addJob(fieldName.getText(), Integer.parseInt(fieldPage.getText()));
 				refresh();
+				}
+				catch (Exception NumberFormatException) {
+					fieldPage.setText("0");
+				}
 			}
 		});
 		

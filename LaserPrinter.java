@@ -317,20 +317,21 @@ public class LaserPrinter {
 	}
 
 	public void printJob() {
-		if(isOn && !queue.isEmpty() && exceptions.isEmpty()) {
+		if (isOn && !queue.isEmpty() && exceptions.isEmpty()) {
 			Document printDocument = queue.nextQueue();
-			queue.remove(printDocument.getID());
-			paperTray.consumePaper();
-			printAssembly.setValue(printAssembly.getValue() + printDocument.getPageCount());
-
-			for(int i = 1; i <= printDocument.getPageCount(); i++)
-				printAssembly.consumeDrum(); // TODO figure out how to stop
-
-			tonerCartridge.setValue(tonerCartridge.getValue() - printDocument.getPageCount());
-			outputTray.setValue(outputTray.getValue() + printDocument.getPageCount());
-		}
-		else if(!exceptions.isEmpty())
-		{
+			for (; printDocument.getPageCount() > 0; printDocument.subtractPageCount()) {
+				paperTray.consumePaper();
+				printAssembly.consumeDrum();
+				tonerCartridge.consumeToner();
+				outputTray.printPaper();
+				if (!exceptions.isEmpty())
+					break;
+				if(printDocument.getPageCount() == 1)
+				{
+					queue.remove(printDocument.getID());
+				}
+			}
+		} else if (!exceptions.isEmpty()) {
 			display.pushMessage("Please fix the error before printing.");
 		}
 	}

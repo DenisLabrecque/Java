@@ -49,4 +49,8 @@ public class Document {
 		this.pageCount = newCount;
 	}
 	
+	/* Set the page count */
+	public void subtractPageCount() {
+		this.pageCount -= 1;
+	}
 }
