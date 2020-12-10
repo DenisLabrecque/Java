@@ -89,7 +89,7 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 
 	// Resets the sheet counter when the drum is replaced
 	public void replaceDrum() {
-		sheetsPrinted = 0;
+		this.sheetsPrinted = MAX_DRUM_LIFE;
 		printer.removeException(assemblyException);
 		assemblyException = null;
 	}
@@ -126,7 +126,7 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 	 */
 	@Override
 	public int getValue() {
-		return sheetsPrinted / MAX_DRUM_LIFE;
+		sheetsPrinted = MAX_DRUM_LIFE;
 	}
 
 	/**

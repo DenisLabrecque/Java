@@ -450,16 +450,16 @@ public class ScreenDisplay extends DisplayAssembly {
 		flevelLayout.setPadding(new Insets(5, 50, 5, 5));
 		flevelLayout.getChildren().addAll(barChart, flevelButtons);
 		
-		HBox displayElements = new HBox();
-		displayElements.setSpacing(10);
-		displayElements.setAlignment(Pos.CENTER);
-		displayElements.getChildren().addAll(flevelLayout);
+		HBox displayElements1 = new HBox();
+		displayElements1.setSpacing(10);
+		displayElements1.setAlignment(Pos.CENTER);
+		displayElements1.getChildren().addAll(flevelLayout);
 		
 
 		
 		
 		
-		pane.getChildren().addAll(fscreenHeader, flevelButtons, flevelLayout, displayElements);
+		pane.getChildren().addAll(fscreenHeader, flevelButtons, flevelLayout, displayElements1);
     }
 
     @Override

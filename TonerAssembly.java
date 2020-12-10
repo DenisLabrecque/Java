@@ -1,3 +1,5 @@
+import java.awt.print.PrinterException;
+
 public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
 	private static final int FULL_TONER = 5000;
 	private static final int TONER_LOW  = 300;
@@ -71,13 +73,22 @@ public class TonerAssembly extends AssemblyUnit implements ISimAssembly {
     
     /**
      * Consume Toner
-     */
+     *
     public int consumeToner() {
     	if (tonerLvl > TONER_EMPTY)
     		return tonerLvl -= 1;
     	else 
     		return TONER_EMPTY;
-    }
+    }*/
+	 
+	 public int consumeToner() {
+	 if(tonerLvl > TONER_EMPTY)
+			tonerLvl -= 1;
+		else {
+			exception = new AssemblyException(AssemblyException.PrinterIssue.TONER, this);
+			printer.raiseException(exception);
+		}
+	 }
     
     /**
      * Set levels back to 100%.
