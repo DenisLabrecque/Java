@@ -121,7 +121,7 @@ public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 	}
 
 	/**
-	 * Gets a percent of how many sheets the drum can still print.
+	 * Gets how many sheets the drum can still print.
 	 * @return
 	 */
 	@Override

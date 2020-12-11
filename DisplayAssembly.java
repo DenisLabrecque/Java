@@ -184,7 +184,6 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
      * Replaces the print assembly drum.
      */
     protected void reset() {
-        printer.printAssembly().replaceDrum();
         printer.exceptions().clear();
         currentMessage = null;
     }

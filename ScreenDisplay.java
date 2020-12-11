@@ -367,7 +367,11 @@ public class ScreenDisplay extends DisplayAssembly {
 		
 		Label errorPrint = new Label();
 		if(!printer.exceptions().isEmpty()) {
-			errorPrint.setText("Please fix the error before printing.");
+		    StringBuilder errors = new StringBuilder();
+		    for(AssemblyException.PrinterIssue issue : printer.exceptions().keySet()) {
+		        errors.append(printer.exceptions().get(issue).getMessage());
+            }
+			errorPrint.setText(errors.toString());
 			errorPrint.getStyleClass().add("red");
 			pane.getChildren().add(errorPrint);
 		}
