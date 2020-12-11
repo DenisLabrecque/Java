@@ -566,7 +566,7 @@ public class ScreenDisplay extends DisplayAssembly {
         
         Text pageCount2 = new Text("Paper Count = " + printer.outputTray().getValue());
         HBox hboxVisual2 = new HBox();
-        Rectangle paperVisual2 = new Rectangle(200, 200, 150, printer.outputTray().getValue() / 20);
+        Rectangle paperVisual2 = new Rectangle(200, 200, 150, printer.outputTray().getValue() / 10);
         Rectangle paperFullVisual2 = new Rectangle(200, 200, 5, 50);
         hboxVisual2.setAlignment(Pos.BOTTOM_LEFT);
         paperVisual2.fillProperty().set(Color.BEIGE);
