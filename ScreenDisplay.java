@@ -343,7 +343,7 @@ public class ScreenDisplay extends DisplayAssembly {
 
 		Button cancelButton = new Button("Cancel");
 		cancelButton.getStyleClass().add("queueButton");
-		grid.add(cancelButton, 2, 0, 1, 1);
+		grid.add(cancelButton, 3, 0, 1, 1);
 		cancelButton.setOnAction(e -> {
 			if(printer.queue().getValue() != 0)
 				printer.queue().remove(printer.queue().getID(0));
@@ -352,7 +352,7 @@ public class ScreenDisplay extends DisplayAssembly {
 		
 		Button addButton = new Button("Add");
 		addButton.getStyleClass().add("queueButton");
-		grid.add(addButton, 3, 0, 1, 1);
+		grid.add(addButton, 2, 0, 1, 1);
 		addButton.setOnAction(e -> displayAddQueueWindow());
 		
 		Button clearButton = new Button("Clear");
@@ -626,7 +626,7 @@ public class ScreenDisplay extends DisplayAssembly {
 	private void displayAddQueueWindow() {
 		pane.getChildren().clear();
 		
-		Label title = new Label("Add Queue");
+		Label title = new Label("Add To Queue");
 		//title.getStyleClass().add("white");
         title.getStyleClass().add("h1");
 		
@@ -646,12 +646,12 @@ public class ScreenDisplay extends DisplayAssembly {
 				
 		Button cancel = new Button("Cancel");
 		cancel.getStyleClass().add("queueButton");
-		grid.add(cancel, 1, 0, 1, 1);
+		grid.add(cancel, 2, 0, 1, 1);
 		cancel.setOnAction(e -> refresh());
 		
 		Button add = new Button("Add");
 		add.getStyleClass().add("queueButton");
-		grid.add(add, 2, 0, 1, 1);
+		grid.add(add, 1, 0, 1, 1);
 		add.setOnAction(e -> {
 			if(!fieldName.getText().isEmpty() && !fieldPage.getText().isEmpty()) {
 				try {
@@ -659,7 +659,8 @@ public class ScreenDisplay extends DisplayAssembly {
 				refresh();
 				}
 				catch (Exception NumberFormatException) {
-					fieldPage.setText("0");
+					labelPage.getStyleClass().add("red");
+					labelPage.setText("Pages: Please enter a valid number");
 				}
 			}
 		});
