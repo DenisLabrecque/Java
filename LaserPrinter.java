@@ -321,8 +321,14 @@ public class LaserPrinter {
 			Document printDocument = queue.nextQueue();
 			for (; printDocument.getPageCount() > 0; printDocument.subtractPageCount()) {
 				paperTray.consumePaper();
+				if (!exceptions.isEmpty())
+					break;
 				printAssembly.consumeDrum();
+				if (!exceptions.isEmpty())
+					break;
 				tonerCartridge.consumeToner();
+				if (!exceptions.isEmpty())
+					break;
 				outputTray.printPaper();
 				if (!exceptions.isEmpty())
 					break;

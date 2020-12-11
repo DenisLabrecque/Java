@@ -283,31 +283,33 @@ public class ScreenDisplay extends DisplayAssembly {
 
     @Override
     protected void displayErrorWindow() {
+		
+		int totalError = 0;
+		
         clearWithColor(Color.ORANGE);
 		Label title = new Label("Error Screen");
-		//title.getStyleClass().add("white");
         title.getStyleClass().add("h1");
 		
 		Label error = new Label();
-		//error.getStyleClass().add("white");
 		if(printer.exceptions().isEmpty()) {
 			error.setText("There is no error.");
+			error.getStyleClass().add("black");
 		}
 		else {
 			StringBuilder builder = new StringBuilder();
-			for (Map.Entry<AssemblyException.PrinterIssue, AssemblyException> entry : printer.exceptions().entrySet())
-				builder.append("   " + entry.getValue().getMessage() + "\n");
-			error.setText(builder.toString());			
+			for (Map.Entry<AssemblyException.PrinterIssue, AssemblyException> entry : printer.exceptions().entrySet()) {
+				totalError++;
+				builder.append(totalError + ". " + entry.getValue().getMessage() + "\n");
+			}
+			error.setText(builder.toString());
+			error.getStyleClass().add("red");			
 		}
-		
-	
-		
+
 		Button clearErrorsButton = new Button("Clear Errors");
 		clearErrorsButton.getStyleClass().add("queueButton");
 		
 		clearErrorsButton.setOnAction(e -> {
 			printer.display().reset();
-			//setLED(errorLED, errorLight);
 			displayErrorWindow();
 			refresh();
 		});
@@ -363,6 +365,20 @@ public class ScreenDisplay extends DisplayAssembly {
 			refresh();
 		});
 		
+		if(totalQueue > 0) {
+			if(printer.exceptions().isEmpty())
+				printButton.setDisable(false);
+			else
+				printButton.setDisable(true);
+			cancelButton.setDisable(false);
+			clearButton.setDisable(false);
+		}
+		else {
+			printButton.setDisable(true);
+			cancelButton.setDisable(true);
+			clearButton.setDisable(true);
+		}
+		
 		pane.getChildren().addAll(title, totalQueueLabel, grid);
 		
 		Label errorPrint = new Label();
@@ -371,7 +387,7 @@ public class ScreenDisplay extends DisplayAssembly {
 		    for(AssemblyException.PrinterIssue issue : printer.exceptions().keySet()) {
 		        errors.append(printer.exceptions().get(issue).getMessage());
             }
-			errorPrint.setText(errors.toString());
+			errorPrint.setText(errors.toString() + ". Please Fix the error before continuing");
 			errorPrint.getStyleClass().add("red");
 			pane.getChildren().add(errorPrint);
 		}
