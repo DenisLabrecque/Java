@@ -72,7 +72,7 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
 	}
 
 	public void consumePaper() {
-		int jam = 1 + (int) (Math.random() * 200);
+		int jam = 1 + (int) (Math.random() * 20);
 		if (jam == 20 || isPaperJammed) {
 			isPaperJammed = true;
 			exception = new AssemblyException(AssemblyException.PrinterIssue.PAPER_JAM, this);
