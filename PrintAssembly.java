@@ -2,11 +2,11 @@ import java.awt.print.PrinterException;
 
 public class PrintAssembly extends AssemblyUnit implements ISimAssembly {
 
-	private final int MIRROR_RPM = 200;
-	private final int MIRROR_SPINUP = 50;
-	private final int MIRROR_SPINDOWN = 25;
-	private final int MAX_DRUM_LIFE = 5000;
-	private final int DRUM_LIFE_WARNING = 100;
+	private static final int MIRROR_RPM = 200;
+	private static final int MIRROR_SPINUP = 50;
+	private static final int MIRROR_SPINDOWN = 25;
+	private static final int MAX_DRUM_LIFE = 5000;
+	private static final int DRUM_LIFE_WARNING = 100;
 
 	private LaserPrinter printer;
 	private AssemblyException assemblyException;

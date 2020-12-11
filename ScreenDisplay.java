@@ -432,13 +432,13 @@ public class ScreenDisplay extends DisplayAssembly {
 
 		fyAxis.setLabel("Degrees");
 		
-		BarChart barChart = new BarChart(fxAxis, fyAxis);
+		BarChart barChart1 = new BarChart(fxAxis, fyAxis);
 		
 		series.getData().clear();
 		
 		series.getData().add(new XYChart.Data("Fuser", printer.fuser().getValue()));
 		
-		barChart.getData().add(series);
+		barChart1.getData().add(series);
 		
 		Button normalFuserButton = new Button("Normal");
 		normalFuserButton.setOnAction( e -> normalFuserAction());
@@ -452,7 +452,7 @@ public class ScreenDisplay extends DisplayAssembly {
 		
 		VBox flevelLayout = new VBox(10);
 		flevelLayout.setPadding(new Insets(5, 50, 5, 5));
-		flevelLayout.getChildren().addAll(barChart, flevelButtons);
+		flevelLayout.getChildren().addAll(barChart1, flevelButtons);
 		
 		HBox displayElements1 = new HBox();
 		displayElements1.setSpacing(10);
