@@ -4,37 +4,37 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
 	AssemblyException exception = null;
 	private static final int MAX_PAPER_PAGES = 1000;
 	private int currentPaperPages;
-	boolean isPaperJammed = false;
+	static boolean isPaperJammed;
 
 	/**
 	 * Constructor.
-	 * @param laserPrinter Reference back to the printer for sending messages, warnings, and exceptions.
+	 * 
+	 * @param laserPrinter Reference back to the printer for sending messages,
+	 *                     warnings, and exceptions.
 	 * @param sheets
 	 */
 	public PaperAssembly(LaserPrinter laserPrinter, int sheets) {
 		super();
 		this.laserPrinter = laserPrinter;
 		currentPaperPages = sheets;
+		isPaperJammed = false;
 	}
 
 	@Override
 	public void activate() throws AssemblyException {
-		if(exception != null)
+
+		if (exception != null) // The issue was already present as the printer shut down, before activating
+			// again
 			throw exception;
 
-		try {
-			laserPrinter.push("Reading current paper pages.");
-			getValue();
-			if(currentPaperPages > 0){
-				activated = true;
-				laserPrinter.push("Paper ready.");
-			}
-			if(isPaperJammed)
-				throw new InterruptedException();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}		
-		//;
+		laserPrinter.push("Reading current paper pages.");
+		if (currentPaperPages > 0) {
+			activated = true;
+			laserPrinter.push("Paper ready.");
+		}
+		if (isPaperJammed)
+			exception = new AssemblyException(AssemblyException.PrinterIssue.PAPER_JAM, this);
+		laserPrinter.raiseException(exception);
 	}
 
 	@Override
@@ -58,44 +58,32 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
 
 	/**
 	 * Add sheets to the paper tray.
+	 * 
 	 * @param sheets
 	 */
 	public void addPaper(int sheets) {
-		if(currentPaperPages + sheets <= MAX_PAPER_PAGES)
-		{
+		if (currentPaperPages + sheets <= MAX_PAPER_PAGES) {
 			currentPaperPages += sheets;
-		}
-		else 
-		{
+		} else {
 			currentPaperPages = MAX_PAPER_PAGES;
 		}
 		laserPrinter.removeException(exception);
 		exception = null;
 	}
 
-	/**
-	 * @return Current exception object (if an exception has occurred).
-	 */
-	public AssemblyException exception() {
-		return exception;
-	}
-
-	public void consumePaper(){
-		int jam = 1 + (int) (Math.random () * 200);
-		if(jam == 20 || isPaperJammed) {
+	public void consumePaper() {
+		int jam = 1 + (int) (Math.random() * 200);
+		if (jam == 20 || isPaperJammed) {
 			isPaperJammed = true;
 			exception = new AssemblyException(AssemblyException.PrinterIssue.PAPER_JAM, this);
 			laserPrinter.raiseException(exception);
-		}
-		else if (currentPaperPages > 0){
+		} else if (currentPaperPages > 0) {
 			currentPaperPages -= 1;
-		}
-		else {
+		} else {
 			exception = new AssemblyException(AssemblyException.PrinterIssue.PAPERSUPPLY, this);
 			laserPrinter.raiseException(exception);
 		}
 	}
-
 
 	/**
 	 * Set paper levels back to 100%.
@@ -110,6 +98,9 @@ public class PaperAssembly extends AssemblyUnit implements ISimAssembly {
 	 * Solve a jam.
 	 */
 	public void unjam() {
+		activated = true;
 		isPaperJammed = false;
+		laserPrinter.removeException(exception);
+		exception = null;
 	}
 }
