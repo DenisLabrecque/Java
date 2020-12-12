@@ -555,7 +555,7 @@ public class ScreenDisplay extends DisplayAssembly {
         // Adds paper to the printer
         Button addPaperButton = new Button("Add paper");
         addPaperButton.setPrefSize(100, 20);
-        addPaperButton.setOnAction(e -> {printer.paperTray().addPaper(20); displayPaperWindow();});
+        addPaperButton.setOnAction(e -> {printer.paperTray().addPaper(50); displayPaperWindow();});
         
         // Unjams the printer and refreshes the error leds
         Button unjamPrinterButton = new Button("Unjam Printer");

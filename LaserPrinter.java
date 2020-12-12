@@ -356,7 +356,6 @@ public class LaserPrinter {
 		else
 			currentID = queue.getID(currentSize - 1);
 		
-		//job.setID((int)(Math.random() * 21));
 		job.setID(currentID + 1);
 		job.setName(name);
 		job.setPageCount(pageCount);
