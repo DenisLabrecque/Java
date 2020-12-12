@@ -671,12 +671,14 @@ public class ScreenDisplay extends DisplayAssembly {
 		add.setOnAction(e -> {
 			if(!fieldName.getText().isEmpty() && !fieldPage.getText().isEmpty()) {
 				try {
+				if(Integer.parseInt(fieldPage.getText()) <= 0)
+						throw new NumberFormatException();
 				printer.addJob(fieldName.getText(), Integer.parseInt(fieldPage.getText()));
 				refresh();
 				}
 				catch (Exception NumberFormatException) {
 					labelPage.getStyleClass().add("red");
-					labelPage.setText("Pages: Please enter a valid number");
+					labelPage.setText("Pages: Please enter a positive number");
 				}
 			}
 		});
