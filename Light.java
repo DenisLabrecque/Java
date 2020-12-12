@@ -1,4 +1,6 @@
 import javafx.scene.paint.Color;
+import javafx.animation.FillTransition;
+
 
 /**
  * LED used to indicate the printer's status.
@@ -10,6 +12,7 @@ public class Light {
 
     private Color color;
     private Pattern pattern;
+	private FillTransition transition;
 
     /**
      * Creates a green light that's off.
@@ -17,6 +20,7 @@ public class Light {
     public Light() {
         color = Color.GREEN;
         pattern = Pattern.OFF;
+		transition = new FillTransition();
     }
 
     /**
@@ -26,6 +30,7 @@ public class Light {
     public Light(Color color) {
         this.color = color;
         this.pattern = Pattern.OFF;
+		transition = new FillTransition();
     }
 
     /**
@@ -72,4 +77,8 @@ public class Light {
         else
             return color + " light, " + pattern;
     }
+	
+	public FillTransition getTransition() {
+		return transition;
+	}
 }

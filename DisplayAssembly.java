@@ -128,7 +128,7 @@ public abstract class DisplayAssembly extends AssemblyUnit implements ISimAssemb
                 tonerLED.setPattern(Light.Pattern.SOLID);
             }
             else
-                tonerLED.setPattern(Light.Pattern.OFF);
+				tonerLED.setPattern(Light.Pattern.OFF);                
         }
         else
             tonerLED.setPattern(Light.Pattern.OFF);
