@@ -305,11 +305,14 @@ public class ScreenDisplay extends DisplayAssembly {
 			error.getStyleClass().add("red");			
 		}
 
-		Button clearErrorsButton = new Button("Clear Errors");
+		Button clearErrorsButton = new Button("Fix All Errors.");
 		clearErrorsButton.getStyleClass().add("queueButton");
 		
 		clearErrorsButton.setOnAction(e -> {
 			printer.display().reset();
+			printer.paperTray().unjam();
+			printer.printAssembly().replaceDrum();
+			printer.toner().refill();
 			displayErrorWindow();
 			refresh();
 		});

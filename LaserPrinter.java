@@ -190,12 +190,10 @@ public class LaserPrinter {
 			safelyActivateAssembly(outputTray);
 
 			// Set whether is on
-			if (allAssembliesOn()) { // No error when turning on assemblies
-				isPowering = false;
-				isOn = true;
-				display.refresh();
-			} else
-				display().refresh(); // Final tally
+			isPowering = false;
+			isOn = true;
+			display.refresh();
+
 		}
 	}
 
